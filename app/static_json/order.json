@@ -1,0 +1,26 @@
+[
+  {
+    "panel":"flight-details"
+  },
+  {
+    "panel":"luggage"
+  },
+  {
+    "panel":"bag-pickup-time"
+  },
+  {
+    "panel":"bag-pickup-location"
+  },
+  {
+    "panel":"passengers"
+  },
+  {
+    "panel":"your-airline-reservation"
+  },
+  {
+    "panel":"passport-information"
+  },
+  {
+    "panel":"payment-details"
+  }
+]

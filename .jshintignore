@@ -1,0 +1,3 @@
+app/scripts/toolkit/run_prettify.js
+test/unit/*.js
+gulpfile.babel.js

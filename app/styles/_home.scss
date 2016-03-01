@@ -1,0 +1,100 @@
+//
+// Home page styles
+// --------------------------------------------------
+
+.bg-mobile{
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+
+  min-height: 50vh;
+
+  display: flex;
+  align-items: center;
+
+  text-align: center;
+
+}
+
+.home-section{
+  h2{ font-size: $title; line-height: $body-lh; }
+
+  .text-container{
+
+    margin: 20px 0;
+    h2{ margin-top: 0; }
+    p{ color: $dark-grey; }
+  }
+}
+
+.header-content{
+  display: block;
+  margin: 0 auto;
+
+  h1{
+    color: $white;
+    font-weight: bold;
+    text-indent: -9999px;
+
+    margin: 0 auto;
+    display: block;
+
+  }
+
+  .logo-tagline{
+    font-size: $subheader;
+    color: $white;
+    text-shadow: $text-shadow;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (min-width: $screen-sm) {
+
+  .bg-mobile{
+    display: block;
+    min-height: auto;
+  }
+
+  .home-section{
+    background-size: cover;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 100vh;
+    max-width: inherit;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    display: flex;
+    align-items: center;
+
+    .text-container{
+      text-align: center;
+      color: $white;
+      margin: 30px 0 30px 0;
+
+      h2,
+      p{
+        text-shadow: $text-shadow;
+        color: $white;
+      }
+
+    }
+
+    .content-holder{
+      display: block;
+      margin: 0 auto;
+    }
+
+  }
+
+  .header-content{
+    .logo-tagline{
+      font-size: $headline;
+    }
+  }
+
+}

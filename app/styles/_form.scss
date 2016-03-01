@@ -1,0 +1,41 @@
+//
+// Form styles - includes input, selects, textarea, validation styles
+// --------------------------------------------------
+
+.form-group{
+  margin-top: 16px;
+
+  &.label-floating{
+    &.is-focused{
+
+      label.control-label{ top:-25px; }
+    }
+  }
+
+}
+
+.form-control,
+.form-group .form-control{
+  background-image: linear-gradient($blue, $blue), linear-gradient($greyscale-1, $greyscale-1);
+}
+
+.form-group{
+  label,
+  label.control-label{
+    color: $greyscale-1;
+  }
+}
+
+.form-group.is-focused{
+  .form-control{
+    background-image: linear-gradient($blue, $blue), linear-gradient($greyscale-1, $greyscale-1);
+  }
+  label,
+  label.form-control{
+    color: $blue;
+  }
+}
+
+
+
+

@@ -1,0 +1,64 @@
+<div class="container-fluid" ng-class="{- currentPage -}">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <h1>Let’s Enjoy Luggage Freedom Bag Check In</h1>
+    </div>
+  </div>
+
+  <div class="row" style="min-height:{- scrollElemHeight -}px">
+
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 panel-container" add-max="8" add-panels>
+
+      <div ng-repeat="panel in panels | limitTo: panelCount" ng-include="getTemplateFile(panel.panel)" id="panel{-panel.panel-}" in-view="panelInView($index, $inview, $inviewpart, $event)" in-view-options="{ offsetTop: 0, offsetBottom: 250 }">
+          <!-- Dynamic panel template used -->
+          <!-- in '/panels' folder -->
+      </div>
+
+    </div>
+    <div class="hidden-xs col-sm-6 col-md-7 col-lg-7 booking-panel-container">
+
+      <div
+        class="booking-fixed-sideboard bg-1 clearfix"
+        fixed-class="pos-fixed"
+        fixed-show="1"
+        fixed-hide="2"
+        style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
+        fixed-sidebar>
+
+        <div class="content-holder">
+          <h2>Panel 1</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat convallis diam, a malesuada leo porta at. Duis sit amet est efficitur, finibus mi tristique, tempor ipsum.</p>
+        </div>
+
+      </div>
+      <div
+        class="booking-fixed-sideboard bg-2 clearfix"
+        fixed-class="pos-fixed"
+        fixed-show="3"
+        fixed-hide="5"
+        style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
+        fixed-sidebar>
+
+        <div class="content-holder">
+          <h2>Panel 2</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat convallis diam, a malesuada leo porta at. Duis sit amet est efficitur, finibus mi tristique, tempor ipsum.</p>
+        </div>
+
+      </div>
+      <div
+        class="booking-fixed-sideboard bg-3 clearfix"
+        fixed-class="pos-fixed"
+        fixed-show="6"
+        fixed-hide="8"
+        style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
+        fixed-sidebar>
+
+        <div class="content-holder">
+          <h2>Panel 3</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat convallis diam, a malesuada leo porta at. Duis sit amet est efficitur, finibus mi tristique, tempor ipsum.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

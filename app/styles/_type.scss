@@ -1,0 +1,85 @@
+//
+// Type styles - includes header sizes, general text, lists, webfont import
+// --------------------------------------------------
+
+html { font-size: 62.5% }
+
+// NOTE - after above reset - rem size example
+// 1.4rem = 14px, 1.6rem = 16px, etc...
+
+$main-heading-size: 4.5rem;
+$smaller-header-size: 3.4rem;
+$headline: 2.4rem;
+$title: 2rem;
+$subheader: 1.6rem;
+$body-text-size: 1.4rem;
+$caption: 1.2rem;
+
+$panel-header-small-size: 1.4rem;
+
+$h1-type-size: $main-heading-size;
+$h2-type-size: $smaller-header-size;
+$h3-type-size: $headline;
+$h4-type-size: $subheader;
+$h5-type-size: $subheader;
+
+$main-header-lh: 48px;
+$smaller-header-lh: 40px;
+$headline-lh: 32px;
+$subheader-lh: 28px;
+$body-lh: 24px;
+$body-small-lh: 20px;
+
+// import google roboto font
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,500italic);
+$roboto-font: 'Roboto', sans-serif;
+
+//import icon font
+@import "icon-font";
+
+body,
+p,
+ul {
+  font-size: $body-text-size;
+}
+
+p{
+  line-height: $body-small-lh;
+  @media screen and (min-width: $screen-sm) {
+    line-height: $body-lh;
+  }
+}
+$text-shadow: 0px 1px 1px rgba(0, 0, 0, 1);
+.text-shadow{ text-shadow: $text-shadow; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+span,
+input,
+textarea,
+select,
+label{
+  font-family: $roboto-font;
+}
+
+h1{ font-size: $h1-type-size; line-height: $main-header-lh; }
+h2{ font-size: $h2-type-size; line-height: $smaller-header-lh; }
+h3{ font-size: $h3-type-size; line-height: $headline-lh; }
+h4{ font-size: $h4-type-size; line-height: $subheader-lh; }
+h5{ font-size: $h5-type-size; line-height: $subheader-lh; }
+
+// size overrides
+.size-headline{ font-size: $headline; }
+.size-title{ font-size: $title; }
+
+
+
+
+
+
+

@@ -1,0 +1,107 @@
+//
+// Main - used to import scss files
+// make sure to include any new files here
+// --------------------------------------------------
+
+$icon-font-path: '../fonts/';
+
+// bower:scss
+// Core variables and mixins
+//Bootstrap path 'bower_components/bootstrap-sass/assets/stylesheets/bootstrap/''
+@import
+  "bootstrap/variables",
+  "bootstrap/mixins";
+
+// custom overrides
+@import
+  "variables",
+  "mixins";
+
+// Reset and dependencies
+@import
+  "bootstrap/normalize",
+  "bootstrap/print",
+  "bootstrap/glyphicons";
+
+// Core CSS
+@import
+  "bootstrap/scaffolding",
+  "bootstrap/type",
+  "bootstrap/code",
+  "bootstrap/grid",
+  "bootstrap/tables",
+  "bootstrap/forms",
+  "bootstrap/buttons";
+
+// Components
+@import
+  "bootstrap/component-animations",
+  "bootstrap/dropdowns",
+  "bootstrap/button-groups",
+  "bootstrap/input-groups",
+  "bootstrap/navs",
+  "bootstrap/navbar",
+  "bootstrap/breadcrumbs",
+  "bootstrap/pagination",
+  "bootstrap/pager",
+  "bootstrap/labels",
+  "bootstrap/badges",
+  "bootstrap/jumbotron",
+  "bootstrap/thumbnails",
+  "bootstrap/alerts",
+  "bootstrap/progress-bars",
+  "bootstrap/media",
+  "bootstrap/list-group",
+  "bootstrap/panels",
+  "bootstrap/responsive-embed",
+  "bootstrap/wells",
+  "bootstrap/close";
+
+// Components w/ JavaScript
+@import
+  "bootstrap/modals",
+  "bootstrap/tooltip",
+  "bootstrap/popovers",
+  "bootstrap/carousel";
+
+// Utility classes
+@import
+  "bootstrap/utilities",
+  "bootstrap/responsive-utilities";
+
+// Material design theme
+// path 'bower_components/bootstrap-material-design/
+@import
+  //'sass/variables',
+  //'sass/mixins',
+  //'sass/shadows',
+  //'sass/core',
+  'sass/bootstrap-material-design',
+  'sass/ripples';
+
+// animate.css includes
+// path 'bower_components/animatewithsass/''
+@import
+  "animate.scss";
+// endbower
+
+// Start booking form styles
+// Custom/updated site elemnts
+@import
+  "type",
+  "images",
+  "containers",
+  "tabs",
+  "form",
+  "images",
+  "panels",
+  "list";
+
+//Pages styles
+@import
+  "home",
+  "booking";
+
+//Utilitiy classes/overrides
+@import
+  "utilities";

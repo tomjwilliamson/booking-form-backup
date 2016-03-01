@@ -1,0 +1,111 @@
+//
+// Panel styles - used for the card layouts
+// --------------------------------------------------
+
+.panel{
+
+  > .panel-heading,
+  &.panel-default > .panel-heading{
+    background-color: $greyscale-3;
+
+    padding: 16px 16px 0 16px;
+
+    @media screen and (min-width: $screen-sm) {
+      padding: 24px 24px 0 24px;
+    }
+
+    h2{
+      font-size: $headline;
+      line-height: $body-lh;
+      color: $blue;
+    }
+
+    h1,
+    h2,
+    h3{ margin: 0; }
+
+    h1,
+    h2,
+    h3,
+    p{
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+
+    p{
+      color: $dark-grey;
+      margin-top: 6px;
+    }
+
+    i{
+      background: none;
+
+      width: 35px;
+      height: auto;
+
+      color: $light-grey;
+      font-size: $smaller-header-size;
+      border-radius: inherit;
+    }
+
+  }
+
+  > .panel-body,
+  &.panel-default > .panel-body{
+    padding: 16px;
+    background-color: $greyscale-3;
+
+    .form-control{
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+
+    .form-group{
+      &:first-child{
+        margin-top: 0;
+      }
+    }
+
+    .btn-link{
+      float: right;
+      padding: 8px 0 0 16px;
+      margin-bottom: 0;
+    }
+
+
+    @media screen and (min-width: $screen-sm) {
+      padding: 24px;
+    }
+  }
+
+  .icon-with-caption{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    li{
+      list-style: none;
+      float: left;
+      color: $greyscale-1;
+      text-align: center;
+
+      padding-right: 10px;
+    }
+
+    span{
+      display: block;
+      margin-top: -5px;
+    }
+  }
+
+  &.panel-animate-in{
+    @include fadeInUp(
+      $duration: 0.3s,
+      $count: 1,
+      $delay: .1s
+    );
+  }
+
+}

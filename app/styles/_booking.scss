@@ -1,0 +1,81 @@
+//
+// Booking page styles
+// --------------------------------------------------
+
+.panel-container{
+  height: 100%;
+  //used for the offset load of the panels
+  //must match offsetValue var in directive
+  padding-bottom: 50px;
+}
+
+.booking-fixed-sideboard{
+
+  position: relative;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  opacity: 0;
+
+  @include fadeInUp(
+    $duration: 0.3s,
+    $count: 1,
+    $delay: .1s
+  );
+
+  &.bg-1{
+    background-image: url(/images/test-img.jpg);
+  }
+  &.bg-2{
+    background-image: url(/images/test-img-2.jpg);
+  }
+  &.bg-3{
+    background-image: url(/images/test-img-3.jpg);
+  }
+
+  &.pos-fixed{
+    position: fixed;
+    top: 0;
+  }
+
+  &.show-section{
+
+    @include fadeIn(
+      $duration: 0.3s,
+      $count: 1,
+      $delay: .1s
+    );
+
+    .content-holder{
+      @include fadeInUp(
+        $duration: 0.3s,
+        $count: 1,
+        $delay: 0.5s
+      );
+    }
+  }
+  &.hide-section{
+
+    @include fadeOut(
+      $duration: 0.3s,
+      $count: 1,
+      $delay: .1s
+    );
+
+    .content-holder{
+      @include fadeOutDown(
+        $duration: 0.3s,
+        $count: 1,
+        $delay: 0.5s
+      );
+    }
+  }
+
+  .content-holder{
+    width: 50%;
+    padding:0 15px 15px 15px;
+  }
+
+}
