@@ -1,0 +1,52 @@
+//
+// Header styles, includes navigation
+// --------------------------------------------------
+
+.header{
+
+  display: none;
+
+  background-color: $blue;
+  min-height: 80px;
+
+  padding: 5px 15px 0 15px;
+
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2), 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+
+  .main-header-content{
+    h1{
+      float: left;
+      text-indent: -9999px;
+      margin-top: 0;
+    }
+  }
+
+  .main-navigation{
+
+    float: right;
+    margin-top: 25px;
+
+    ul{
+      li{
+        list-style: none;
+        float: left;
+        padding-left: 25px;
+
+        a{ color: $white; text-transform: uppercase; }
+
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-sm) {
+    display: block;
+
+    position: fixed;
+    top: 0;
+
+    z-index: 999;
+    width: 100%;
+
+  }
+
+}

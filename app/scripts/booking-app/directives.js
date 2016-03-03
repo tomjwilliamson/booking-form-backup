@@ -112,12 +112,12 @@ portrBookingDirectives.directive('panel', ['$timeout', function ($timeout) {
 
       element.on('click', function(){
 
-        if(!attrs.scroll){
+        if(attrs.scroll === false){
           return;
         }
 
         $timeout(function(){
-          portrFunctions.animateScroll(element, {duration: 750, offset: -250});
+          portrFunctions.animateScroll(element, {duration: 500, offset: -250});
           scope.$digest();
         }, 250);
 
@@ -137,6 +137,16 @@ portrBookingDirectives.directive('showtab', [function () {
         element.tab('show');
       });
     }
+  };
+
+}]);
+
+portrBookingDirectives.directive('siteHeader', [function () {
+
+  return {
+    restrict: 'A',
+    replace: true,
+    templateUrl: './templates/partials/header.html'
   };
 
 }]);

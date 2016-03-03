@@ -56,6 +56,14 @@
     padding: 16px;
     background-color: $greyscale-3;
 
+    p,
+    ul{ color: $dark-grey; }
+    h4{ margin-bottom: 0; }
+
+    hr{
+      border-color: $light-grey;
+    }
+
     .form-control{
       &:last-child{
         margin-bottom: 0;
@@ -72,8 +80,8 @@
       float: right;
       padding: 8px 0 0 16px;
       margin-bottom: 0;
+      margin-top: 0;
     }
-
 
     @media screen and (min-width: $screen-sm) {
       padding: 24px;

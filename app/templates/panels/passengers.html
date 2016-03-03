@@ -1,4 +1,4 @@
-<article panel class="panel panel-default panel-animate-in" panel-id="passengers">
+<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="passengers">
 
   <div class="panel-heading">
     <h2>Passengers</h2>
@@ -7,27 +7,30 @@
 
   <div class="panel-body">
     <form>
+
       <div class="form-group label-floating">
         <label class="control-label" for="PassengerFirstName1">Lead Passenger First Name*</label>
-        <input class="form-control" id="PassengerFirstName1" type="text">
+        <input class="form-control" id="PassengerFirstName1" ng-model="passenger[0].firstname" ng-change="onChange(0)" type="text">
       </div>
 
       <div class="form-group label-floating">
         <label class="control-label" for="PassengerLastName1">Lead Passenger Last Name*</label>
-        <input class="form-control" id="PassengerLastName1" type="text">
+        <input class="form-control" id="PassengerLastName1" ng-model="passenger[0].lastname" ng-change="onChange(0)" type="text">
       </div>
 
       <div class="form-group label-floating">
         <label class="control-label" for="PassengerEmail1">E-mail*</label>
-        <input class="form-control" id="PassengerEmail1" type="text">
+        <input class="form-control" id="PassengerEmail1" ng-model="passenger[0].email" ng-change="onChange(0)" type="text">
       </div>
 
       <div class="form-group label-floating">
         <label class="control-label" for="PassengerPhone1">Phone Number*</label>
-        <input class="form-control" id="PassengerPhone1" type="text">
+        <input class="form-control" id="PassengerPhone1" ng-model="passenger[0].phone" ng-change="onChange(0)" type="text">
       </div>
 
-      <button class="btn btn-link">+ Add more passengers</button>
+      <div ng-repeat="passengerItem in passengers track by $index" ng-include="passengerTemplate"></div>
+
+      <button class="btn btn-link" ng-click="addPassengerForm()">+ Add more passengers</button>
     </form>
   </div>
 

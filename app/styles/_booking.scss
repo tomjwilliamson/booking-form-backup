@@ -2,6 +2,12 @@
 // Booking page styles
 // --------------------------------------------------
 
+.booking-section{
+  h2{
+    margin-bottom: 30px;
+  }
+}
+
 .panel-container{
   height: 100%;
   //used for the offset load of the panels
@@ -17,23 +23,23 @@
   background-repeat: no-repeat;
 
   width: 100%;
-  opacity: 0;
+  //opacity: 0;
 
-  @include fadeInUp(
-    $duration: 0.3s,
-    $count: 1,
-    $delay: .1s
-  );
+  // @include fadeInUp(
+  //   $duration: 0.3s,
+  //   $count: 1,
+  //   $delay: .1s
+  // );
 
   &.bg-1{
-    background-image: url(/images/test-img.jpg);
+    background-image: url(/images/fixed-panel/fixed-bg.jpg);
   }
-  &.bg-2{
-    background-image: url(/images/test-img-2.jpg);
-  }
-  &.bg-3{
-    background-image: url(/images/test-img-3.jpg);
-  }
+  // &.bg-2{
+  //   background-image: url(/images/fixed-panel/fixed-bg.jpg);
+  // }
+  // &.bg-3{
+  //   background-image: url(/images/fixed-panel/fixed-bg.jpg);
+  // }
 
   &.pos-fixed{
     position: fixed;
@@ -42,11 +48,13 @@
 
   &.show-section{
 
-    @include fadeIn(
-      $duration: 0.3s,
-      $count: 1,
-      $delay: .1s
-    );
+    display: block;
+
+    // @include fadeIn(
+    //   $duration: 0.3s,
+    //   $count: 1,
+    //   $delay: .1s
+    // );
 
     .content-holder{
       @include fadeInUp(
@@ -58,11 +66,13 @@
   }
   &.hide-section{
 
-    @include fadeOut(
-      $duration: 0.3s,
-      $count: 1,
-      $delay: .1s
-    );
+    display: none;
+
+    // @include fadeOut(
+    //   $duration: 0.3s,
+    //   $count: 1,
+    //   $delay: .1s
+    // );
 
     .content-holder{
       @include fadeOutDown(
@@ -74,8 +84,20 @@
   }
 
   .content-holder{
-    width: 50%;
-    padding:0 15px 15px 15px;
+    position: absolute;
+    top: 100px;
+    width: 75%;
+    padding:10px 15px 15px 30px;
+
+    h3,
+    p,
+    ul{
+      color: $white;
+      text-shadow: $text-shadow;
+      font-size: 2rem;
+      line-height: 1.2em;
+    }
+    h3{ font-size: 3.5rem; }
   }
 
 }

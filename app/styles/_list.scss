@@ -7,21 +7,42 @@ $list-h4-lh: 16px;
 .list-group{
 
   margin-bottom: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+
+  &.has-bottom-border{
+    border-bottom: 1px solid $greyscale-2;
+    padding-bottom: 20px;
+    padding-top: 0;
+  }
 
   .list-group-item{
 
     padding-left: 0;
+    padding-right: 0;
+    //display: flex;
+
+    &.display-block{
+      display: block;
+    }
 
     h4.list-group-item-heading{
       color: $dark-grey;
       font-size: $subheader;
       line-height: $list-h4-lh;
     }
-    p.list-group-item-text{
+    p.list-group-item-text,
+    ul,
+    li{
       color: $light-grey;
     }
 
-    .row-action-primary{
+    .row-content{
+      min-height: 50px;
+    }
+
+    .row-action-primary,
+    .row-action-secondary{
       i{
         background: none;
 
@@ -33,6 +54,13 @@ $list-h4-lh: 16px;
         border-radius: inherit;
       }
     }
+    .row-action-secondary{
+      float: right;
+    }
   }
 
+}
+
+.list-group.has-bottom-border + .list-group{
+  margin-top: 20px;
 }

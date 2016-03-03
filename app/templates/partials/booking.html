@@ -1,7 +1,9 @@
-<div class="container-fluid" ng-class="{- currentPage -}">
+<div site-header></div>
+
+<div class="container-fluid {- currentPage -}-section">
   <div class="row">
     <div class="col-xs-12 col-sm-12">
-      <h1>Let’s Enjoy Luggage Freedom Bag Check In</h1>
+      <h2>Let’s Enjoy Luggage Freedom Bag Check In</h2>
     </div>
   </div>
 
@@ -13,6 +15,10 @@
           <!-- Dynamic panel template used -->
           <!-- in '/panels' folder -->
       </div>
+
+      <div ng-show="panelCount === panels.length" ng-include="confirmationTemplate"></div>
+
+      <button ng-show="panelCount === panels.length" class="btn btn-lg btn-raised btn-block btn-blue booking-submit">Book now</button>
 
     </div>
     <div class="hidden-xs col-sm-6 col-md-7 col-lg-7 booking-panel-container">
@@ -26,37 +32,65 @@
         fixed-sidebar>
 
         <div class="content-holder">
-          <h2>Panel 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat convallis diam, a malesuada leo porta at. Duis sit amet est efficitur, finibus mi tristique, tempor ipsum.</p>
+          <h3>Quote or tip goes here</h3>
+          <p>e.g. travelling bag free saves time and money, on arrival to the airport, you can go straight to security</p>
         </div>
 
       </div>
       <div
-        class="booking-fixed-sideboard bg-2 clearfix"
+        class="booking-fixed-sideboard bg-1 clearfix"
         fixed-class="pos-fixed"
         fixed-show="3"
+        fixed-hide="4"
+        style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
+        fixed-sidebar>
+
+        <div class="content-holder">
+          <h3>Make sure you are there!</h3>
+          <p>We are bringing the airport to your doorstep. So remember:
+            <ul>
+              <li>Check in online (or mobile) with your airline before your driver arrives</li>
+              <li>Have your passport ready. Your driver will validate both your boarding pass and your passport. So you need to be there!”</li>
+            </ul>
+          </p>
+        </div>
+
+      </div>
+      <div
+        class="booking-fixed-sideboard bg-1 clearfix"
+        fixed-class="pos-fixed"
+        fixed-show="5"
         fixed-hide="5"
         style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
         fixed-sidebar>
 
         <div class="content-holder">
-          <h2>Panel 2</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat convallis diam, a malesuada leo porta at. Duis sit amet est efficitur, finibus mi tristique, tempor ipsum.</p>
+          <h3>Header here...</h3>
+          <p>If you are travelling with other passengers who want to check in bags, they will need to be present at pick up too</p>
         </div>
-
       </div>
       <div
-        class="booking-fixed-sideboard bg-3 clearfix"
+        class="booking-fixed-sideboard bg-1 clearfix"
         fixed-class="pos-fixed"
         fixed-show="6"
-        fixed-hide="8"
+        fixed-hide="7"
         style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
         fixed-sidebar>
 
         <div class="content-holder">
-          <h2>Panel 3</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat convallis diam, a malesuada leo porta at. Duis sit amet est efficitur, finibus mi tristique, tempor ipsum.</p>
+          <h3>We will need you passport details and airline reservation to confirm your details with British Airways</h3>
+          <p>If you don’t have them now, we’ll remind you later</p>
         </div>
+      </div>
+      <div
+        class="booking-fixed-sideboard bg-1 clearfix"
+        fixed-class="pos-fixed"
+        fixed-show="8"
+        fixed-hide="9"
+        style="width:{- fixedElemWidth -}px; height:{- fixedElemHeight -}px"
+        fixed-sidebar>
+
+        <div class="content-holder"></div>
       </div>
 
     </div>

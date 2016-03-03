@@ -5,11 +5,14 @@
 .form-group{
   margin-top: 16px;
 
-  &.label-floating{
+  &.label-floating,
+  &.label-static{
     &.is-focused{
-
       label.control-label{ top:-25px; }
     }
+  }
+  &.label-static{
+    label.control-label{ top:-25px; }
   }
 
 }
@@ -22,7 +25,7 @@
 .form-group{
   label,
   label.control-label{
-    color: $greyscale-1;
+    color: $light-grey;
   }
 }
 

@@ -1,4 +1,4 @@
-<article panel class="panel panel-default panel-animate-in" panel-id="passport-information">
+<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="passport-information">
 
   <div class="panel-heading">
     <h2>Passport Information</h2>
@@ -6,19 +6,55 @@
   </div>
 
   <div class="panel-body">
-    <form>
-      <div class="form-group label-floating">
-        <label class="control-label" for="Name">Name</label>
-        <input class="form-control" id="Name" type="text">
+
+    <div class="list-group has-bottom-border clearfix">
+      <!-- <div ng-repeat="passenger in passengers" ng-include="passportListTemplate"></div> -->
+
+      <div class="list-group-item display-block">
+        <!-- <div class="row-action-primary">
+          <i class="material-icons">art_track</i>
+        </div> -->
+        <div class="row-content">
+          <p class="list-group-item-text">John Smith</p>
+          <h4 class="list-group-item-heading">! Information missing</h4>
+        </div>
+         <div class="row-action-secondary">
+          <i class="material-icons">art_track</i>
+        </div>
       </div>
 
-      <div class="form-group label-floating">
-        <label class="control-label" for="Email">Email</label>
-        <input class="form-control" id="Email" type="text">
+      <p>We will need passport information for all passengers at least 24 hours prior to flight departure.</p>
+      <p>Enter it now, or skip and we’ll remind you to enter later.</p>
+
+      <button class="btn btn-link">Enter Now</button>
+      <button class="btn btn-link">Enter Later</button>
+
+    </div>
+
+    <div class="list-group clearfix">
+      <!-- <div ng-repeat="passenger in passengers" ng-include="passportListTemplate"></div> -->
+
+      <div class="list-group-item display-block">
+        <!-- <div class="row-action-primary">
+          <i class="material-icons">art_track</i>
+        </div> -->
+        <div class="row-content">
+          <p class="list-group-item-text">John Smith</p>
+          <h4 class="list-group-item-heading">! Information missing</h4>
+        </div>
+         <div class="row-action-secondary">
+          <i class="material-icons">art_track</i>
+        </div>
       </div>
 
-      <button class="btn btn-raised">OK</button>
-    </form>
+      <p>We will need passport information for all passengers at least 24 hours prior to flight departure.</p>
+      <p>Enter it now, or skip and we’ll remind you to enter later.</p>
+
+      <button class="btn btn-link">Enter Now</button>
+      <button class="btn btn-link">Enter Later</button>
+
+    </div>
+
   </div>
 
 </article>

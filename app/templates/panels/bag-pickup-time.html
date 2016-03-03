@@ -1,22 +1,47 @@
-<article panel class="panel panel-default panel-animate-in" panel-id="bag-pickup-time">
+<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-time">
 
   <div class="panel-heading">
-    <h2>Panel 4</h2>
+    <h2>Bag Pick Up Date &amp; Time*</h2>
+    <p>When should we collect your bags?</p>
   </div>
 
   <div class="panel-body">
     <form>
-      <div class="form-group label-floating">
-        <label class="control-label" for="Name">Name</label>
-        <input class="form-control" id="Name" type="text">
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="PickupDate = 'Same'">Same day</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="PickupDate = 'Before'">Day before</a>
+        </div>
       </div>
 
-      <div class="form-group label-floating">
-        <label class="control-label" for="Email">Email</label>
-        <input class="form-control" id="Email" type="text">
+      <div class="form-group hidden">
+        <input class="form-control" id="PickupDateInput" type="text" value="{- PickupDate -}">
       </div>
 
-      <button class="btn btn-raised">OK</button>
+      <div class="form-group label-static">
+        <label class="control-label" for="PickupTime">Choose a time slot</label>
+        <select class="form-control" id="PickupTime" type="text">
+          <option>07:00 to 08:00</option>
+          <option>08:00 to 09:00</option>
+          <option>09:00 to 10:00</option>
+          <option>10:00 to 11:00</option>
+          <option>11:00 to 12:00</option>
+        </select>
+      </div>
+
+      <div class="list-group">
+
+        <div class="list-group-item">
+          <div class="row-action-primary">
+            <i class="material-icons">error</i>
+          </div>
+
+          <div class="row-content">
+            <p class="list-group-item-text">Remember you and any other passenger(s) will need to be present with their Boarding pass &amp; IDs</p>
+          </div>
+        </div>
+
+      </div>
     </form>
   </div>
 

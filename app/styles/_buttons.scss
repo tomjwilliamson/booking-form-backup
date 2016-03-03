@@ -1,0 +1,50 @@
+//
+// Button styles
+// --------------------------------------------------
+
+// .btn.btn-raised:not(.btn-link):focus,
+// .btn.btn-raised:not(.btn-link):hover,
+// .btn.btn-raised:not(.btn-link):active{ box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+
+.btn{
+  text-transform: uppercase;
+
+  &.btn-blue{
+    background-color: $blue;
+    color: $white;
+
+    &::hover,
+    &::active,
+    &::focus{
+      background-color: $blue;
+    }
+
+    &.btn-lg.btn-raised.btn-block{
+      background-color: $blue;
+    }
+  }
+
+}
+
+.btn-toolbar{
+  .btn-group{
+    .btn{
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}
+
+
+@media screen and (min-width: $screen-lg) {
+
+  .btn-toolbar{
+    .btn-group{
+      .btn{
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+    }
+  }
+
+}

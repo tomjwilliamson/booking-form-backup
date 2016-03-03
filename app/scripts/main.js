@@ -105,7 +105,7 @@ portrFunctions.animateScroll = function(ele, options, callback){
   // do the scroll
   opts.container.animate({
     scrollTop: scrollPos + opts.offset
-  }, opts.duration, function(){
+  }, opts.duration, 'easeOutQuart', function(){
     // remove scroll stop binding on complete
     opts.container.off('.cancelscroll');
 

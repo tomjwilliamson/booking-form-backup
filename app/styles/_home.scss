@@ -3,9 +3,10 @@
 // --------------------------------------------------
 
 .bg-mobile{
-  background-size: cover;
   width: 100%;
   height: 100%;
+
+  background-size: cover;
 
   min-height: 50vh;
 
@@ -13,6 +14,10 @@
   align-items: center;
 
   text-align: center;
+
+  @media screen and (min-width: $screen-xs) and (max-width: $screen-xs-max) {
+    min-height: 75vh;
+  }
 
 }
 
@@ -57,10 +62,10 @@
   }
 
   .home-section{
-    background-size: cover;
-
     width: 100%;
     height: 100%;
+
+    background-size: cover;
 
     min-height: 100vh;
     max-width: inherit;
@@ -97,4 +102,10 @@
     }
   }
 
+}
+
+@media screen and (min-width: $screen-md) {
+  .header-content{
+    margin-top: 50px;
+  }
 }

@@ -7,6 +7,10 @@ $image-folder-path: '../images';
 // Main logo styles
 $logo-path: url(../images/branding/logo.svg);
 
+//
+// Main logo
+// On home/splash page
+// --------------------------------------------------
 .header-content{
   h1{
     width: 250px;
@@ -22,26 +26,45 @@ $logo-path: url(../images/branding/logo.svg);
     }
   }
 }
-
-//Home page images
-.bg-mobile{
-  @include background-image-retina(#{$image-folder-path}/bg-images/home-mobile, jpg, 400px, 225px, center, center);
+// In main header
+// --------------------------------------------------
+.main-header-content{
+  h1{
+    width: 163px;
+    height: 70px;
+    background: $logo-path no-repeat center center;
+    background-size: 163px 70px;
+  }
+  @media screen and (min-width: $screen-sm) {
+    h1{
+      width: 163px;
+      height: 70px;
+      background-size: 163px 70px;
+    }
+  }
 }
 
+
+//
+// Homepage bg images
+// --------------------------------------------------
+.bg-mobile{
+  @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-mobile, jpg, 400px, 600px, center, center);
+}
 @media screen and (min-width: $screen-sm) {
   .bg-mobile{ background-image: none; }
   .home-section{
-    @include background-image-retina(#{$image-folder-path}/bg-images/home-tablet, jpg, 768px, 431px, center, center);
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-tablet-portrait, jpg, 768px, 1024px, center, center);
   }
 }
 @media screen and (min-width: $screen-md) {
   .home-section{
-    @include background-image-retina(#{$image-folder-path}/bg-images/home-small-desktop, jpg, 1200px, 674px, center, center);
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-tablet-landscape, jpg, 1024px, 768px, center, center);
   }
 }
 @media screen and (min-width: $screen-lg) {
   .home-section{
-    background: url(#{$image-folder-path}/bg-images/home-desktop.jpg) no-repeat center center;
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-desktop, jpg, 1600px, 900px, center, center);
   }
 }
 

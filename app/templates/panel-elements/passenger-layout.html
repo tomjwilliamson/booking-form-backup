@@ -1,0 +1,24 @@
+<div class="heading-with-icon">
+  <h4>Passenger {- $index + 1 -}</h4>
+  <i class="material-icons" ng-click="passengerClose($index)">close</i>
+</div>
+
+<div class="form-group label-floating">
+  <label class="control-label" for="PassengerFirstName[$index + 1]">Lead Passenger First Name*</label>
+  <input class="form-control" id="PassengerFirstName[$index + 1]" ng-model="passenger[$index + 1].firstname" ng-change="onChange(passenger[$index + 1].firstname)" type="text">
+</div>
+
+<div class="form-group label-floating">
+  <label class="control-label" for="PassengerLastName[$index + 1]">Lead Passenger Last Name*</label>
+  <input class="form-control" id="PassengerLastName[$index + 1]" ng-model="passenger[$index + 1].lastname" ng-change="onChange(passenger[$index + 1].lastname)" type="text">
+</div>
+
+<div class="form-group label-floating">
+  <label class="control-label" for="PassengerEmail[$index + 1]">E-mail*</label>
+  <input class="form-control" id="PassengerEmail[$index + 1]" ng-model="passenger[$index + 1].email" ng-change="onChange(passenger[$index + 1].email)" type="text">
+</div>
+
+<div class="form-group label-floating">
+  <label class="control-label" for="PassengerPhone[$index + 1]">Phone Number*</label>
+  <input class="form-control" id="PassengerPhone[$index + 1]" ng-model="passenger[$index + 1].phone" ng-change="onChange(passenger[$index + 1].phone)" type="text">
+</div>

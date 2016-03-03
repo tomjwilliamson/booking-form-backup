@@ -18,6 +18,7 @@ portrBookingControllers.controller('homeController', ['$scope', '$timeout', func
 
 portrBookingControllers.controller('bookingController', ['$scope', '$window', '$timeout', '$interval', 'DataService', function ($scope, $window, $timeout, $interval, DataService) {
 
+  $scope.currentPage = 'booking';
   $scope.panels = [];
   $scope.panelCount = 3;
   $scope.visiblePanel = 1;
@@ -96,11 +97,98 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   };
 
   $scope.$watch('panelCount', function(){
-
     $timeout(function(){
       $.material.init();
     }, 500);
-
   });
+
+  // Passenger panel functions
+  $scope.passengers = [];
+  $scope.passenger = {};
+  $scope.passengerIndex = 1;
+
+  $scope.passengerTemplate = './templates/panel-elements/passenger-layout.html';
+
+  $scope.passengerClose = function(item){
+
+    $scope.passengers.splice(item, 1);
+
+    $scope.passenger[$scope.passengerIndex].firstname = '';
+    $scope.passenger[$scope.passengerIndex].lastname = '';
+    $scope.passenger[$scope.passengerIndex].email = '';
+    $scope.passenger[$scope.passengerIndex].phone = '';
+
+    $scope.passengerIndex --;
+  };
+
+  $scope.addPassengerForm = function(){
+
+    console.log('ADD', $scope.passengerIndex);
+
+    // $scope.passengers.push({
+    //   'index': $scope.passengerIndex,
+    //   'firstname': $scope.passenger[$scope.passengerIndex].firstname,
+    //   'lastname': $scope.passenger[$scope.passengerIndex].lastname,
+    //   'email': $scope.passenger[$scope.passengerIndex].email,
+    //   'phone': $scope.passenger[$scope.passengerIndex].phone
+    // });
+    $scope.passengers.push({
+      'index': $scope.passengerIndex,
+      'firstname': '',
+      'lastname': '',
+      'email': '',
+      'phone': ''
+    });
+
+    $scope.passengerIndex ++;
+    $.material.init();
+
+    console.log($scope.passengers);
+
+  };
+
+   $scope.onChange = function(val){
+
+    console.log(val);
+    // $scope.passenger.firstname = val;
+
+    // console.log($scope.passengers[$scope.passengerIndex - 1].index);
+
+    //console.log($scope.passenger[$scope.passengerIndex].index);
+
+
+    // console.log($scope.passenger[$scope.passengerIndex].firstname, $scope.passenger[$scope.passengerIndex].lastname);
+
+
+    // if($scope.passenger[$scope.passengerIndex].firstname !== 'undefined' && $scope.passenger[$scope.passengerIndex].lastname !== 'undefined' && $scope.passenger[$scope.passengerIndex].email !== 'undefined' && $scope.passenger[$scope.passengerIndex].phone !== 'undefined'){
+
+    //   // $scope.passenger[$scope.passengerIndex].index = $scope.passengerIndex,
+    //   // $scope.passenger[$scope.passengerIndex].firstname = $scope.passenger[$scope.passengerIndex].firstname,
+    //   // $scope.passenger[$scope.passengerIndex].lastname = $scope.passenger[$scope.passengerIndex].lastname,
+    //   // $scope.passenger[$scope.passengerIndex].email = $scope.passenger[$scope.passengerIndex].email,
+    //   // $scope.passenger[$scope.passengerIndex].phone = $scope.passenger[$scope.passengerIndex].phone;
+
+
+    //   console.log($scope.passenger[$scope.passengerIndex].firstname);
+
+
+
+    //   console.log('in change', $scope.passengers);
+    //   //amendObject($scope.passengerIndex, $scope.passenger.firstname, $scope.passenger.lastname, $scope.passenger.email, $scope.passenger.phone);
+    //   //$scope.passengers.push(new Passenger($scope.passenger.firstname, $scope.passenger.lastname, $scope.passenger.email, $scope.passenger.phone));
+
+
+    // }
+    // else{
+    //   console.log('shit', $scope.passengerIndex);
+    // }
+
+
+  };
+
+  // Passport panel functions
+  $scope.passportListTemplate = './templates/panel-elements/passport-list-item.html';
+  $scope.confirmationTemplate = './templates/panels/confirmation.html';
+
 
 }]);

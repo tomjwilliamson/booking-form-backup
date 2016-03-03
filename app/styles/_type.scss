@@ -41,6 +41,7 @@ body,
 p,
 ul {
   font-size: $body-text-size;
+  //color: $black;
 }
 
 p{
@@ -52,6 +53,12 @@ p{
 $text-shadow: 0px 1px 1px rgba(0, 0, 0, 1);
 .text-shadow{ text-shadow: $text-shadow; }
 
+ul{
+  padding-left: 20px;
+
+
+}
+
 h1,
 h2,
 h3,
@@ -59,6 +66,7 @@ h4,
 h5,
 p,
 ul,
+li,
 span,
 input,
 textarea,
@@ -76,6 +84,23 @@ h5{ font-size: $h5-type-size; line-height: $subheader-lh; }
 // size overrides
 .size-headline{ font-size: $headline; }
 .size-title{ font-size: $title; }
+
+.heading-with-icon{
+
+  margin-top: 20px;
+
+  h1,
+  h2,
+  h3,
+  h4{
+    display: inline;
+  }
+  i{
+    float: right;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+}
 
 
 
