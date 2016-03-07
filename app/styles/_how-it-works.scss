@@ -1,0 +1,31 @@
+//
+// How it works page styles
+// --------------------------------------------------
+
+.how-it-works-section{
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0 auto;
+
+  .slide-content{
+    padding-top: 5%;
+
+    h2,
+    p{
+      text-align: center;
+    }
+
+    .panel{
+      h2,
+      p{
+        text-align: left;
+      }
+    }
+
+    p{ margin: 35px 0; }
+
+  }
+}
+

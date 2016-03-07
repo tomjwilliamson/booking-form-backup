@@ -1,0 +1,58 @@
+{
+  "flightStatusDetails": {
+    "flightNumber": "1",
+    "airlineCode": "BA",
+    "airlineName": "British Airways",
+    "isCodeShare": false,
+    "departureAirport": {
+      "airportCode": "LCY",
+      "airportName": "London City Airport",
+      "airportTerminal": null,
+      "airportLatitude": "51.50438",
+      "airportLongitude": "0.049365",
+      "airportCityName": "London",
+      "airportCountryCode": "GB",
+      "airportCountryName": "United Kingdom"
+    },
+    "departureTimeDetails": {
+      "scheduledDate": "31/03/2016",
+      "scheduledTimeUTC": "09:45:00",
+      "scheduledTimeLocal": "09:45:00"
+    },
+    "arrivalAirport": {
+      "airportCode": "SNN",
+      "airportName": "Shannon Airport",
+      "airportTerminal": null,
+      "airportLatitude": "52.69248",
+      "airportLongitude": "-8.92039",
+      "airportCityName": "Shannon",
+      "airportCountryCode": "IE",
+      "airportCountryName": "Ireland"
+    },
+    "arrivalTimeDetails": {
+      "scheduledDate": "31/03/2016",
+      "scheduledTimeUTC": "11:00:00",
+      "scheduledTimeLocal": "11:00:00"
+    },
+    "airlineCodeShare": [
+      {
+        "airlineCode": "IB",
+        "airlineName": "Iberia",
+        "codeShareFlightNumber": "4601"
+      },
+      {
+        "airlineCode": "AA",
+        "airlineName": "American Airlines",
+        "codeShareFlightNumber": "6229"
+      },
+      {
+        "airlineCode": "AY",
+        "airlineName": "Finnair",
+        "codeShareFlightNumber": "5401"
+      }
+    ]
+  },
+  "description": null,
+  "responseStatus": 1,
+  "validationErrors": []
+}

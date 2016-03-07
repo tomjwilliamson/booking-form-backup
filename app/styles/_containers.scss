@@ -30,7 +30,9 @@
 }
 
 .header + .container-fluid {
-  margin-top: 100px;
+  @media screen and (min-width: $screen-sm) {
+    margin-top: 100px;
+  }
 }
 
 .text-container{

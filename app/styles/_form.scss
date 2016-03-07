@@ -15,11 +15,56 @@
     label.control-label{ top:-25px; }
   }
 
+  // &.has-error{
+  //   .ng-invalid.ng-touched{
+  //     background-image: linear-gradient($red, $red), linear-gradient($red, $red);
+  //   }
+
+  //   &.ng-valid{
+  //     > + label.control-label{ color: $light-grey !important; }
+  //   }
+
+  // }
+  // &.has-error{
+  //   .ng-invalid.ng-touched{
+  //     background-image: linear-gradient($red, $red), linear-gradient($red, $red);
+  //   }
+  // }
+
 }
+
+// form.ng-invalid{
+//   input.ng-invalid.ng-touched{
+//     background-image: linear-gradient($red, $red), linear-gradient($red, $red);
+//   }
+
+//   // .is-focused{
+//   //   input.ng-invalid.ng-untouched{
+//   //     background-image: linear-gradient($red, $red), linear-gradient($red, $red);
+//   //   }
+//   //   //input.ng-invalid.ng-untouched + label.control-label{ color: $red; }
+//   // }
+// }
 
 .form-control,
 .form-group .form-control{
   background-image: linear-gradient($blue, $blue), linear-gradient($greyscale-1, $greyscale-1);
+
+  // &.ng-invalid{
+  //   background-image: linear-gradient($red, $red), linear-gradient($red, $red);
+
+  //   // &.is-focused{
+  //   //   ~ label.control-label{ color: $red; }
+  //   // }
+
+  //   ~ label.control-label{ color: $red; }
+  // }
+  // &.ng-valid.ng-touched{
+  //   background-image: linear-gradient($green, $green), linear-gradient($green, $green);
+
+  //   //~ label.control-label{ color: $green; }
+  // }
+
 }
 
 .form-group{
@@ -32,12 +77,24 @@
 .form-group.is-focused{
   .form-control{
     background-image: linear-gradient($blue, $blue), linear-gradient($greyscale-1, $greyscale-1);
+
+    // &.ng-invalid.ng-touched{
+    //   background-image: linear-gradient($red, $red), linear-gradient($red, $red);
+    // }
+
   }
   label,
   label.form-control{
     color: $blue;
   }
 }
+
+// input.ng-invalid.ng-touched {
+//   background-image: linear-gradient($red, $red), linear-gradient($greyscale-1, $greyscale-1);
+// }
+// input.ng-valid.ng-touched {
+//   background-image: linear-gradient($green, $green), linear-gradient($greyscale-1, $greyscale-1);
+// }
 
 
 

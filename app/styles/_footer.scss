@@ -1,0 +1,12 @@
+//
+// Footer styles, includes navigation
+// --------------------------------------------------
+
+$footer-height: 100px;
+
+.footer{
+  background-color: $light-grey;
+  min-height: $footer-height;
+
+  margin: 0;
+}

@@ -7,7 +7,8 @@ var portrBookingDirectives = angular.module('portrBookingDirectives', []);
 portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) {
 
   var $win = angular.element($window),
-      $parent = angular.element('.booking-panel-container');
+      $parent = angular.element('.booking-panel-container'),
+      $header = angular.element('.booking-header');
 
   return{
     restrict: 'A',
@@ -19,13 +20,14 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
       scope.fixedElemCount = $parent.children().length;
 
       var fixedClass = attrs.fixedClass,
-          offsetFromTop = element.offset().top;
+          offsetFromTop = element.offset().top,
+          delta = 50;
 
       $win.on('scroll', function (){
 
         element.removeClass('hidden');
 
-        if ($win.scrollTop() >= offsetFromTop) {
+        if ($win.scrollTop() >= (offsetFromTop + $header.height() + delta) && $win.scrollTop() >= delta) {
           element.addClass(fixedClass);
         }
         else {
@@ -86,7 +88,6 @@ portrBookingDirectives.directive('addPanels', ['$window', function ($window) {
           if(elemBottom <= (docViewBottom - offsetValue)){
 
             if(scope.panelCount === parseInt(attrs.addMax, 10)){
-              //$win.off('scroll');
               return;
             }
 
@@ -141,12 +142,93 @@ portrBookingDirectives.directive('showtab', [function () {
 
 }]);
 
-portrBookingDirectives.directive('siteHeader', [function () {
+portrBookingDirectives.directive('siteHeader', ['$window', '$document', '$interval', function ($window, $document, $interval) {
+
+  var $win = angular.element($window),
+      $doc = angular.element($document);
 
   return {
     restrict: 'A',
     replace: true,
-    templateUrl: './templates/partials/header.html'
+    templateUrl: './templates/partials/header.html',
+    link: function(scope, element){
+
+      var didScroll,
+          lastScrollTop = 0,
+          delta = 5,
+          navbarHeight = element.outerHeight();
+
+      $win.on('scroll', function (){
+        didScroll = true;
+      });
+      $interval(function() {
+        if (didScroll) {
+          hasScrolled();
+          didScroll = false;
+        }
+      }, 250);
+
+      var hasScrolled = function() {
+        var st = $win.scrollTop();
+
+        if (Math.abs(lastScrollTop - st) <= delta){
+          return;
+        }
+
+        if (st > lastScrollTop && st > navbarHeight){
+          // Scroll Down
+          element.removeClass('nav-down').addClass('nav-up');
+        }
+        else {
+          // Scroll Up
+          if(st + $win.height() < $doc.height()) {
+            element.removeClass('nav-up').addClass('nav-down');
+          }
+        }
+
+        lastScrollTop = st;
+
+      };
+
+    }
+  };
+
+}]);
+
+portrBookingDirectives.directive('siteFooter', [function () {
+
+  return {
+    restrict: 'A',
+    replace: true,
+    templateUrl: './templates/partials/footer.html'
+  };
+
+}]);
+
+portrBookingDirectives.directive('jqdatepicker', [function () {
+
+  return {
+    restrict: 'A',
+    scope:{
+      ngModel: '='
+    },
+    link: function (scope, element, ngModelCtrl) {
+
+      element.datepicker({
+        dateFormat: 'yy-mm-dd',
+
+        onSelect: function (date) {
+          ngModelCtrl.FlightDate = date;
+          scope.ngModel = date;
+
+          if(date !== ''){
+            element.parent('.form-group').removeClass('is-empty has-error');
+          }
+
+        }
+
+      });
+    }
   };
 
 }]);

@@ -2,12 +2,10 @@
 // Utility classes
 // --------------------------------------------------
 
-.display-flex{
-  display: flex !important;
-}
-.align-center{
-  align-items: center;
-}
+.text-align-center{ text-align:center; }
+
+.display-flex{ display: flex !important; }
+.align-center{ align-items: center; }
 
 @media screen and (min-width: $screen-sm) {
   .break{ display: block; }

@@ -16,7 +16,49 @@ portrBookingControllers.controller('homeController', ['$scope', '$timeout', func
 
 }]);
 
-portrBookingControllers.controller('bookingController', ['$scope', '$window', '$timeout', '$interval', 'DataService', function ($scope, $window, $timeout, $interval, DataService) {
+portrBookingControllers.controller('howItWorksController', ['$scope', '$location', '$timeout', '$http', 'DataService', 'SharedProperties', function ($scope, $location, $timeout, $http, DataService, SharedProperties) {
+
+  $scope.currentPage = 'how-it-works';
+  $scope.flyingSoonPanel = './templates/panels/flying-soon.html';
+  $scope.flightDetails = {};
+
+  // call material design scripts after angular has loaded
+  $timeout(function(){
+    $.material.init();
+  }, 500);
+
+
+  $scope.checkFlight = function(isValid){
+
+    if(isValid){
+
+      DataService.postData(portrGlobals.paths.flightStatus, $scope.flightDetails)
+        .success(function(response){
+
+          if(response.validationErrors.length === 0){
+
+            SharedProperties.setUserFlightData(response.flightStatusDetails);
+            $location.url('/booking');
+
+          }
+
+        })
+        .error(function(){
+
+        });
+
+    }
+    else{
+      console.log('INVALID');
+    }
+
+
+
+  };
+
+}]);
+
+portrBookingControllers.controller('bookingController', ['$scope', '$window', '$timeout', '$interval', 'DataService', 'SharedProperties', function ($scope, $window, $timeout, $interval, DataService, SharedProperties) {
 
   $scope.currentPage = 'booking';
   $scope.panels = [];
@@ -85,6 +127,10 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   };
 
+  // get set user flight object
+  $scope.userFlightDetails = SharedProperties.getUserFlightData();
+  console.log($scope.userFlightDetails);
+
   // toggle visibility based on current panel
   var stateChangeHandler = function(panelID){
     $scope.visiblePanel = panelID;
@@ -101,6 +147,9 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       $.material.init();
     }, 500);
   });
+
+  // Luggage panel functions
+  $scope.showCarryOnSection = true;
 
   // Passenger panel functions
   $scope.passengers = [];

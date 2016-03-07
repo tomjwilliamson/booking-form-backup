@@ -1,7 +1,7 @@
 <article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="flight-details">
 
   <div class="panel-heading">
-    <h2>Your Flight from XXX to XXX</h2>
+    <h2>Your Flight from {- userFlightDetails.departureAirport.airportCode -} to {- userFlightDetails.arrivalAirport.airportCode -}</h2>
     <p>Are these details correct?</p>
   </div>
 
@@ -14,8 +14,8 @@
           <i class="material-icons">flight_takeoff</i>
         </div>
         <div class="row-content">
-          <h4 class="list-group-item-heading">British Airways Flight 3</h4>
-          <p class="list-group-item-text">From London, LCY to New York, JFK</p>
+          <h4 class="list-group-item-heading">{- userFlightDetails.airlineName -} Flight {- userFlightDetails.flightNumber -}</h4>
+          <p class="list-group-item-text">From {- userFlightDetails.departureAirport.airportCityName -}, {- userFlightDetails.departureAirport.airportCode -} to {- userFlightDetails.arrivalAirport.airportCityName -}, {- userFlightDetails.arrivalAirport.airportCode -}</p>
         </div>
       </div>
 
@@ -24,8 +24,8 @@
           <i class="material-icons">schedule</i>
         </div>
         <div class="row-content">
-          <h4 class="list-group-item-heading">British Airways Flight 3</h4>
-          <p class="list-group-item-text">From London, LCY to New York, JFK</p>
+          <h4 class="list-group-item-heading">Departing {- userFlightDetails.departureAirport.airportName -} ({- userFlightDetails.departureAirport.airportCode -})</h4>
+          <p class="list-group-item-text">{- userFlightDetails.departureTimeDetails.scheduledTimeLocal -} on {- userFlightDetails.departureTimeDetails.scheduledDate -}</p>
         </div>
       </div>
 

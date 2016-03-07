@@ -83,7 +83,18 @@ $icon-font-path: '../fonts/';
 // path 'bower_components/animatewithsass/''
 @import
   "animate.scss";
+
+// slick.js styles
+@import
+  "slick/slick.scss",
+  "slick/slick-theme.scss";
+
+//jquery ui datepicker styles
+@import
+  "../bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css";
 // endbower
+
+
 
 // Start booking form styles
 // Custom/updated site elemnts
@@ -97,12 +108,15 @@ $icon-font-path: '../fonts/';
   "panels",
   "list",
   "buttons",
-  "header";
+  "header",
+  "footer",
+  "carousel";
 
 //Pages styles
 @import
   "home",
-  "booking";
+  "booking",
+  "how-it-works";
 
 //Utilitiy classes/overrides
 @import

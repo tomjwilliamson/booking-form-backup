@@ -6,12 +6,13 @@ var portrGlobals = (function(){
       //staging = '',
       //partialsFolder = '/templates/partials/',
       //panelsFolder = '/templates/panels/',
-      //api = '',
+      api = 'http://portr2-dev-api.azurewebsites.net:80/api/',
       globals;
 
   globals = {
     paths: {
-      panelOrder: jsonFolder + 'order.json'
+      panelOrder: jsonFolder + 'order.json',
+      flightStatus: api + 'FlightStatus/GetFlightStatus'
     }
   };
 

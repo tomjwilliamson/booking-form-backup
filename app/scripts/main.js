@@ -115,8 +115,3 @@ portrFunctions.animateScroll = function(ele, options, callback){
     }
   });
 };
-
-$(function(){
-
-
-});

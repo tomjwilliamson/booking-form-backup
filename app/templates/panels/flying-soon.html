@@ -1,0 +1,28 @@
+<article panel class="panel panel-default panel-animate-in" panel-id="your-airline-reservation" panel-scroll="false">
+
+  <div class="panel-heading">
+    <h2>Flying Soon?</h2>
+    <p>Check if your flight is eligible below</p>
+  </div>
+
+  <div class="panel-body">
+    <form name="formFlight" ng-submit="checkFlight(formFlight.$valid)" novalidate>
+      <div class="form-group label-floating" ng-class="{ 'has-error' : formFlight.FlightNumber.$invalid && !formFlight.FlightNumber.$pristine }">
+        <label class="control-label" for="FlightNumber">Flight Number</label>
+        <input class="form-control" name="FlightNumber" id="FlightNumber" ng-model="flightDetails.flightNumber" type="text" required="">
+        <!-- <span class="help-block">Please enter a valid flight number</span> -->
+      </div>
+
+      <div class="form-group label-floating" ng-class="{ 'has-error' : formFlight.DepartureDate.$invalid && !formFlight.DepartureDate.$pristine }">
+        <label class="control-label" for="DepartureDate">Date</label>
+        <input class="form-control date-input" name="DepartureDate" id="DepartureDate" ng-model="flightDetails.departureDate" type="text" required="" jqdatepicker>
+        <!-- <span class="help-block">Please enter a valid flight date</span> -->
+      </div>
+
+      <button type="submit" class="btn btn-link" ng-disabled="formFlight.$invalid">Go</button>
+      <button class="btn btn-link">Continue Anyway</button>
+    </form>
+  </div>
+
+  </div>
+</article>

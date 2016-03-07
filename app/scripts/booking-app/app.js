@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var portrBookingApp = angular.module('portrBookingApp', ['portrBookingControllers', 'portrBookingDirectives', 'portrServices', 'portrBookingFilters', 'ngRoute', 'ngSanitize', 'angular-inview']);
+var portrBookingApp = angular.module('portrBookingApp', ['portrBookingControllers', 'portrBookingDirectives', 'portrServices', 'portrBookingFilters', 'ngRoute', 'ngSanitize', 'angular-inview', 'slick']);
 
 portrBookingApp.config(['$routeProvider', '$locationProvider', '$interpolateProvider', function($routeProvider, $locationProvider, $interpolateProvider) {
 
@@ -24,6 +24,11 @@ portrBookingApp.config(['$routeProvider', '$locationProvider', '$interpolateProv
       controller: 'homeController',
       reloadOnSearch: false
     })
+    .when('/how-it-works', {
+      templateUrl: '/templates/partials/how-it-works.html',
+      controller: 'howItWorksController',
+      reloadOnSearch: false
+    })
     .when('/booking', {
       templateUrl: '/templates/partials/booking.html',
       controller: 'bookingController',
@@ -33,4 +38,12 @@ portrBookingApp.config(['$routeProvider', '$locationProvider', '$interpolateProv
       redirectTo: '/'
     });
 
+}]);
+
+portrBookingApp.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.headers.common = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Basic VFdpbGxpYW1zb25AcG9ydHIuY29tOnBhc3N3b3Jk'
+    };
 }]);

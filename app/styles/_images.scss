@@ -1,11 +1,11 @@
 //
-// Image styles - includes logo, background images
+// Image styles - includes logo, background images, fixed panel images
 // --------------------------------------------------
 
 // Image folder path
 $image-folder-path: '../images';
 // Main logo styles
-$logo-path: url(../images/branding/logo.svg);
+$logo-path: url(#{$image-folder-path}/branding/logo.svg);
 
 //
 // Main logo
@@ -66,5 +66,30 @@ $logo-path: url(../images/branding/logo.svg);
   .home-section{
     @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-desktop, jpg, 1600px, 900px, center, center);
   }
+}
+
+//
+// Booking fixed panel images
+// --------------------------------------------------
+.booking-fixed-sideboard{
+
+  @media screen and (min-width: $screen-sm) {
+    &.bg-1{
+      background-image: url(#{$image-folder-path}/fixed-panel/panel-tablet-1.jpg);
+    }
+  }
+  @media screen and (min-width: $screen-sm) {
+    &.bg-1{
+      background-image: url(#{$image-folder-path}/fixed-panel/panel-desktop-1.jpg);
+    }
+  }
+
+  // &.bg-2{
+  //   background-image: url(/images/fixed-panel/fixed-bg.jpg);
+  // }
+  // &.bg-3{
+  //   background-image: url(/images/fixed-panel/fixed-bg.jpg);
+  // }
+
 }
 

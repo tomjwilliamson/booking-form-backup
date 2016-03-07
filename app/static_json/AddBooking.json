@@ -1,0 +1,82 @@
+{
+  "bookingType": 1,
+  "userId": "20a68eb3-0fc9-4191-9cf4-f32ddfd1450a",
+  "bookingJourney": [
+    {
+      "journeyDirection": 0,
+      "price": 0,
+      "discountPrice": 0,
+      "priceAdjustmentAmount": 0,
+      "priceAdjustmentDescription": "string",
+      "hasAddOnProducts": true,
+      "collectionLocation": {
+        "type": 0,
+        "name": "string",
+        "shortName": "string",
+        "geoCoord": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "phoneNumber": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressTown": "string",
+        "addressPostCode": "string",
+        "addressCounty": "string",
+        "addressCountry": "string",
+        "contactEmail": "string"
+      },
+      "collectionDateTime": "2016-03-04T16:16:16.673Z",
+      "deliveryLocation": {
+        "type": 0,
+        "name": "string",
+        "shortName": "string",
+        "geoCoord": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "phoneNumber": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressTown": "string",
+        "addressPostCode": "string",
+        "addressCounty": "string",
+        "addressCountry": "string",
+        "contactEmail": "string"
+      },
+      "deliveryDateTime": "2016-03-04T16:16:16.673Z",
+      "passenger": [
+        {
+          "title": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "holdLuggageQuantity": 0,
+          "handLuggageQuantity": 0,
+          "isFlightBooker": true,
+          "isHotelBooker": true,
+          "inboundFlightNumber": "string",
+          "inboundBoardingPassNumber": "string",
+          "outboundFlightNumber": "string",
+          "outboundBoardingPassNumber": "string",
+          "passportNumber": "string",
+          "passportCountryOfIssue": "string",
+          "frequentFlyerNumber": "string",
+          "reservationNumber": "string",
+          "emailAddress": "string",
+          "country": "string",
+          "homeNumber": "string",
+          "mobileNumber": "string"
+        }
+      ]
+    }
+  ],
+  "bookingCompletion": {
+    "collectionLocationDetails": true,
+    "collectionDateTimeDetails": false,
+    "deliveryLocationDetail": true,
+    "deliveryDateTimeDetails": true,
+    "passengerDetails": true
+  }
+}

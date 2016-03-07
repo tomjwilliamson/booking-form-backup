@@ -2,12 +2,12 @@
 // Header styles, includes navigation
 // --------------------------------------------------
 
+$header-height: 85px;
+
 .header{
 
-  display: none;
-
   background-color: $blue;
-  min-height: 80px;
+  min-height: $header-height;
 
   padding: 5px 15px 0 15px;
 
@@ -22,6 +22,8 @@
   }
 
   .main-navigation{
+
+    display: none;
 
     float: right;
     margin-top: 25px;
@@ -46,6 +48,16 @@
 
     z-index: 999;
     width: 100%;
+
+    @include transition(top, 0.3s, ease-in-out);
+
+    &.nav-up{
+      top: -$header-height;
+    }
+
+    .main-navigation{
+      display: block;
+    }
 
   }
 

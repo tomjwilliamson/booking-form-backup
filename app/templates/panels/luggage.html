@@ -9,7 +9,7 @@
     <form>
       <h4>Bags to Check In*</h4>
       <div class="btn-toolbar">
-        <div class="btn-group">
+        <div class="btn-group" ng-show="!showCheckInInput">
           <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 1">1</a>
           <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 2">2</a>
           <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 3">3</a>
@@ -23,25 +23,29 @@
         <input class="form-control" id="BagCheckIn" type="text" value="{- luggageCheckInAmount -}">
       </div>
 
-      <h4>Any Hand luggage or Carry-Ons?</h4>
-      <p>Pick them up before security at the airport</p>
-      <div class="btn-toolbar" ng-show="showCarryOnButtonGroup">
-        <div class="btn-group">
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 1">1</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 2">2</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 3">3</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 4">4</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 5">5</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="showCarryOnInput = !showCarryOnInput">more</a>
+      <div ng-show="showCarryOnSection">
+        <h4>Any Hand luggage or Carry-Ons?</h4>
+        <p>Pick them up before security at the airport</p>
+        <div class="btn-toolbar" ng-show="showCarryOnButtonGroup && !showCarryOnInput">
+          <div class="btn-group">
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 0">0</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 1">1</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 2">2</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 3">3</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 4">4</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="showCarryOnInput = !showCarryOnInput">more</a>
+          </div>
+        </div>
+        <div class="form-group label-static" ng-show="showCarryOnInput">
+          <label class="control-label" for="CarryOnBags">Carry On Bags</label>
+          <input class="form-control" id="CarryOnBags" type="text" value="{- luggageCarryOnAmount -}">
+        </div>
+
+        <div>
+          <button class="btn btn-raised" ng-click="showCarryOnButtonGroup = true">Add Carry-on bags</button>
+          <button class="btn btn-raised" ng-click="showCarryOnSection = false; luggageCarryOnAmount = ''">No Thanks</button>
         </div>
       </div>
-      <div class="form-group label-static" ng-show="showCarryOnInput || showCarryOnButtonGroup">
-        <label class="control-label" for="CarryOnBags">Carry On Bags</label>
-        <input class="form-control" id="CarryOnBags" type="text" value="{- luggageCarryOnAmount -}">
-      </div>
-
-      <button class="btn btn-raised" ng-click="showCarryOnButtonGroup = true">Add Carry-on bags</button>
-      <button class="btn btn-raised" ng-click="showCarryOnButtonGroup = false; luggageCarryOnAmount = ''">No Thanks</button>
     </form>
   </div>
 
