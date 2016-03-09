@@ -2,6 +2,13 @@
 // Form styles - includes input, selects, textarea, validation styles
 // --------------------------------------------------
 
+form.ng-submitted{
+  h4.has-error,
+  label.has-error{
+    color: $red;
+  }
+}
+
 .form-group{
   margin-top: 16px;
 

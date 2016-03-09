@@ -6,18 +6,19 @@
   </div>
 
   <div class="panel-body">
-    <form>
+    <form name="formAirlineReservation" ng-submit="setAirlineReservation(formAirlineReservation.$valid)" novalidate>
       <div class="form-group label-floating">
-        <label class="control-label" for="Airline-Reservation-Number">Airline Reservation Number*</label>
-        <input class="form-control" id="Airline-Reservation-Number" type="text">
+        <label class="control-label" for="AirlineReservationNumber">Airline Reservation Number*</label>
+        <input class="form-control" id="AirlineReservationNumber" ng-model="airlineReservation.airlineReservationNumber" required="" type="text">
       </div>
 
       <div class="form-group label-floating">
-        <label class="control-label" for="Executive-Club-Number">Executive Club Number</label>
-        <input class="form-control" id="Executive-Club-Number" type="text">
+        <label class="control-label" for="ExecutiveClubNumber">Executive Club Number</label>
+        <input class="form-control" id="ExecutiveClubNumber" ng-model="airlineReservation.executiveClubNumber" type="text">
       </div>
 
       <button class="btn btn-link">Enter Later</button>
+      <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formAirlineReservation.$valid); " ng-disabled="visiblePanel !== $index + 1 || formAirlineReservation.$invalid" id="next{- $index + 1 -}">Next</button>
     </form>
   </div>
 

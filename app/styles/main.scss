@@ -5,17 +5,11 @@
 
 $icon-font-path: '../fonts/';
 
-// bower:scss
 // Core variables and mixins
 //Bootstrap path 'bower_components/bootstrap-sass/assets/stylesheets/bootstrap/''
 @import
   "bootstrap/variables",
   "bootstrap/mixins";
-
-// custom overrides
-@import
-  "variables",
-  "mixins";
 
 // Reset and dependencies
 @import
@@ -89,15 +83,20 @@ $icon-font-path: '../fonts/';
   "slick/slick.scss",
   "slick/slick-theme.scss";
 
+// endbower
+
 //jquery ui datepicker styles
 @import
   "../bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css";
-// endbower
-
-
 
 // Start booking form styles
 // Custom/updated site elemnts
+
+// custom overrides
+@import
+  "variables",
+  "mixins";
+
 @import
   "type",
   "images",
@@ -110,7 +109,8 @@ $icon-font-path: '../fonts/';
   "buttons",
   "header",
   "footer",
-  "carousel";
+  "carousel",
+  "modules";
 
 //Pages styles
 @import

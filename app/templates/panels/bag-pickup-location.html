@@ -4,38 +4,43 @@
     <h2>Bag Pick Up Location</h2>
     <p>Where should we meet you?</p>
 
-    <ul class="icon-with-caption">
-      <li>
-        <i class="material-icons">hotel</i>
-        <span>Hotel</span>
-      </li>
-      <li>
-        <i class="material-icons">home</i>
-        <span>Residential</span>
-      </li>
-      <li>
-        <i class="material-icons">business</i>
-        <span>Business</span>
-      </li>
-      <li>
-        <i class="material-icons">local_airport</i>
-        <span>Airport</span>
-      </li>
-    </ul>
-
-
   </div>
 
   <div class="panel-body">
 
-    <form>
+    <form name="formBagPickupLocation" ng-submit="setBagPickUpLocation(formBagPickupLocation.$valid)" novalidate>
+
+      <label for="BagLocationType" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Select a date</p>
+      <ul class="icon-with-caption">
+        <li ng-click="bagLocationSelection = 'Hotel'" ng-disabled="visiblePanel !== $index + 1">
+          <i class="material-icons">hotel</i>
+          <span>Hotel</span>
+        </li>
+        <li ng-click="bagLocationSelection = 'Residential'" ng-disabled="visiblePanel !== $index + 1">
+          <i class="material-icons">home</i>
+          <span>Residential</span>
+        </li>
+        <li ng-click="bagLocationSelection = 'Business'" ng-disabled="visiblePanel !== $index + 1">
+          <i class="material-icons">business</i>
+          <span>Business</span>
+        </li>
+        <li ng-click="bagLocationSelection = 'Airport'" ng-disabled="visiblePanel !== $index + 1">
+          <i class="material-icons">local_airport</i>
+          <span>Airport</span>
+        </li>
+      </ul>
+      <input class="form-control" ng-show="" ng-model="bagPickupLocationDetails.type" ng-init="bagPickupLocationDetails.type = ''" ng-value="bagPickupLocationDetails.type = bagLocationSelection" id="BagLocationType" name="BagLocationType" type="text" required="" ng-disabled="visiblePanel !== $index + 1">
+
       <div class="form-group label-floating">
-        <label class="control-label" for="Location">Start typing location name</label>
-        <input class="form-control" id="Location" type="text">
+        <label class="control-label" for="BagLocationAddress" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Start typing location name</label>
+        <input class="form-control" id="BagLocationAddress" ng-model="bagPickupLocationDetails.address" ng-disabled="visiblePanel !== $index + 1" type="text" required="">
       </div>
 
-      <button class="btn btn-link">Enter Manually</button>
-      <button class="btn btn-link">Enter Later</button>
+      <button class="btn btn-link" ng-disabled="visiblePanel !== $index + 1">Enter Manually</button>
+      <button class="btn btn-link" ng-disabled="visiblePanel !== $index + 1">Enter Later</button>
+
+
+      <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formBagPickupLocation.$valid); " ng-disabled="visiblePanel !== $index + 1" id="next{- $index + 1 -}">Next</button>
     </form>
   </div>
 

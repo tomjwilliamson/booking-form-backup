@@ -1,7 +1,9 @@
+/*eslint-disable */
+
 'use strict'; //jshint ignore:line
 /* jshint unused:false */
 
-var portrGlobals = (function(){
+var portrGlobals = (function(){ //eslint-disable-line no-use-before-define
   var jsonFolder = '/static_json/',
       //staging = '',
       //partialsFolder = '/templates/partials/',
@@ -19,3 +21,6 @@ var portrGlobals = (function(){
   return globals;
 
 })();
+
+
+/*eslint-enable */

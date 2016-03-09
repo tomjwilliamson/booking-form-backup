@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var portrBookingApp = angular.module('portrBookingApp', ['portrBookingControllers', 'portrBookingDirectives', 'portrServices', 'portrBookingFilters', 'ngRoute', 'ngSanitize', 'angular-inview', 'slick']);
+var portrBookingApp = angular.module('portrBookingApp', ['portrBookingControllers', 'portrBookingDirectives', 'portrServices', 'portrBookingFilters', 'ngRoute', 'ngSanitize', 'angular-inview', 'slick', 'angularMoment']);
 
 portrBookingApp.config(['$routeProvider', '$locationProvider', '$interpolateProvider', function($routeProvider, $locationProvider, $interpolateProvider) {
 

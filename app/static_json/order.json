@@ -3,6 +3,9 @@
     "panel":"flight-details"
   },
   {
+    "panel":"flying-soon"
+  },
+  {
     "panel":"luggage"
   },
   {

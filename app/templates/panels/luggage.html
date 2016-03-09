@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="luggage">
+<article id="panel + ($index+1)" panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="luggage" tabindex="2" ng-keypress="keyDown($event, ($index + 1), formLuggage.$valid)">
 
   <div class="panel-heading">
     <h2>Your Luggage*</h2>
@@ -6,46 +6,49 @@
   </div>
 
   <div class="panel-body">
-    <form>
-      <h4>Bags to Check In*</h4>
+    <form name="formLuggage" ng-submit="setLuggage(formLuggage.$valid)" novalidate>
+      <h4 ng-class="{ 'has-error' : formLuggage.$invalid }">Bags to Check In*</h4>
       <div class="btn-toolbar">
         <div class="btn-group" ng-show="!showCheckInInput">
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 1">1</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 2">2</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 3">3</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 4">4</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 5">5</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="showCheckInInput = !showCheckInInput">more</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 1" ng-disabled="visiblePanel !== $index + 1">1</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 2" ng-disabled="visiblePanel !== $index + 1">2</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 3" ng-disabled="visiblePanel !== $index + 1">3</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 4" ng-disabled="visiblePanel !== $index + 1">4</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCheckInAmount = 5" ng-disabled="visiblePanel !== $index + 1">5</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="showCheckInInput = !showCheckInInput" ng-disabled="visiblePanel !== $index + 1">more</a>
         </div>
       </div>
-      <div class="form-group label-static" ng-show="showCheckInInput">
+      <div class="form-group label-static" ng-show="showCheckInInput" ng-class="{ 'has-error' : formLuggage.BagCheckIn.$invalid && !formLuggage.BagCheckIn.$pristine }">
         <label class="control-label" for="BagCheckIn">Check In Bags</label>
-        <input class="form-control" id="BagCheckIn" type="text" value="{- luggageCheckInAmount -}">
+        <input class="form-control" required="" ng-model="luggageDetails.bagCheckIn" ng-init="luggageDetails.bagCheckIn = 1" ng-value="!showCheckInInput ? luggageDetails.bagCheckIn = luggageCheckInAmount : parseInt(luggageDetails.bagCheckIn, 10)" id="BagCheckIn" name="BagCheckIn" type="number">
       </div>
 
       <div ng-show="showCarryOnSection">
         <h4>Any Hand luggage or Carry-Ons?</h4>
         <p>Pick them up before security at the airport</p>
         <div class="btn-toolbar" ng-show="showCarryOnButtonGroup && !showCarryOnInput">
-          <div class="btn-group">
-            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 0">0</a>
-            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 1">1</a>
-            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 2">2</a>
-            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 3">3</a>
-            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 4">4</a>
-            <a href="javascript:void(0)" class="btn btn-raised" ng-click="showCarryOnInput = !showCarryOnInput">more</a>
+          <div class="btn-group" ng-disabled="visiblePanel !== $index + 1">
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 0" ng-disabled="visiblePanel !== $index + 1">0</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 1" ng-disabled="visiblePanel !== $index + 1">1</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 2" ng-disabled="visiblePanel !== $index + 1">2</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 3" ng-disabled="visiblePanel !== $index + 1">3</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="luggageCarryOnAmount = 4" ng-disabled="visiblePanel !== $index + 1">4</a>
+            <a href="javascript:void(0)" class="btn btn-raised" ng-click="showCarryOnInput = !showCarryOnInput" ng-disabled="visiblePanel !== $index + 1">more</a>
           </div>
         </div>
         <div class="form-group label-static" ng-show="showCarryOnInput">
           <label class="control-label" for="CarryOnBags">Carry On Bags</label>
-          <input class="form-control" id="CarryOnBags" type="text" value="{- luggageCarryOnAmount -}">
+          <input class="form-control" ng-model="luggageDetails.bagCarryOn" ng-init="luggageDetails.bagCarryOn = 0" ng-value="showCarryOnButtonGroup && !showCarryOnInput ? luggageDetails.bagCarryOn = luggageCarryOnAmount : ''" id="CarryOnBags" name="CarryOnBags" type="number">
         </div>
 
         <div>
-          <button class="btn btn-raised" ng-click="showCarryOnButtonGroup = true">Add Carry-on bags</button>
-          <button class="btn btn-raised" ng-click="showCarryOnSection = false; luggageCarryOnAmount = ''">No Thanks</button>
+          <button class="btn btn-raised" ng-click="showCarryOnButtonGroup = true" ng-disabled="visiblePanel !== $index + 1">Add Carry-on bags</button>
+          <button class="btn btn-raised" ng-click="showCarryOnSection = false; luggageCarryOnAmount = 0; luggageDetails.bagCarryOn = 0" ng-disabled="visiblePanel !== $index + 1">No Thanks</button>
         </div>
+
       </div>
+
+      <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formLuggage.$valid); " ng-disabled="visiblePanel !== $index + 1" id="next{- $index + 1 -}">Next</button>
     </form>
   </div>
 

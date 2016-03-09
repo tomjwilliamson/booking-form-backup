@@ -1,0 +1,70 @@
+{
+  "bookingType": 1,
+  "userId": "20a68eb3-0fc9-4191-9cf4-f32ddfd1450a",
+  "bookingJourney": [
+    {
+      "collectionLocation": {
+        "type": 0,
+        "name": "",
+        "shortName": "",
+        "geoCoord": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "phoneNumber": "",
+        "addressLine1": "",
+        "addressLine2": "",
+        "addressLine3": "",
+        "addressTown": "",
+        "addressPostCode": "",
+        "addressCounty": "",
+        "addressCountry": "",
+        "contactEmail": ""
+      },
+      "collectionDateTime": "2016-03-09",
+      "deliveryLocation": {
+        "type": 0,
+        "name": "string",
+        "shortName": "string",
+        "geoCoord": {
+             "latitude": 0,
+             "longitude": 0
+         },
+        "phoneNumber": "",
+        "addressLine1": "",
+        "addressLine2": "",
+        "addressLine3": "",
+        "addressTown": "",
+        "addressPostCode": "",
+        "addressCounty": "",
+        "addressCountry": "",
+        "contactEmail": ""
+      },
+      "deliveryDateTime": "2016-03-09",
+      "passenger": [
+        {
+          "title": "Mr",
+          "firstName": "Tom",
+          "lastName": "W",
+          "holdLuggageQuantity": 0,
+          "handLuggageQuantity": 0,
+          "inboundFlightNumber": "111",
+          "inboundBoardingPassNumber": "32323",
+          "outboundFlightNumber": "2222",
+          "outboundBoardingPassNumber": "65654554",
+          "passportNumber": "78797987",
+          "passportCountryOfIssue": "UK",
+          "emailAddress": "tom@t.com",
+          "country": "UK"
+        }
+      ]
+    }
+  ],
+  "bookingCompletion": {
+    "collectionLocationDetails": true,
+    "collectionDateTimeDetails": true,
+    "deliveryLocationDetail": true,
+    "deliveryDateTimeDetails": true,
+    "passengerDetails": true
+  }
+}

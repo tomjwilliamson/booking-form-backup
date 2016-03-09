@@ -6,11 +6,13 @@
   </div>
 
   <div class="panel-body">
-    <form>
+    <form name="formBagPickupTimeDate" ng-submit="setBagPickUpTimeDate(formBagPickupTimeDate.$valid)" novalidate>
       <div class="btn-toolbar">
+        <label for="BagDate" ng-class="{ 'has-error' : formBagPickupTimeDate.$invalid }">Select a date</p>
         <div class="btn-group">
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="PickupDate = 'Same'">Same day</a>
-          <a href="javascript:void(0)" class="btn btn-raised" ng-click="PickupDate = 'Before'">Day before</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="bagPickupDateSelection('same')" ng-disabled="visiblePanel !== $index + 1">Same day</a>
+          <a href="javascript:void(0)" class="btn btn-raised" ng-click="bagPickupDateSelection('before')" ng-disabled="visiblePanel !== $index + 1">Day before</a>
+          <input class="form-control" ng-show="" ng-model="bagPickupTimeDetails.date" ng-init="bagPickupTimeDetails.date = ''" ng-value="bagPickupTimeDetails.date = bagTimeSelection" id="BagDate" name="BagDate" type="text" required="">
         </div>
       </div>
 
@@ -19,8 +21,8 @@
       </div>
 
       <div class="form-group label-static">
-        <label class="control-label" for="PickupTime">Choose a time slot</label>
-        <select class="form-control" id="PickupTime" type="text">
+        <label class="control-label" for="BagTime" ng-class="{ 'has-error' : formBagPickupTimeDate.$invalid }">Choose a time slot</label>
+        <select class="form-control" ng-model="bagPickupTimeDetails.time" id="BagTime" name="BagTime" required="" ng-disabled="visiblePanel !== $index + 1">
           <option>07:00 to 08:00</option>
           <option>08:00 to 09:00</option>
           <option>09:00 to 10:00</option>
@@ -42,6 +44,7 @@
         </div>
 
       </div>
+      <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formBagPickupTimeDate.$valid); " ng-disabled="visiblePanel !== $index + 1" id="next{- $index + 1 -}">Next</button>
     </form>
   </div>
 

@@ -1,9 +1,63 @@
-<div class="list-group-item">
-  <div class="row-action-primary">
-    <i class="material-icons">flight_takeoff</i>
+<hr ng-show="$index > 0">
+
+<div ng-show="!passengers.passenger[$index].passportNumber">
+
+  <div class="list-group-item display-block clearfix">
+    <div class="row-content">
+      <p class="list-group-item-text">{- passengers.passenger[$index].firstName -} {- passengers.passenger[$index].lastName -}</p>
+      <h4 class="list-group-item-heading">! Information missing</h4>
+    </div>
+     <div class="row-action-secondary">
+      <i class="material-icons">art_track</i>
+    </div>
   </div>
-  <div class="row-content">
-    <h4 class="list-group-item-heading">British Airways Flight 3</h4>
-    <p class="list-group-item-text">From London, LCY to New York, JFK</p>
+
+  <p>We will need passport information for all passengers at least 24 hours prior to flight departure.</p>
+  <p>Enter it now, or skip and we’ll remind you to enter later.</p>
+
+  <button class="btn btn-link" ng-click="showPassportEditForm = true" ng-show="!showPassportEditForm && passengers.passenger[$index]">Enter Now</button>
+  <button class="btn btn-link" ng-click="showPassportEditForm = false" ng-show="!showPassportEditForm && passengers.passenger[$index]">Enter Later</button>
+
+</div>
+
+<div ng-show="passengers.passenger[$index].passportNumber">
+
+  <div class="list-group-item display-block clearfix">
+    <div class="row-content">
+      <p class="list-group-item-text">{- passengers.passenger[$index].firstName -} {- passengers.passenger[$index].lastName -}</p>
+      <h4 class="list-group-item-heading">UK Passport {- passengers.passenger[$index].passportNumber | limitTo: 4 -}{- passengers.passenger[$index].passportNumber.length > 4 ? '******' : '' -}</h4>
+    </div>
+     <div class="row-action-secondary">
+      <i class="material-icons">done</i>
+    </div>
   </div>
+
+  <button class="btn btn-link" ng-click="">Edit</button>
+
+</div>
+
+<div class="passport-info-form" ng-show="showPassportEditForm">
+
+  <h4>{- passengers.passenger[$index].firstName -} {- passengers.passenger[$index].lastName -}</h4>
+
+  <div class="form-group label-floating">
+    <label class="control-label" for="PassportNumber[$index]" ng-class="{ 'has-error' : formPassport.$invalid }">Passport Number</label>
+    <input class="form-control" id="PassportNumber[$index]" name="PassportNumber[$index]" ng-model="passengers.passenger[$index].passportNumber" type="text" required="">
+  </div>
+
+  <div class="form-group label-floating">
+    <label class="control-label" for="DateOfBirth[$index]" ng-class="{ 'has-error' : formPassport.$invalid }">Date Of Birth</label>
+    <input class="form-control" id="DateOfBirth[$index]" name="PassportNumber[$index]" ng-model="passengers.passenger[$index].dateOfBirth" type="text" required="">
+  </div>
+
+  <div class="form-group label-floating">
+    <label class="control-label" for="ExpiryDate[$index]" ng-class="{ 'has-error' : formPassport.$invalid }">Expiry Date</label>
+    <input class="form-control" id="ExpiryDate[$index]" name="ExpiryDate[$index]" ng-model="passengers.passenger[$index].passportExpiry" type="text" required="">
+  </div>
+
+  <div class="form-group label-floating">
+    <label class="control-label" for="Nationality[$index]" ng-class="{ 'has-error' : formPassport.$invalid }">Nationality</label>
+    <input class="form-control" id="Nationality[$index]" name="Nationality[$index]" ng-model="passengers.passenger[$index].passportCountryOfIssue" type="text" required="">
+  </div>
+
 </div>

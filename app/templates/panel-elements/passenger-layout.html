@@ -4,21 +4,21 @@
 </div>
 
 <div class="form-group label-floating">
-  <label class="control-label" for="PassengerFirstName[$index + 1]">Lead Passenger First Name*</label>
-  <input class="form-control" id="PassengerFirstName[$index + 1]" ng-model="passenger[$index + 1].firstname" ng-change="onChange(passenger[$index + 1].firstname)" type="text">
+  <label class="control-label" for="PassengerFirstName[$index]">Passenger First Name*</label>
+  <input class="form-control" id="PassengerFirstName[$index]" ng-model="passengers.passenger[$index].firstName" required="" type="text">
 </div>
 
 <div class="form-group label-floating">
-  <label class="control-label" for="PassengerLastName[$index + 1]">Lead Passenger Last Name*</label>
-  <input class="form-control" id="PassengerLastName[$index + 1]" ng-model="passenger[$index + 1].lastname" ng-change="onChange(passenger[$index + 1].lastname)" type="text">
+  <label class="control-label" for="PassengerLastName[$index]">Passenger Last Name*</label>
+  <input class="form-control" id="PassengerLastName[$index]" ng-model="passengers.passenger[$index].lastName" required="" type="text">
 </div>
 
 <div class="form-group label-floating">
-  <label class="control-label" for="PassengerEmail[$index + 1]">E-mail*</label>
-  <input class="form-control" id="PassengerEmail[$index + 1]" ng-model="passenger[$index + 1].email" ng-change="onChange(passenger[$index + 1].email)" type="text">
+  <label class="control-label" for="PassengerEmail[$index]">E-mail</label>
+  <input class="form-control" id="PassengerEmail[$index]" ng-model="passengers.passenger[$index].emailAddress" type="text">
 </div>
 
 <div class="form-group label-floating">
-  <label class="control-label" for="PassengerPhone[$index + 1]">Phone Number*</label>
-  <input class="form-control" id="PassengerPhone[$index + 1]" ng-model="passenger[$index + 1].phone" ng-change="onChange(passenger[$index + 1].phone)" type="text">
+  <label class="control-label" for="PassengerPhone[$index]">Phone Number</label>
+  <input class="form-control" id="PassengerPhone[$index]" ng-model="passengers.passenger[$index].phoneNumber"  type="text">
 </div>

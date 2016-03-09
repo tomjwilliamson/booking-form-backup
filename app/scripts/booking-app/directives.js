@@ -10,7 +10,7 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
       $parent = angular.element('.booking-panel-container'),
       $header = angular.element('.booking-header');
 
-  return{
+  return {
     restrict: 'A',
     link: function(scope, element, attrs){
 
@@ -64,9 +64,37 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
 
 }]);
 
+portrBookingDirectives.directive('panelParent', ['$timeout', function ($timeout) {
+
+  var initLoad = true;
+
+  return {
+    link: function(scope, element, attrs){
+
+      scope.$watch('visiblePanel', function(nv){
+
+        if((parseInt(attrs.panelIndex, 10) < 3) && initLoad === true){
+          element.addClass('active-panel');
+          $timeout(function(){
+            initLoad = false;
+          }, 1000);
+        }
+        else if((parseInt(attrs.panelIndex, 10) === nv) && initLoad === false){
+          element.addClass('active-panel');
+        }
+        else{
+          element.removeClass('active-panel');
+        }
+
+      });
+    }
+  };
+
+}]);
+
 portrBookingDirectives.directive('addPanels', ['$window', function ($window) {
 
-  return{
+  return {
     link: function(scope, element, attrs){
 
       var $win = angular.element($window),
@@ -105,29 +133,31 @@ portrBookingDirectives.directive('addPanels', ['$window', function ($window) {
 
 }]);
 
-portrBookingDirectives.directive('panel', ['$timeout', function ($timeout) {
+// portrBookingDirectives.directive('panel', ['$timeout', function ($timeout) {
 
-  return{
-    restrict: 'A',
-    link: function(scope, element, attrs){
+//   return{
+//     restrict: 'A',
+//     link: function(scope, element, attrs){
 
-      element.on('click', function(){
+//       element.on('click', function(){
 
-        if(attrs.scroll === false){
-          return;
-        }
+//         if(attrs.scroll === false){
+//           return;
+//         }
 
-        $timeout(function(){
-          portrFunctions.animateScroll(element, {duration: 500, offset: -250});
-          scope.$digest();
-        }, 250);
+//         $timeout(function(){
+//           portrFunctions.animateScroll(element, {duration: 500, offset: -250});
+//           angular.element('.panel').parent('.panel-parent').removeClass('active-panel');
+//           element.parent('.panel-parent').addClass('active-panel');
+//           scope.$digest();
+//         }, 250);
 
-      });
+//       });
 
-    }
-  };
+//     }
+//   };
 
-}]);
+// }]);
 
 portrBookingDirectives.directive('showtab', [function () {
 
@@ -209,7 +239,7 @@ portrBookingDirectives.directive('jqdatepicker', [function () {
 
   return {
     restrict: 'A',
-    scope:{
+    scope: {
       ngModel: '='
     },
     link: function (scope, element, ngModelCtrl) {

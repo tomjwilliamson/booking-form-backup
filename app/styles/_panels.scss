@@ -2,6 +2,14 @@
 // Panel styles - used for the card layouts
 // --------------------------------------------------
 
+.panel-parent{
+  @include opacity(0.4);
+
+  &.active-panel{
+    @include opacity(1);
+  }
+}
+
 .panel{
 
   > .panel-heading,

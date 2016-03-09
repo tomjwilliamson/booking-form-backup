@@ -1,5 +1,8 @@
 //BookingApp Controllers
+/*eslint-disable */
 /* global portrGlobals:false */
+/* global portrFunctions:false */
+/* global moment:false */ //jshint ignore:line
 'use strict';
 
 var portrBookingControllers = angular.module('portrBookingControllers', []);
@@ -16,7 +19,7 @@ portrBookingControllers.controller('homeController', ['$scope', '$timeout', func
 
 }]);
 
-portrBookingControllers.controller('howItWorksController', ['$scope', '$location', '$timeout', '$http', 'DataService', 'SharedProperties', function ($scope, $location, $timeout, $http, DataService, SharedProperties) {
+portrBookingControllers.controller('howItWorksController', ['$scope', '$location', '$timeout', '$http', 'DataService', 'SharedProperties', '$localstorage', function ($scope, $location, $timeout, $http, DataService, SharedProperties, $localstorage) {
 
   $scope.currentPage = 'how-it-works';
   $scope.flyingSoonPanel = './templates/panels/flying-soon.html';
@@ -36,6 +39,11 @@ portrBookingControllers.controller('howItWorksController', ['$scope', '$location
         .success(function(response){
 
           if(response.validationErrors.length === 0){
+
+            $localstorage.setObject('flightdetails', {
+              flightNumber: $scope.flightDetails.flightNumber,
+              departureDate: $scope.flightDetails.departureDate
+            });
 
             SharedProperties.setUserFlightData(response.flightStatusDetails);
             $location.url('/booking');
@@ -58,13 +66,19 @@ portrBookingControllers.controller('howItWorksController', ['$scope', '$location
 
 }]);
 
-portrBookingControllers.controller('bookingController', ['$scope', '$window', '$timeout', '$interval', 'DataService', 'SharedProperties', function ($scope, $window, $timeout, $interval, DataService, SharedProperties) {
+portrBookingControllers.controller('bookingController', ['$scope', '$window', '$timeout', '$interval', 'DataService', 'SharedProperties', 'BookingObject', '$localstorage', '$filter', function ($scope, $window, $timeout, $interval, DataService, SharedProperties, BookingObject, $localstorage, $filter) {
 
+  // inital scope variables
   $scope.currentPage = 'booking';
   $scope.panels = [];
   $scope.panelCount = 3;
   $scope.visiblePanel = 1;
+  $scope.showDetailPanel = true;
 
+  $scope.booking = {};
+
+  // get order of panels from JSON data
+  // set up scope var
   DataService.getData(portrGlobals.paths.panelOrder)
     .success(function(response){
 
@@ -109,6 +123,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     switch (thisPanel) {
       case 'flight-details':
         return './templates/panels/flight-details.html';
+      case 'flying-soon':
+        return './templates/panels/flying-soon.html';
       case 'luggage':
         return './templates/panels/luggage.html';
       case 'bag-pickup-time':
@@ -127,117 +143,284 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   };
 
-  // get set user flight object
-  $scope.userFlightDetails = SharedProperties.getUserFlightData();
-  console.log($scope.userFlightDetails);
-
+  $scope.visiblePanel = 1;
   // toggle visibility based on current panel
   var stateChangeHandler = function(panelID){
     $scope.visiblePanel = panelID;
   };
-
+  // check if panel is in view
   $scope.panelInView = function(index, inview, inviewpart) {
     if(inview && inviewpart === 'both'){
       stateChangeHandler(index + 1);
     }
   };
+  // set inital panel
+  stateChangeHandler(1);
 
+  // re-init material js functions when panel count changes
+  // fixes bug with loading of methods
   $scope.$watch('panelCount', function(){
     $timeout(function(){
       $.material.init();
     }, 500);
   });
 
-  // Luggage panel functions
-  $scope.showCarryOnSection = true;
+  // next panel
+  // goToPanel function
+  $scope.goToPanel = function(panelIndex, isValid){
+    var thisPanel = angular.element('#panel' + (panelIndex + 1));
+    if(isValid){
+      portrFunctions.animateScroll(thisPanel, {duration: 500, offset: -250});
+    }
+  };
 
+  $scope.keyDown = function(e, i){
+    if(e.keyCode === 13){
+      $timeout(function(){
+        angular.element('#next' + i).triggerHandler('submit');
+        angular.element('#next' + i).triggerHandler('click');
+      });
+      return;
+    }
+  };
+
+  //
+  // Flight Details/Flying Soon panel functions
+  // --------------------------------------------------
+  $scope.flightDetails = {};
+
+  // flight api call handler
+  // pass in form data and if required to set local storage obj
+  var flightDetailHandler = function(data, setLocalObj){
+
+    DataService.postData(portrGlobals.paths.flightStatus, data)
+      .success(function(response){
+
+        // set local storage obj
+        if(setLocalObj === true){
+          $localstorage.setObject('flightdetails', {
+            flightNumber: $scope.flightDetails.flightNumber,
+            departureDate: $scope.flightDetails.departureDate
+          });
+        }
+
+        // if no errors
+        // set data to scope item, update display - show detail apnel, hide loader
+        if(response.validationErrors.length === 0){
+          $scope.userFlightDetails = response.flightStatusDetails;
+          $scope.showFlightLoader = false;
+          $scope.showDetailPanel = true;
+        }
+
+      })
+      .error(function(){
+        console.log('Error');
+      });
+  };
+
+  // handle page refresh
+  // shared property is empty
+  // get obj from local storage
+  if(typeof SharedProperties.getUserFlightData() === 'undefined'){
+
+    var flightData = $localstorage.getObject('flightdetails');
+    $scope.showFlightLoader = true;
+
+    $timeout(function(){
+      // call service with stored data
+      flightDetailHandler(flightData, false);
+    }, 5000);
+
+  }
+  else{
+    // else set from shared propertry
+    // this happens when redirected from how-it-works page
+    $scope.userFlightDetails = SharedProperties.getUserFlightData();
+  }
+
+  // show flying soon panel on clikc of change flight btn
+  $scope.changeFlightPanel = function(){
+    $scope.showDetailPanel = false;
+  };
+  // check flight click, pass through if form is valid
+  $scope.checkFlight = function(isValid){
+    if(isValid){
+      // call api service handler, pass in form field data
+      flightDetailHandler($scope.flightDetails, true);
+    }
+  };
+
+  //
+  // Luggage panel functions
+  // --------------------------------------------------
+  $scope.showCarryOnSection = true;
+  $scope.luggageDetails = {};
+
+  $scope.setLuggage = function(isValid){
+
+    if(isValid){
+      $localstorage.setObject('luggageDetails', {
+        bagCheckIn: parseInt($scope.luggageDetails.bagCheckIn, 10),
+        bagCarryOn: parseInt($scope.luggageDetails.bagCarryOn, 10)
+      });
+    }
+
+    console.log($scope.luggageDetails);
+
+  };
+
+  //
+  // Bag pick up time panel functions
+  // --------------------------------------------------
+  $scope.bagPickupTimeDetails = {};
+  $scope.bagPickupDateSelection = function(type){
+
+    if(type === 'same'){
+      $scope.bagTimeSelection = $scope.userFlightDetails.departureTimeDetails.scheduledDate;
+    }
+    else if(type === 'before'){
+
+      var dateWithSlash = $filter('formatDateDash')($scope.userFlightDetails.departureTimeDetails.scheduledDate),
+          day = moment(dateWithSlash, 'YYYY-MM-DD').subtract(1, 'day').format('DD-MM-YYYY'),
+          yesterday = $filter('formatDateSlash')(day);
+
+      $scope.bagTimeSelection = yesterday;
+    }
+
+  };
+
+  $scope.setBagPickUpTimeDate = function(isValid){
+
+    if(isValid){
+      $localstorage.setObject('bagPickupTimeDetails', {
+        bagPickupDate: $scope.bagPickupTimeDetails.date,
+        bagPickupTime: $scope.bagPickupTimeDetails.time,
+      });
+
+      $scope.booking = BookingObject.setCollectionDateTime($scope.bagPickupTimeDetails);
+
+      console.log($scope.booking);
+
+    }
+
+    else{
+
+      console.log($scope.bagPickupTimeDetails);
+
+      console.log('error');
+    }
+
+  };
+
+  //
+  // Bag pick up location panel functions
+  // --------------------------------------------------
+  $scope.bagPickupLocationDetails = {};
+  $scope.setBagPickUpLocation = function(isValid){
+
+    if(isValid){
+      $localstorage.setObject('bagPickupLocationDetails', {
+        bagPickupType: $scope.bagPickupLocationDetails.type,
+        bagPickupLocation: $scope.bagPickupLocationDetails.address,
+      });
+
+      $scope.booking = BookingObject.setCollectionLocation($scope.bagPickupLocationDetails);
+      console.log($scope.booking);
+
+    }
+
+  };
+
+
+  //
   // Passenger panel functions
+  // --------------------------------------------------
   $scope.passengers = [];
   $scope.passenger = {};
-  $scope.passengerIndex = 1;
+  $scope.passengers.push($scope.passenger);
 
-  $scope.passengerTemplate = './templates/panel-elements/passenger-layout.html';
+  $scope.getPassengerTemplate = function(i){
+
+    if(i === 0){
+      return './templates/panel-elements/passenger-layout-lead.html';
+    }
+    else{
+      return './templates/panel-elements/passenger-layout.html';
+    }
+
+  };
 
   $scope.passengerClose = function(item){
-
     $scope.passengers.splice(item, 1);
-
-    $scope.passenger[$scope.passengerIndex].firstname = '';
-    $scope.passenger[$scope.passengerIndex].lastname = '';
-    $scope.passenger[$scope.passengerIndex].email = '';
-    $scope.passenger[$scope.passengerIndex].phone = '';
-
-    $scope.passengerIndex --;
+    delete $scope.passengers.passenger[item];
   };
 
   $scope.addPassengerForm = function(){
-
-    console.log('ADD', $scope.passengerIndex);
-
-    // $scope.passengers.push({
-    //   'index': $scope.passengerIndex,
-    //   'firstname': $scope.passenger[$scope.passengerIndex].firstname,
-    //   'lastname': $scope.passenger[$scope.passengerIndex].lastname,
-    //   'email': $scope.passenger[$scope.passengerIndex].email,
-    //   'phone': $scope.passenger[$scope.passengerIndex].phone
-    // });
-    $scope.passengers.push({
-      'index': $scope.passengerIndex,
-      'firstname': '',
-      'lastname': '',
-      'email': '',
-      'phone': ''
-    });
-
-    $scope.passengerIndex ++;
+    $scope.passengers.push($scope.passenger);
     $.material.init();
+  };
 
-    console.log($scope.passengers);
+  $scope.setPassengers = function(isValid){
+
+    if(isValid){
+      console.log($scope.passengers.passenger);
+      $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
+      console.log($scope.booking);
+    }
 
   };
 
-   $scope.onChange = function(val){
+  //
+  // Airline reservation panel functions
+  // --------------------------------------------------
+  $scope.airlineReservation = {};
 
-    console.log(val);
-    // $scope.passenger.firstname = val;
+  $scope.setAirlineReservation = function(isValid){
 
-    // console.log($scope.passengers[$scope.passengerIndex - 1].index);
+    if(isValid){
+      $localstorage.setObject('airlineReservation', {
+        airlineReservationNumber: $scope.airlineReservation.airlineReservationNumber,
+        executiveClubNumber: $scope.airlineReservation.executiveClubNumber,
+      });
 
-    //console.log($scope.passenger[$scope.passengerIndex].index);
-
-
-    // console.log($scope.passenger[$scope.passengerIndex].firstname, $scope.passenger[$scope.passengerIndex].lastname);
-
-
-    // if($scope.passenger[$scope.passengerIndex].firstname !== 'undefined' && $scope.passenger[$scope.passengerIndex].lastname !== 'undefined' && $scope.passenger[$scope.passengerIndex].email !== 'undefined' && $scope.passenger[$scope.passengerIndex].phone !== 'undefined'){
-
-    //   // $scope.passenger[$scope.passengerIndex].index = $scope.passengerIndex,
-    //   // $scope.passenger[$scope.passengerIndex].firstname = $scope.passenger[$scope.passengerIndex].firstname,
-    //   // $scope.passenger[$scope.passengerIndex].lastname = $scope.passenger[$scope.passengerIndex].lastname,
-    //   // $scope.passenger[$scope.passengerIndex].email = $scope.passenger[$scope.passengerIndex].email,
-    //   // $scope.passenger[$scope.passengerIndex].phone = $scope.passenger[$scope.passengerIndex].phone;
-
-
-    //   console.log($scope.passenger[$scope.passengerIndex].firstname);
-
-
-
-    //   console.log('in change', $scope.passengers);
-    //   //amendObject($scope.passengerIndex, $scope.passenger.firstname, $scope.passenger.lastname, $scope.passenger.email, $scope.passenger.phone);
-    //   //$scope.passengers.push(new Passenger($scope.passenger.firstname, $scope.passenger.lastname, $scope.passenger.email, $scope.passenger.phone));
-
-
-    // }
-    // else{
-    //   console.log('shit', $scope.passengerIndex);
-    // }
-
+      console.log($scope.airlineReservation);
+    }
 
   };
 
+  //
   // Passport panel functions
+  // --------------------------------------------------
   $scope.passportListTemplate = './templates/panel-elements/passport-list-item.html';
+
+  $scope.setPassport = function(isValid){
+
+    if(isValid){
+
+      console.log($scope.passengers.passenger);
+      $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
+      console.log($scope.booking);
+
+    }
+
+
+  };
+
+
+
+
+
+  //
+  // Confimration panel functions
+  // --------------------------------------------------
   $scope.confirmationTemplate = './templates/panels/confirmation.html';
 
 
 }]);
+
+
+
+
+
+
+/*eslint-enable */

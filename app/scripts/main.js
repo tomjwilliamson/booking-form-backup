@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 'use strict';
 
 // Create name space - stops conflicts
@@ -98,7 +100,7 @@ portrFunctions.animateScroll = function(ele, options, callback){
   if (ele) { scrollPos = ele.offset().top; }
 
   // binding to stop scroll if user attempts to scroll during animation
-  opts.container.on('scroll.cancelscroll mousedown.cancelscroll DOMMouseScroll.cancelscroll mousewheel.cancelscroll keyup.cancelscroll touchstart.cancelscroll touchend.cancelscroll touchmove.cancelscroll', function(){
+  opts.container.on('scroll.cancelscroll mousedown.cancelscroll DOMMouseScroll.cancelscroll mousewheel.cancelscroll touchstart.cancelscroll touchend.cancelscroll touchmove.cancelscroll', function(){
     opts.container.stop();
   });
 
@@ -115,3 +117,5 @@ portrFunctions.animateScroll = function(ele, options, callback){
     }
   });
 };
+
+/*eslint-enable */
