@@ -10,7 +10,7 @@ var portrBookingControllers = angular.module('portrBookingControllers', []);
 portrBookingControllers.controller('homeController', ['$scope', '$timeout', function ($scope, $timeout) {
 
   $scope.currentPage = 'home';
-  $scope.panelPath = './templates/panels/login-register.html';
+  $scope.panelPath = portrGlobals.panels.loginRegister;
 
   // call material design scripts after angular has loaded
   $timeout(function(){
@@ -22,7 +22,7 @@ portrBookingControllers.controller('homeController', ['$scope', '$timeout', func
 portrBookingControllers.controller('howItWorksController', ['$scope', '$location', '$timeout', '$http', 'DataService', 'SharedProperties', '$localstorage', function ($scope, $location, $timeout, $http, DataService, SharedProperties, $localstorage) {
 
   $scope.currentPage = 'how-it-works';
-  $scope.flyingSoonPanel = './templates/panels/flying-soon.html';
+  $scope.flyingSoonPanel = portrGlobals.panels.flyingSoon;
   $scope.flightDetails = {};
 
   // call material design scripts after angular has loaded
@@ -77,6 +77,14 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   $scope.booking = {};
 
+  $scope.offsetValue = (angular.element($window).height() / 2) / 2;
+
+
+
+
+  console.log($scope.winHeight);
+
+
   // get order of panels from JSON data
   // set up scope var
   DataService.getData(portrGlobals.paths.panelOrder)
@@ -122,28 +130,27 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
     switch (thisPanel) {
       case 'flight-details':
-        return './templates/panels/flight-details.html';
+        return portrGlobals.panels.flightDetails;
       case 'flying-soon':
-        return './templates/panels/flying-soon.html';
+        return portrGlobals.panels.flyingSoon;
       case 'luggage':
-        return './templates/panels/luggage.html';
+        return portrGlobals.panels.luggage;
       case 'bag-pickup-time':
-        return './templates/panels/bag-pickup-time.html';
+        return portrGlobals.panels.bagPickUpTime;
       case 'bag-pickup-location':
-        return './templates/panels/bag-pickup-location.html';
+        return portrGlobals.panels.bagPickUpLocation;
       case 'passengers':
-        return './templates/panels/passengers.html';
+        return portrGlobals.panels.passengers;
       case 'your-airline-reservation':
-        return './templates/panels/your-airline-reservation.html';
+        return portrGlobals.panels.airlineReservation;
       case 'passport-information':
-        return './templates/panels/passport-information.html';
+        return portrGlobals.panels.passportInformation;
       case 'payment-details':
-        return './templates/panels/payment-details.html';
+        return portrGlobals.panels.paymentDetails;
     }
 
   };
 
-  $scope.visiblePanel = 1;
   // toggle visibility based on current panel
   var stateChangeHandler = function(panelID){
     $scope.visiblePanel = panelID;
@@ -342,10 +349,10 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.getPassengerTemplate = function(i){
 
     if(i === 0){
-      return './templates/panel-elements/passenger-layout-lead.html';
+      return portrGlobals.panelElements.passengerLead;
     }
     else{
-      return './templates/panel-elements/passenger-layout.html';
+      return portrGlobals.panelElements.passengerLayout;
     }
 
   };
@@ -363,7 +370,9 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.setPassengers = function(isValid){
 
     if(isValid){
-      console.log($scope.passengers.passenger);
+
+      $filter('addLuggageToPassengers')($scope.passengers.passenger, 'check-in', $scope.luggageDetails.bagCheckIn);
+
       $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
       console.log($scope.booking);
     }
@@ -383,7 +392,9 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
         executiveClubNumber: $scope.airlineReservation.executiveClubNumber,
       });
 
-      console.log($scope.airlineReservation);
+      $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
+
+      console.log($scope.booking);
     }
 
   };
@@ -391,7 +402,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   //
   // Passport panel functions
   // --------------------------------------------------
-  $scope.passportListTemplate = './templates/panel-elements/passport-list-item.html';
+  $scope.passportListTemplate = portrGlobals.panelElements.passportList;
 
   $scope.setPassport = function(isValid){
 
@@ -413,7 +424,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   //
   // Confimration panel functions
   // --------------------------------------------------
-  $scope.confirmationTemplate = './templates/panels/confirmation.html';
+  $scope.confirmationTemplate = portrGlobals.panels.confirmation;
 
 
 }]);

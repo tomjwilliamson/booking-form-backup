@@ -1,8 +1,30 @@
 // bookingApp Directives
 /* global portrFunctions:false */
+/* global portrGlobals:false */
 'use strict';
 
 var portrBookingDirectives = angular.module('portrBookingDirectives', []);
+
+portrBookingDirectives.directive('fixedBg', ['$window', function ($window) {
+
+  var $win = angular.element($window);
+
+  return {
+    restrict: 'A',
+    link: function (scope, element) {
+
+      element.width($win.width());
+      element.height($win.height());
+
+      portrFunctions.browserSize.resize(function () {
+        element.width($win.width());
+        element.height($win.height());
+      });
+
+    }
+  };
+
+}]);
 
 portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) {
 
@@ -180,7 +202,7 @@ portrBookingDirectives.directive('siteHeader', ['$window', '$document', '$interv
   return {
     restrict: 'A',
     replace: true,
-    templateUrl: './templates/partials/header.html',
+    templateUrl: portrGlobals.sections.header,
     link: function(scope, element){
 
       var didScroll,
@@ -230,7 +252,7 @@ portrBookingDirectives.directive('siteFooter', [function () {
   return {
     restrict: 'A',
     replace: true,
-    templateUrl: './templates/partials/footer.html'
+    templateUrl: portrGlobals.sections.footer
   };
 
 }]);
@@ -257,6 +279,20 @@ portrBookingDirectives.directive('jqdatepicker', [function () {
 
         }
 
+      });
+    }
+  };
+
+}]);
+
+portrBookingDirectives.directive('toggleClass', [function () {
+
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      element.on('click', function() {
+        angular.element(attrs.toggleSelector).removeClass(attrs.toggleClass);
+        element.addClass(attrs.toggleClass);
       });
     }
   };

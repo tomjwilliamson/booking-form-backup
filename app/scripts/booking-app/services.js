@@ -79,6 +79,12 @@ PortrServices.service('BookingObject', [function () {
 
     return booking;
   };
+  GlobalBookingObject.setReservationNumber = function(obj){
+
+    booking.bookingJourney[0].passenger = obj;
+
+    return booking;
+  };
 
   return GlobalBookingObject;
 

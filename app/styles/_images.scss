@@ -71,25 +71,34 @@ $logo-path: url(#{$image-folder-path}/branding/logo.svg);
 //
 // Booking fixed panel images
 // --------------------------------------------------
-.booking-fixed-sideboard{
+// .booking-fixed-sideboard{
+
+//   @media screen and (min-width: $screen-sm) {
+//     &.bg-1{
+//       background-image: url(#{$image-folder-path}/fixed-panel/panel-tablet-1.jpg);
+//     }
+//   }
+//   @media screen and (min-width: $screen-sm) {
+//     &.bg-1{
+//       background-image: url(#{$image-folder-path}/fixed-panel/panel-desktop-1.jpg);
+//     }
+//   }
+
+// }
+
+//
+// Booking page background images
+// --------------------------------------------------
+.booking-bg{
 
   @media screen and (min-width: $screen-sm) {
-    &.bg-1{
-      background-image: url(#{$image-folder-path}/fixed-panel/panel-tablet-1.jpg);
-    }
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-tablet-portrait, jpg, 768px, 1024px, center, center);
   }
-  @media screen and (min-width: $screen-sm) {
-    &.bg-1{
-      background-image: url(#{$image-folder-path}/fixed-panel/panel-desktop-1.jpg);
-    }
+  @media screen and (min-width: $screen-md) {
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-tablet-landscape, jpg, 1024px, 768px, center, center);
   }
-
-  // &.bg-2{
-  //   background-image: url(/images/fixed-panel/fixed-bg.jpg);
-  // }
-  // &.bg-3{
-  //   background-image: url(/images/fixed-panel/fixed-bg.jpg);
-  // }
+  @media screen and (min-width: $screen-lg) {
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-desktop, jpg, 1600px, 900px, center, center);
+  }
 
 }
-

@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-location">
+<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-location" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Bag Pick Up Location</h2>
@@ -10,21 +10,21 @@
 
     <form name="formBagPickupLocation" ng-submit="setBagPickUpLocation(formBagPickupLocation.$valid)" novalidate>
 
-      <label for="BagLocationType" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Select a date</p>
+      <label for="BagLocationType" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Select a location type</p>
       <ul class="icon-with-caption">
-        <li ng-click="bagLocationSelection = 'Hotel'" ng-disabled="visiblePanel !== $index + 1">
+        <li ng-click="bagLocationSelection = 'Hotel'" toggle-class="active-li" ng-disabled="visiblePanel !== $index + 1">
           <i class="material-icons">hotel</i>
           <span>Hotel</span>
         </li>
-        <li ng-click="bagLocationSelection = 'Residential'" ng-disabled="visiblePanel !== $index + 1">
+        <li ng-click="bagLocationSelection = 'Residential'" toggle-class="active-li" ng-disabled="visiblePanel !== $index + 1">
           <i class="material-icons">home</i>
           <span>Residential</span>
         </li>
-        <li ng-click="bagLocationSelection = 'Business'" ng-disabled="visiblePanel !== $index + 1">
+        <li ng-click="bagLocationSelection = 'Business'" toggle-class="active-li" ng-disabled="visiblePanel !== $index + 1">
           <i class="material-icons">business</i>
           <span>Business</span>
         </li>
-        <li ng-click="bagLocationSelection = 'Airport'" ng-disabled="visiblePanel !== $index + 1">
+        <li ng-click="bagLocationSelection = 'Airport'" toggle-class="active-li" ng-disabled="visiblePanel !== $index + 1">
           <i class="material-icons">local_airport</i>
           <span>Airport</span>
         </li>

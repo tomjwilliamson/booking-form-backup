@@ -1,5 +1,5 @@
 'use strict'; //jshint ignore:line
-
+/* global portrGlobals:false */
 /**
  * @ngdoc overview
  * @name PortrBookingApp
@@ -20,17 +20,17 @@ portrBookingApp.config(['$routeProvider', '$locationProvider', '$interpolateProv
 
   $routeProvider
     .when('/', {
-      templateUrl: '/templates/partials/home.html',
+      templateUrl: portrGlobals.templates.home,
       controller: 'homeController',
       reloadOnSearch: false
     })
     .when('/how-it-works', {
-      templateUrl: '/templates/partials/how-it-works.html',
+      templateUrl: portrGlobals.templates.howItWorks,
       controller: 'howItWorksController',
       reloadOnSearch: false
     })
     .when('/booking', {
-      templateUrl: '/templates/partials/booking.html',
+      templateUrl: portrGlobals.templates.booking,
       controller: 'bookingController',
       reloadOnSearch: false
     })

@@ -2,9 +2,21 @@
 // Booking page styles
 // --------------------------------------------------
 
+.booking-bg{
+  position: fixed;
+  background-size: cover;
+}
+
 .booking-section{
+
+  padding-top: $header-height + 20px;
+
+  h1,
   h2{
     margin-bottom: 30px;
+    color: $white;
+
+    @include text-shadow();
   }
 }
 

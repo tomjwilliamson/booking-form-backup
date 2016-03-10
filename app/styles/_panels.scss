@@ -5,6 +5,8 @@
 .panel-parent{
   @include opacity(0.4);
 
+  @include transition(opacity, 0.3s, ease-in-out);
+
   &.active-panel{
     @include opacity(1);
   }
@@ -26,6 +28,7 @@
       font-size: $headline;
       line-height: $body-lh;
       color: $blue;
+      text-shadow: none;
     }
 
     h1,
@@ -109,6 +112,12 @@
       cursor: pointer;
 
       padding-right: 10px;
+
+      &.active-li{
+        i{ color: $blue; }
+        span{ color: $blue; }
+      }
+
     }
 
     span{
