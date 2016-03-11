@@ -5,12 +5,12 @@
 
 <div class="form-group label-floating">
   <label class="control-label" for="PassengerFirstName[$index]">Passenger First Name*</label>
-  <input class="form-control" id="PassengerFirstName[$index]" ng-model="passengers.passenger[$index].firstName" required="" type="text">
+  <input class="form-control" id="PassengerFirstName[$index]" ng-model="passengers.passenger[$index].firstName" ng-blur="setPassengers(formPassengers.$valid)" required="" type="text">
 </div>
 
 <div class="form-group label-floating">
   <label class="control-label" for="PassengerLastName[$index]">Passenger Last Name*</label>
-  <input class="form-control" id="PassengerLastName[$index]" ng-model="passengers.passenger[$index].lastName" required="" type="text">
+  <input class="form-control" id="PassengerLastName[$index]" ng-model="passengers.passenger[$index].lastName" ng-blur="setPassengers(formPassengers.$valid)" required="" type="text">
 </div>
 
 <div class="form-group label-floating">

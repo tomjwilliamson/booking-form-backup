@@ -7,6 +7,8 @@
 
   <div class="panel-body">
 
+    <p><strong>Picking up {- luggageDetails.bagCheckIn + luggageDetails.bagCarryOn -} bags at Corinthia hotel, between {- bagPickupTimeDetails.time -}.</strong></p>
+
     <div class="list-group">
 
       <div class="list-group-item">
@@ -15,10 +17,10 @@
         </div>
         <div class="row-content">
           <p class="list-group-item-text">
-            All 3 passengers must be there with:
+            All {- passengerCount -} passengers must be there with:
             <ul>
               <li>valid Boarding Pass</li>
-              <li>valid Boarding Pass</li>
+              <li>valid Passport</li>
             </ul>
           </p>
         </div>
@@ -26,13 +28,13 @@
 
       <div class="list-group-item">
         <div class="row-content display-flex">
-          <p class="list-group-item-text display-flex align-center">2 bags to check into flight BA1, departing 16:00 from London LCY to New York JFK</p>
+          <p class="list-group-item-text display-flex align-center">{- luggageDetails.bagCheckIn -} bags to check into flight {- flightDetails.flightNumber -}, departing {- userFlightDetails.departureTimeDetails.scheduledTimeLocal -} from {- userFlightDetails.departureAirport.airportCityName -} {- userFlightDetails.departureAirport.airportCode -} to {- userFlightDetails.arrivalAirport.airportCityName -} {- userFlightDetails.arrivalAirport.airportCode -}</p>
         </div>
       </div>
 
       <div class="list-group-item">
         <div class="row-content display-flex">
-          <p class="list-group-item-text display-flex align-center">1 Hand luggage available to be collected from London City Airport from 14:00 onwards</p>
+          <p class="list-group-item-text display-flex align-center">{- luggageDetails.bagCarryOn -} Hand luggage available to be collected from {- userFlightDetails.departureAirport.airportName -} from xx:xx onwards</p>
         </div>
       </div>
 

@@ -91,6 +91,8 @@ $logo-path: url(#{$image-folder-path}/branding/logo.svg);
 // --------------------------------------------------
 .booking-bg{
 
+  @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-mobile, jpg, 400px, 600px, center, center);
+
   @media screen and (min-width: $screen-sm) {
     @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-tablet-portrait, jpg, 768px, 1024px, center, center);
   }
@@ -98,7 +100,7 @@ $logo-path: url(#{$image-folder-path}/branding/logo.svg);
     @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-tablet-landscape, jpg, 1024px, 768px, center, center);
   }
   @media screen and (min-width: $screen-lg) {
-    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-home-desktop, jpg, 1600px, 900px, center, center);
+    @include background-image-retina(#{$image-folder-path}/bg-images/bg-image-booking-desktop, jpg, 1600px, 900px, center, center);
   }
 
 }

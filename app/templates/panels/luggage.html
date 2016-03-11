@@ -6,26 +6,31 @@
   </div>
 
   <div class="panel-body">
-    <form name="formLuggage" ng-submit="setLuggage(formLuggage.$valid)" novalidate>
+    <form name="formLuggage" ng-submit="setLuggage(formLuggage.$valid)" ng-class="" novalidate>
       <h4 ng-class="{ 'has-error' : formLuggage.$invalid }">Bags to Check In*</h4>
       <div class="btn-toolbar">
         <div class="btn-group luggage-btn-1" ng-show="!showCheckInInput">
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 1" ng-disabled="visiblePanel !== $index + 1">1</a>
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 2" ng-disabled="visiblePanel !== $index + 1">2</a>
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 3" ng-disabled="visiblePanel !== $index + 1">3</a>
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 4" ng-disabled="visiblePanel !== $index + 1">4</a>
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 5" ng-disabled="visiblePanel !== $index + 1">5</a>
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="showCheckInInput = !showCheckInInput" ng-disabled="visiblePanel !== $index + 1">more</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 1" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".luggage-input-1">1</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 2" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".luggage-input-1">2</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 3" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".luggage-input-1">3</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 4" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".luggage-input-1">4</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="luggageCheckInAmount = 5" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".luggage-input-1">5</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".luggage-btn-1 .btn" ng-click="showCheckInInput = !showCheckInInput" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".luggage-input-1">more</a>
         </div>
       </div>
       <div class="form-group label-static" ng-show="showCheckInInput" ng-class="{ 'has-error' : formLuggage.BagCheckIn.$invalid && !formLuggage.BagCheckIn.$pristine }">
         <label class="control-label" for="BagCheckIn">Check In Bags</label>
-        <input class="form-control" required="" ng-model="luggageDetails.bagCheckIn" ng-init="luggageDetails.bagCheckIn = 1" ng-value="!showCheckInInput ? luggageDetails.bagCheckIn = luggageCheckInAmount : parseInt(luggageDetails.bagCheckIn, 10)" id="BagCheckIn" name="BagCheckIn" type="number">
+        <input class="form-control luggage-input-1" required="" ng-model="luggageDetails.bagCheckIn" ng-init="luggageDetails.bagCheckIn = 1" ng-value="!showCheckInInput ? luggageDetails.bagCheckIn = luggageCheckInAmount : parseInt(luggageDetails.bagCheckIn, 10)" ng-blur="setLuggage(formLuggage.$valid)" id="BagCheckIn" name="BagCheckIn" type="number">
       </div>
 
-      <div ng-show="showCarryOnSection">
-        <h4>Any Hand luggage or Carry-Ons?</h4>
-        <p>Pick them up before security at the airport</p>
+      <h4>Any Hand luggage or Carry-Ons?</h4>
+      <p>Pick them up before security at the airport</p>
+      <div class="add-carry-on-btn">
+        <button type="button" class="btn btn-raised" ng-click="showCarryOnButtonGroup = true" ng-disabled="visiblePanel !== $index + 1" toggle-class="active-btn-carryon" toggle-selector=".add-carry-on-btn .btn">Add Carry-on bags</button>
+        <button type="button" class="btn btn-raised" ng-click="showCarryOnButtonGroup = false; luggageCarryOnAmount = 0; luggageDetails.bagCarryOn = 0" ng-disabled="visiblePanel !== $index + 1" toggle-class="active-btn-carryon" toggle-selector=".add-carry-on-btn .btn">No Thanks</button>
+      </div>
+
+      <div ng-show="showCarryOnButtonGroup">
         <div class="btn-toolbar" ng-show="showCarryOnButtonGroup && !showCarryOnInput">
           <div class="btn-group luggage-btn-2" ng-disabled="visiblePanel !== $index + 1">
             <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-2" toggle-selector=".luggage-btn-2 .btn" ng-click="luggageCarryOnAmount = 0" ng-disabled="visiblePanel !== $index + 1">0</a>
@@ -38,12 +43,7 @@
         </div>
         <div class="form-group label-static" ng-show="showCarryOnInput">
           <label class="control-label" for="CarryOnBags">Carry On Bags</label>
-          <input class="form-control" toggle-class="active-btn" ng-model="luggageDetails.bagCarryOn" ng-init="luggageDetails.bagCarryOn = 0" ng-value="showCarryOnButtonGroup && !showCarryOnInput ? luggageDetails.bagCarryOn = luggageCarryOnAmount : ''" id="CarryOnBags" name="CarryOnBags" type="number">
-        </div>
-
-        <div>
-          <button class="btn btn-raised" ng-click="showCarryOnButtonGroup = true" ng-disabled="visiblePanel !== $index + 1">Add Carry-on bags</button>
-          <button class="btn btn-raised" ng-click="showCarryOnSection = false; luggageCarryOnAmount = 0; luggageDetails.bagCarryOn = 0" ng-disabled="visiblePanel !== $index + 1">No Thanks</button>
+          <input class="form-control" toggle-class="active-btn" ng-model="luggageDetails.bagCarryOn" ng-init="luggageDetails.bagCarryOn = 0" ng-value="showCarryOnButtonGroup && !showCarryOnInput ? luggageDetails.bagCarryOn = luggageCarryOnAmount : ''" ng-blur="setLuggage(formLuggage.$valid)" id="CarryOnBags" name="CarryOnBags" type="number">
         </div>
 
       </div>

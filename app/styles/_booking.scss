@@ -9,14 +9,16 @@
 
 .booking-section{
 
-  padding-top: $header-height + 20px;
-
   h1,
   h2{
     margin-bottom: 30px;
     color: $white;
 
     @include text-shadow();
+  }
+
+  @media screen and (min-width: $screen-sm) {
+    padding-top: $header-height + 20px;
   }
 }
 

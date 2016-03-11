@@ -13,6 +13,8 @@ portrBookingDirectives.directive('fixedBg', ['$window', function ($window) {
     restrict: 'A',
     link: function (scope, element) {
 
+      $win.pageYOffset = 0;
+
       element.width($win.width());
       element.height($win.height());
 
@@ -285,7 +287,7 @@ portrBookingDirectives.directive('jqdatepicker', [function () {
 
 }]);
 
-portrBookingDirectives.directive('toggleClass', [function () {
+portrBookingDirectives.directive('toggleClass', [ function () {
 
   return {
     restrict: 'A',
@@ -294,6 +296,43 @@ portrBookingDirectives.directive('toggleClass', [function () {
         angular.element(attrs.toggleSelector).removeClass(attrs.toggleClass);
         element.addClass(attrs.toggleClass);
       });
+    }
+  };
+
+}]);
+
+portrBookingDirectives.directive('focusInput', ['$timeout', function($timeout) {
+
+  return {
+    link: function(scope, element, attrs) {
+      element.on('click', function() {
+        $timeout(function() {
+          angular.element(attrs.focusSelector).focus();
+        });
+      });
+    }
+  };
+
+}]);
+
+portrBookingDirectives.directive('googlePlacesAutocomplete', [ function() {
+
+  return {
+    restrict: 'A',
+    scope: {
+      permissions: '@',
+      location: '=thisLocation'
+    },
+    link: function(scope, element) {
+
+      var autocomplete = new google.maps.places.Autocomplete(element[0]);
+
+      autocomplete.addListener('place_changed', function() {
+        scope.$apply(function(){
+          scope.selectedLocation = autocomplete.getPlace();
+        });
+      });
+
     }
   };
 

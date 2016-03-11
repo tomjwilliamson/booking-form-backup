@@ -10,8 +10,8 @@
       <div class="btn-toolbar">
         <label for="BagDate" ng-class="{ 'has-error' : formBagPickupTimeDate.$invalid }">Select a date</p>
         <div class="btn-group date-btn">
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('same')" ng-disabled="visiblePanel !== $index + 1">Same day</a>
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('before')" ng-disabled="visiblePanel !== $index + 1">Day before</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('same'); showTimeSelect = true" ng-disabled="visiblePanel !== $index + 1">Same day</a>
+          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('before'); showTimeSelect = true" ng-disabled="visiblePanel !== $index + 1">Day before</a>
           <input class="form-control" ng-show="" ng-model="bagPickupTimeDetails.date" ng-init="bagPickupTimeDetails.date = ''" ng-value="bagPickupTimeDetails.date = bagTimeSelection" id="BagDate" name="BagDate" type="text" required="">
         </div>
       </div>
@@ -20,7 +20,7 @@
         <input class="form-control" id="PickupDateInput" type="text" value="{- PickupDate -}">
       </div>
 
-      <div class="form-group label-static">
+      <div class="form-group label-static" ng-show="showTimeSelect">
         <label class="control-label" for="BagTime" ng-class="{ 'has-error' : formBagPickupTimeDate.$invalid }">Choose a time slot</label>
         <select class="form-control" ng-model="bagPickupTimeDetails.time" id="BagTime" name="BagTime" required="" ng-disabled="visiblePanel !== $index + 1">
           <option>07:00 to 08:00</option>

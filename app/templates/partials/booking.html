@@ -12,16 +12,16 @@
 
   <div class="row" style="min-height:{- scrollElemHeight -}px">
 
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 panel-container" add-max="9" add-panels>
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 panel-container" add-max="10" add-panels>
 
       <div class="panel-parent" ng-repeat="panel in panels | limitTo: panelCount" ng-include="getTemplateFile(panel.panel)" id="panel{- $index + 1 -}" in-view="panelInView($index, $inview, $inviewpart, $event)" in-view-options="{ offsetTop: 0, offsetBottom: 250 }" panel-parent panel-index="{- $index + 1 -}">
           <!-- Dynamic panel template used -->
           <!-- in '/panels' folder -->
       </div>
 
-      <div ng-show="panelCount === panels.length" ng-include="confirmationTemplate"></div>
+      <div ng-show="panelCount > 8" ng-include="confirmationTemplate"></div>
 
-      <button ng-show="panelCount === panels.length" class="btn btn-lg btn-raised btn-block btn-blue booking-submit">Book now</button>
+      <button ng-show="panelCount > 8" class="btn btn-lg btn-raised btn-block btn-blue booking-submit">Book now</button>
 
     </div>
     <div class="hidden-xs col-sm-6 col-md-7 col-lg-7 booking-panel-container">

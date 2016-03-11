@@ -78,12 +78,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.booking = {};
 
   $scope.offsetValue = (angular.element($window).height() / 2) / 2;
-
-
-
-
   console.log($scope.winHeight);
-
 
   // get order of panels from JSON data
   // set up scope var
@@ -191,6 +186,13 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     }
   };
 
+  $scope.formBlur = function(){
+    console.log('blur');
+  };
+  $scope.formFocus = function(){
+    console.log('focus');
+  };
+
   //
   // Flight Details/Flying Soon panel functions
   // --------------------------------------------------
@@ -255,6 +257,11 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       // call api service handler, pass in form field data
       flightDetailHandler($scope.flightDetails, true);
     }
+  };
+
+  // Flying soon continue click
+  $scope.flyingSoonContinue = function(){
+    $scope.showDetailPanel = true;
   };
 
   //
@@ -339,6 +346,13 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   };
 
 
+  $scope.selectedLocation = {};
+
+  $scope.$watch('selectedLocation', function(nv){
+    console.log(nv);
+  });
+
+
   //
   // Passenger panel functions
   // --------------------------------------------------
@@ -374,7 +388,11 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       $filter('addLuggageToPassengers')($scope.passengers.passenger, 'check-in', $scope.luggageDetails.bagCheckIn);
 
       $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
+      $scope.passengerCount = Object.keys($scope.passengers.passenger).length;
+      console.log($scope.passengerCount);
+
       console.log($scope.booking);
+
     }
 
   };
@@ -414,17 +432,13 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
     }
 
-
   };
-
-
-
-
 
   //
   // Confimration panel functions
   // --------------------------------------------------
   $scope.confirmationTemplate = portrGlobals.panels.confirmation;
+  $scope.confirmationBagCount = parseInt($scope.luggageDetails.bagCheckIn, 10) + parseInt($scope.luggageDetails.bagCarryOn, 10);
 
 
 }]);

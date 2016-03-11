@@ -20,7 +20,7 @@
       </div>
 
       <button type="submit" class="btn btn-link" ng-disabled="formFlight.$invalid">Go</button>
-      <button class="btn btn-link" ng-disabled="visiblePanel !== $index + 1">Continue Anyway</button>
+      <button type="button" class="btn btn-link" ng-click="flyingSoonContinue()" ng-disabled="visiblePanel !== $index + 1">Continue Anyway</button>
     </form>
   </div>
 

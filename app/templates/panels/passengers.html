@@ -10,9 +10,9 @@
 
       <div ng-repeat="passenger in passengers track by $index" ng-include="getPassengerTemplate($index)"></div>
 
-      <button class="btn btn-link" ng-click="addPassengerForm()">+ Add more passengers</button>
-
       <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formPassengers.$valid); " ng-disabled="visiblePanel !== $index + 1 || formPassengers.$invalid" id="next{- $index + 1 -}">Next</button>
+
+      <button class="btn btn-link" ng-click="addPassengerForm()">+ Add more passengers</button>
     </form>
   </div>
 
