@@ -315,22 +315,83 @@ portrBookingDirectives.directive('focusInput', ['$timeout', function($timeout) {
 
 }]);
 
-portrBookingDirectives.directive('googlePlacesAutocomplete', [ function() {
+portrBookingDirectives.directive('googlePlacesAutocomplete', [ 'SharedProperties', function(SharedProperties) {
+
+    var componentForm = {
+    premise: 'long_name',
+    street_number: 'short_name',
+    route: 'long_name', // i.e. Road
+    sublocality_level_1: 'long_name',
+    neighborhood: 'short_name',
+    locality: 'long_name', //i.e. Can be town
+    postal_town: 'long_name', //i.e. can be same as locality
+    administrative_area_level_1: 'long_name', // i.e. can be county
+    administrative_area_level_2: 'long_name', // i.e. can be county
+    country: 'long_name',
+    postal_code: 'long_name',
+    postal_code_prefix: 'short_name'
+  };
+  var mapping = {
+    premise: 'long_name',
+    street_number: 'addressLine1',
+    route: 'addressLine2', // i.e. Road
+    sublocality_level_1: 'addressLine3',
+    neighborhood: 'addressLine3',
+    locality: 'addressTown', //i.e. Can be town
+    postal_town: 'addressTown', //i.e. can be same as locality
+    administrative_area_level_1: 'addressCounty',// i.e. can be county
+    administrative_area_level_2: 'addressCounty',// i.e. can be county
+    country: 'addressCountry',
+    postal_code_prefix: 'addressPostCode',
+    postal_code: 'addressPostCode'
+  };
 
   return {
     restrict: 'A',
     scope: {
-      permissions: '@',
-      location: '=thisLocation'
+      details: '=?'
     },
-    link: function(scope, element) {
+    link: function(scope, element, attrs) {
 
-      var autocomplete = new google.maps.places.Autocomplete(element[0]);
+      var options = {
+        types: attrs.googlePlacesAutocomplete !== '' ? attrs.googlePlacesAutocomplete.split(',') : [],
+        componentRestrictions: {}
+      };
 
-      autocomplete.addListener('place_changed', function() {
-        scope.$apply(function(){
-          scope.selectedLocation = autocomplete.getPlace();
+      scope.collectionLocation = new google.maps.places.Autocomplete(element[0], options);
+
+      google.maps.event.addListener(scope.collectionLocation, 'place_changed', function() {
+
+        // Get the place details from the autocomplete object.
+        var place = scope.collectionLocation.getPlace();
+
+        var details = place.geometry && place.geometry.location ? {
+          latitude: place.geometry.location.lat(),
+          longitude: place.geometry.location.lng()
+        } : {};
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            details[mapping[addressType]] = val;
+          }
+        }
+        details.formatted = place.formatted_address;
+        details.shortName = place.name;
+        details.placeId = place.place_id;
+
+        scope.$apply(function () {
+          scope.details = details;
+          //model.$setViewValue(element.val());
+
+          SharedProperties.setUserLocation(scope.details);
+
         });
+
+
       });
 
     }

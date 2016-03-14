@@ -7,6 +7,8 @@
 
   <div class="panel-body">
 
+    <h4 class="text-red" ng-show="showFlightErrorText">{- flightErrorText -}</h4>
+
     <div class="loader-container" ng-show="showFlightLoader">
       <div class="loader">
         <svg class="circular" viewBox="25 25 50 50">
@@ -15,7 +17,7 @@
       </div>
     </div>
 
-    <div class="list-group" ng-show="!showFlightLoader">
+    <div class="list-group" ng-show="!showFlightLoader && showFlightErrorText !== true">
 
       <div class="list-group-item display-block">
         <div class="row-action-primary">

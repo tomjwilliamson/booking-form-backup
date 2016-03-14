@@ -77,8 +77,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   $scope.booking = {};
 
-  $scope.offsetValue = (angular.element($window).height() / 2) / 2;
-  console.log($scope.winHeight);
+  $scope.offsetValue = (angular.element($window).height() / 2);
+  //console.log($scope.winHeight);
 
   // get order of panels from JSON data
   // set up scope var
@@ -152,9 +152,22 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   };
   // check if panel is in view
   $scope.panelInView = function(index, inview, inviewpart) {
-    if(inview && inviewpart === 'both'){
-      stateChangeHandler(index + 1);
+
+    console.log(index, inview, inviewpart);
+
+
+
+    if(inview && inviewpart === 'both' || inview && inviewpart === 'neither'){
+
+      if($scope.showDetailPanel === true && index === 1){
+        return;
+      }
+      else{
+        stateChangeHandler(index + 1);
+      }
+
     }
+
   };
   // set inital panel
   stateChangeHandler(1);
@@ -172,7 +185,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.goToPanel = function(panelIndex, isValid){
     var thisPanel = angular.element('#panel' + (panelIndex + 1));
     if(isValid){
-      portrFunctions.animateScroll(thisPanel, {duration: 500, offset: -250});
+      portrFunctions.animateScroll(thisPanel, {duration: 500, offset: -40});
     }
   };
 
@@ -197,6 +210,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // Flight Details/Flying Soon panel functions
   // --------------------------------------------------
   $scope.flightDetails = {};
+  $scope.showFlightErrorText = false;
 
   // flight api call handler
   // pass in form data and if required to set local storage obj
@@ -219,6 +233,15 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
           $scope.userFlightDetails = response.flightStatusDetails;
           $scope.showFlightLoader = false;
           $scope.showDetailPanel = true;
+        }
+        else{
+          $scope.showFlightErrorText = true;
+
+          for(var e = 0; e < response.validationErrors.length; e++){
+            $scope.flightErrorText = response.validationErrors[e];
+          }
+
+          $scope.showFlightLoader = false;
         }
 
       })
@@ -329,29 +352,41 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   //
   // Bag pick up location panel functions
   // --------------------------------------------------
-  $scope.bagPickupLocationDetails = {};
+  $scope.collectionLocation = {};
+
   $scope.setBagPickUpLocation = function(isValid){
 
+    $scope.locationDetails = SharedProperties.getUserLocation();
+    console.log($scope.locationDetails);
+
+    $scope.collectionLocation.name = $scope.locationDetails.formatted;
+    $scope.collectionLocation.shortName = $scope.locationDetails.shortName;
+    $scope.collectionLocation.addressLine1 = typeof $scope.locationDetails.addressLine1 !== 'undefined' ? $scope.locationDetails.addressLine1 : '';
+    $scope.collectionLocation.addressLine2 = typeof $scope.locationDetails.addressLine2 !== 'undefined' ? $scope.locationDetails.addressLine2 : '';
+    $scope.collectionLocation.addressLine3 = typeof $scope.locationDetails.addressLine3 !== 'undefined' ? $scope.locationDetails.addressLine3 : '';
+    $scope.collectionLocation.addressTown = typeof $scope.locationDetails.addressTown !== 'undefined' ? $scope.locationDetails.addressTown : '';
+    $scope.collectionLocation.addressPostCode =  $scope.locationDetails.addressPostCode;
+    $scope.collectionLocation.addressCounty = typeof $scope.locationDetails.addressCounty !== 'undefined' ? $scope.locationDetails.addressCounty : '';
+    $scope.collectionLocation.addressCountry = $scope.locationDetails.addressCountry;
+
     if(isValid){
-      $localstorage.setObject('bagPickupLocationDetails', {
-        bagPickupType: $scope.bagPickupLocationDetails.type,
-        bagPickupLocation: $scope.bagPickupLocationDetails.address,
+      $localstorage.setObject('collectionLocation', {
+        collectionLocationType: $scope.collectionLocation.type,
+        collectionLocationAddress1: $scope.collectionLocation.addressLine1,
+        collectionLocationAddress2: $scope.collectionLocation.addressLine2,
+        collectionLocationAddress3: $scope.collectionLocation.addressLine3,
+        collectionLocationAddressTown: $scope.collectionLocation.addressTown,
+        collectionLocationAddressPostCode: $scope.collectionLocation.addressPostCode,
+        collectionLocationAddressCounty: $scope.collectionLocation.addressCounty,
+        collectionLocationAddressCountry: $scope.collectionLocation.addressCountry,
       });
 
-      $scope.booking = BookingObject.setCollectionLocation($scope.bagPickupLocationDetails);
+      $scope.booking = BookingObject.setCollectionLocation($scope.collectionLocation);
       console.log($scope.booking);
 
     }
 
   };
-
-
-  $scope.selectedLocation = {};
-
-  $scope.$watch('selectedLocation', function(nv){
-    console.log(nv);
-  });
-
 
   //
   // Passenger panel functions

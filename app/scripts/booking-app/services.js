@@ -21,7 +21,8 @@ PortrServices.factory('DataService', [ '$http', function ($http) {
 PortrServices.service('SharedProperties', [function () {
 
   var SharedProperties = {},
-      flightDataObj;
+      flightDataObj,
+      locationDetails;
 
   SharedProperties.setUserFlightData = function(obj){
     flightDataObj = obj;
@@ -29,6 +30,16 @@ PortrServices.service('SharedProperties', [function () {
   };
   SharedProperties.getUserFlightData = function(){
     return flightDataObj;
+  };
+  SharedProperties.setUserLocation = function(obj){
+    locationDetails = obj;
+
+    console.log(obj);
+
+    return locationDetails;
+  };
+  SharedProperties.getUserLocation = function(){
+    return locationDetails;
   };
 
   return SharedProperties;
@@ -62,8 +73,7 @@ PortrServices.service('BookingObject', [function () {
 
   GlobalBookingObject.setCollectionLocation = function(obj){
 
-    booking.bookingJourney[0].collectionLocation.type = obj.type;
-    booking.bookingJourney[0].collectionLocation.addressLine1 = obj.address;
+    booking.bookingJourney[0].collectionLocation = obj;
 
     return booking;
   };

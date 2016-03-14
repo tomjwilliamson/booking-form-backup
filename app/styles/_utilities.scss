@@ -7,6 +7,9 @@
 .display-flex{ display: flex !important; }
 .align-center{ align-items: center; }
 
+.text-red{ color: $red !important; }
+.text-blue{ color: $blue !important; }
+
 @media screen and (min-width: $screen-sm) {
   .break{ display: block; }
 }

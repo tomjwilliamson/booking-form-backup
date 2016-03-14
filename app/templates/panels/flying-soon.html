@@ -6,6 +6,9 @@
   </div>
 
   <div class="panel-body">
+
+    <h4 class="text-red" ng-show="showFlightErrorText">{- flightErrorText -}</h4>
+
     <form name="formFlight" ng-submit="checkFlight(formFlight.$valid)" novalidate>
       <div class="form-group label-floating" ng-class="{ 'has-error' : formFlight.FlightNumber.$invalid && !formFlight.FlightNumber.$pristine }">
         <label class="control-label" for="FlightNumber">Flight Number</label>
