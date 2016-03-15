@@ -12,9 +12,9 @@
 
   <div class="row" style="min-height:{- scrollElemHeight -}px">
 
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 panel-container" add-max="10" add-panels>
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 panel-container" add-max="8" add-panels>
 
-      <div class="panel-parent" ng-repeat="panel in panels | limitTo: panelCount" ng-include="getTemplateFile(panel.panel)" id="panel{- $index + 1 -}" in-view="panelInView($index, $inview, $inviewpart, $event)" in-view-options="{ offsetTop: -200, offsetBottom: 0 }" panel-parent panel-index="{- $index + 1 -}">
+      <div class="panel-parent" ng-repeat="panel in panels | limitTo: panelCount" ng-include="getTemplateFile(panel.panel)" id="panel{- $index + 1 -}" panel-parent panel-index="{- $index + 1 -}" panel-visible>
           <!-- Dynamic panel template used -->
           <!-- in '/panels' folder -->
       </div>

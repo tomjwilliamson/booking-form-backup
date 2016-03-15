@@ -146,31 +146,29 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   };
 
-  // toggle visibility based on current panel
-  var stateChangeHandler = function(panelID){
-    $scope.visiblePanel = panelID;
-  };
-  // check if panel is in view
-  $scope.panelInView = function(index, inview, inviewpart) {
+  // // toggle visibility based on current panel
+  // var stateChangeHandler = function(panelID){
+  //   $scope.visiblePanel = panelID;
+  // };
+  // // set inital panel
+  // stateChangeHandler(1);
 
-    console.log(index, inview, inviewpart);
+  // $scope.panelInView = function(index, inview, inviewpart) {
 
+  //   if(inview && inviewpart === 'both' || inview && inviewpart === 'neither'){
 
+  //     console.log('Elem', index, inview, inviewpart);
 
-    if(inview && inviewpart === 'both' || inview && inviewpart === 'neither'){
+  //     if(angular.element($window).scrollTop() < 100){
+  //       stateChangeHandler(1);
+  //     }
+  //     else{
+  //       stateChangeHandler(index + 1);
+  //     }
 
-      if($scope.showDetailPanel === true && index === 1){
-        return;
-      }
-      else{
-        stateChangeHandler(index + 1);
-      }
+  //   }
 
-    }
-
-  };
-  // set inital panel
-  stateChangeHandler(1);
+  // };
 
   // re-init material js functions when panel count changes
   // fixes bug with loading of methods
@@ -366,6 +364,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     $scope.collectionLocation.addressLine3 = typeof $scope.locationDetails.addressLine3 !== 'undefined' ? $scope.locationDetails.addressLine3 : '';
     $scope.collectionLocation.addressTown = typeof $scope.locationDetails.addressTown !== 'undefined' ? $scope.locationDetails.addressTown : '';
     $scope.collectionLocation.addressPostCode =  $scope.locationDetails.addressPostCode;
+    $scope.collectionLocation.addressPostCodePrefix =  $scope.locationDetails.addressPostCodePrefix;
     $scope.collectionLocation.addressCounty = typeof $scope.locationDetails.addressCounty !== 'undefined' ? $scope.locationDetails.addressCounty : '';
     $scope.collectionLocation.addressCountry = $scope.locationDetails.addressCountry;
 

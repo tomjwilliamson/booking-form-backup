@@ -1,4 +1,5 @@
 // bookingApp Directives
+/*eslint-disable */
 /* global portrFunctions:false */
 /* global portrGlobals:false */
 'use strict';
@@ -64,6 +65,8 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
       // and comparing with attr
       scope.$watch('visiblePanel', function(nv){
 
+        console.log(nv);
+
         if(parseInt(nv, 10) >= parseInt(attrs.fixedShow, 10) && parseInt(nv, 10) <= parseInt(attrs.fixedHide, 10)){
           element.addClass('show-section');
           element.removeClass('hide-section');
@@ -88,29 +91,57 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
 
 }]);
 
-portrBookingDirectives.directive('panelParent', ['$timeout', function ($timeout) {
-
-  var initLoad = true;
+portrBookingDirectives.directive('panelParent', [ '$window', function ($window) {
 
   return {
+
+
     link: function(scope, element, attrs){
+
+      var $win = angular.element($window);
+
+      //console.log(attrs);
 
       scope.$watch('visiblePanel', function(nv){
 
-        if((parseInt(attrs.panelIndex, 10) < 3) && initLoad === true){
+        console.log(nv);
+
+        if(parseInt(attrs.panelIndex, 10) === parseInt(nv, 10)){
+          console.log('add', parseInt(attrs.panelIndex, 10));
           element.addClass('active-panel');
-          $timeout(function(){
-            initLoad = false;
-          }, 1000);
+          attrs.panelVisible = true;
         }
-        else if((parseInt(attrs.panelIndex, 10) === nv) && initLoad === false){
-          element.addClass('active-panel');
+        else if(parseInt(attrs.panelIndex, 10) !== parseInt(nv, 10)){
+          console.log('remove');
+          element.removeClass('active-panel');
+        }
+
+      });
+
+      $win.on('scroll', function (){
+
+        var $elem = element;
+
+        var docViewTop = $win.scrollTop();
+        var docViewBottom = docViewTop + $win.height();
+
+        var elemTop = $elem.offset().top;
+        var elemBottom = elemTop + $elem.height();
+
+        //console.log(attrs.panelIndex, elemTop, docViewTop, elemBottom, docViewBottom);
+        //console.log(elemTop, (elemBottom / 2));
+
+        if(elemTop >= docViewTop && elemBottom <= docViewBottom){
+          //console.log(attrs.panelIndex);
+          scope.visiblePanel = attrs.panelIndex;
+          scope.$digest();
         }
         else{
           element.removeClass('active-panel');
         }
 
       });
+
     }
   };
 
@@ -317,7 +348,7 @@ portrBookingDirectives.directive('focusInput', ['$timeout', function($timeout) {
 
 portrBookingDirectives.directive('googlePlacesAutocomplete', [ 'SharedProperties', function(SharedProperties) {
 
-    var componentForm = {
+  var componentForm = {
     premise: 'long_name',
     street_number: 'short_name',
     route: 'long_name', // i.e. Road
@@ -329,10 +360,10 @@ portrBookingDirectives.directive('googlePlacesAutocomplete', [ 'SharedProperties
     administrative_area_level_2: 'long_name', // i.e. can be county
     country: 'long_name',
     postal_code: 'long_name',
-    postal_code_prefix: 'short_name'
+    postal_code_prefix: 'long_name'
   };
   var mapping = {
-    premise: 'long_name',
+    //premise: 'long_name',
     street_number: 'addressLine1',
     route: 'addressLine2', // i.e. Road
     sublocality_level_1: 'addressLine3',
@@ -342,7 +373,7 @@ portrBookingDirectives.directive('googlePlacesAutocomplete', [ 'SharedProperties
     administrative_area_level_1: 'addressCounty',// i.e. can be county
     administrative_area_level_2: 'addressCounty',// i.e. can be county
     country: 'addressCountry',
-    postal_code_prefix: 'addressPostCode',
+    postal_code_prefix: 'addressPostCodePrefix',
     postal_code: 'addressPostCode'
   };
 
@@ -398,3 +429,5 @@ portrBookingDirectives.directive('googlePlacesAutocomplete', [ 'SharedProperties
   };
 
 }]);
+
+/*eslint-enable */
