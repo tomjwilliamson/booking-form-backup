@@ -44,13 +44,28 @@
     }
   }
 
+  &.btn-link{
+    &:focus{
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+
 }
 
 .btn-toolbar{
-  .btn-group{
+  .btn-group:not(.location-btn-1){
     .btn{
       padding-left: 15px;
       padding-right: 15px;
+    }
+  }
+  .location-btn-1{
+    .btn{
+      padding: 10px;
+
+      &:hover{ background-color: inherit; }
+
     }
   }
 }
@@ -59,10 +74,15 @@
 @media screen and (min-width: $screen-lg) {
 
   .btn-toolbar{
-    .btn-group{
+    .btn-group:not(.location-btn-1){
       .btn{
         padding-left: 25px;
         padding-right: 25px;
+      }
+    }
+    .location-btn-1{
+      .btn{
+        padding: 10px;
       }
     }
   }

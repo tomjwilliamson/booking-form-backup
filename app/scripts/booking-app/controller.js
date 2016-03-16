@@ -77,8 +77,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   $scope.booking = {};
 
-  $scope.offsetValue = (angular.element($window).height() / 2);
-  //console.log($scope.winHeight);
+  var offsetValue = (angular.element($window).height() / 4);
 
   // get order of panels from JSON data
   // set up scope var
@@ -183,7 +182,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.goToPanel = function(panelIndex, isValid){
     var thisPanel = angular.element('#panel' + (panelIndex + 1));
     if(isValid){
-      portrFunctions.animateScroll(thisPanel, {duration: 500, offset: -40});
+      portrFunctions.animateScroll(thisPanel, {duration: 500, offset: -offsetValue});
     }
   };
 
@@ -283,6 +282,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // Flying soon continue click
   $scope.flyingSoonContinue = function(){
     $scope.showDetailPanel = true;
+    $scope.visiblePanel = 2;
   };
 
   //

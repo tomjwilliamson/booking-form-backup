@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="passengers" panel-layout="$index+1">
+<article id="panel + ($index+1)" panel panel-order="{- $index+1 -}" panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="passengers" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Passengers</h2>
@@ -10,7 +10,7 @@
 
       <div ng-repeat="passenger in passengers track by $index" ng-include="getPassengerTemplate($index)"></div>
 
-      <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formPassengers.$valid); " ng-disabled="visiblePanel !== $index + 1 || formPassengers.$invalid" id="next{- $index + 1 -}">Next</button>
+      <button type="submit" class="btn btn-link first-input" ng-click="goToPanel($index+1, formPassengers.$valid); " ng-disabled="visiblePanel !== $index + 1 || formPassengers.$invalid" id="next{- $index + 1 -}">Next</button>
 
       <button class="btn btn-link" ng-click="addPassengerForm()">+ Add more passengers</button>
     </form>

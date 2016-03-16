@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-location" panel-layout="$index+1">
+<article id="panel + ($index+1)" panel panel-order="{- $index+1 -}" panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-location" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Bag Pick Up Location</h2>
@@ -11,25 +11,32 @@
     <form name="formBagPickupLocation" ng-submit="setBagPickUpLocation(formBagPickupLocation.$valid)" novalidate>
 
       <label for="BagLocationType" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Select a location type</label>
-      <ul class="icon-with-caption">
-        <li ng-click="bagLocationSelection = 'Hotel'; showLocationInput = true" toggle-class="active-li" toggle-selector=".icon-with-caption li" ng-disabled="visiblePanel !== $index + 1">
-          <i class="material-icons">hotel</i>
-          <span>Hotel</span>
-        </li>
-        <li ng-click="bagLocationSelection = 'Residential'; showLocationInput = true" toggle-class="active-li" toggle-selector=".icon-with-caption li" ng-disabled="visiblePanel !== $index + 1">
-          <i class="material-icons">home</i>
-          <span>Residential</span>
-        </li>
-        <li ng-click="bagLocationSelection = 'Business'; showLocationInput = true" toggle-class="active-li" toggle-selector=".icon-with-caption li" ng-disabled="visiblePanel !== $index + 1">
-          <i class="material-icons">business</i>
-          <span>Business</span>
-        </li>
-        <li ng-click="bagLocationSelection = 'Airport'; showLocationInput = true" toggle-class="active-li" toggle-selector=".icon-with-caption li" ng-disabled="visiblePanel !== $index + 1">
-          <i class="material-icons">local_airport</i>
-          <span>Airport</span>
-        </li>
-      </ul>
-      <input class="form-control" ng-show="" ng-model="collectionLocation.type" ng-init="collectionLocation.type = ''" ng-value="collectionLocation.type = bagLocationSelection" id="BagLocationType" name="BagLocationType" type="text" required="" ng-disabled="visiblePanel !== $index + 1">
+
+      <div class="btn-toolbar icon-with-caption">
+        <div class="btn-group location-btn-1">
+          <a href="javascript:void(0)" class="btn first-input" toggle-class="active-list-btn-1" toggle-selector=".location-btn-1 .btn" ng-click="bagLocationSelection = 'Hotel'; showLocationInput = true" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".location-input-1">
+            <i class="material-icons">hotel</i>
+            <span>Hotel</span>
+          </a>
+
+          <a href="javascript:void(0)" class="btn" toggle-class="active-list-btn-1" toggle-selector=".location-btn-1 .btn" ng-click="bagLocationSelection = 'Residential'; showLocationInput = true" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".location-input-1">
+            <i class="material-icons">home</i>
+            <span>Residential</span>
+          </a>
+
+          <a href="javascript:void(0)" class="btn" toggle-class="active-list-btn-1" toggle-selector=".location-btn-1 .btn" ng-click="bagLocationSelection = 'Business'; showLocationInput = true" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".location-input-1">
+            <i class="material-icons">home</i>
+            <span>Business</span>
+          </a>
+
+          <a href="javascript:void(0)" class="btn" toggle-class="active-list-btn-1" toggle-selector=".location-btn-1 .btn" ng-click="bagLocationSelection = 'Airport'; showLocationInput = true" ng-disabled="visiblePanel !== $index + 1" focus-input focus-selector=".location-input-1">
+            <i class="material-icons">local_airport</i>
+            <span>Airport</span>
+          </a>
+        </div>
+      </div>
+
+      <input class="form-control location-input-1" ng-show="" ng-model="collectionLocation.type" ng-init="collectionLocation.type = ''" ng-value="collectionLocation.type = bagLocationSelection" id="BagLocationType" name="BagLocationType" type="text" required="" ng-disabled="visiblePanel !== $index + 1">
 
       <div class="form-group label-static">
         <label class="control-label" for="BagLocationAddress" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Start typing location name</label>

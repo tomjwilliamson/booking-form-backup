@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="payment-details" panel-layout="$index+1">
+<article id="panel + ($index+1)" panel panel-order="{- $index+1 -}" panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="payment-details" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Payment Details</h2>
@@ -9,7 +9,7 @@
     <form>
       <div class="form-group label-floating">
         <label class="control-label" for="CardName">Name on Card</label>
-        <input class="form-control" id="CardName" type="text">
+        <input class="form-control first-input" id="CardName" type="text">
       </div>
 
       <div class="form-group label-floating">

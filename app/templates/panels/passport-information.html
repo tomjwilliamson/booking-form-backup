@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="passport-information" panel-layout="$index+1">
+<article id="panel + ($index+1)" panel panel-order="{- $index+1 -}" panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="passport-information" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Passport Information</h2>
@@ -15,7 +15,7 @@
 
       </div>
 
-      <button type="submit" class="btn btn-link" ng-click="goToPanel($index+1, formPassport.$valid); " ng-disabled="visiblePanel !== $index + 1 || formPassport.$invalid" id="next{- $index + 1 -}">Next</button>
+      <button type="submit" class="btn btn-link first-input" ng-click="goToPanel($index+1, formPassport.$valid)" ng-disabled="visiblePanel !== $index + 1 || formPassport.$invalid" id="next{- $index + 1 -}">Next</button>
 
     </form>
 

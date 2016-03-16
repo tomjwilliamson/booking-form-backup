@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="your-airline-reservation" panel-layout="$index+1">
+<article id="panel + ($index+1)" panel panel-order="{- $index+1 -}" panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="your-airline-reservation" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Your Airline Reservation</h2>
@@ -9,7 +9,7 @@
     <form name="formAirlineReservation" ng-submit="setAirlineReservation(formAirlineReservation.$valid)" novalidate>
       <div class="form-group label-floating">
         <label class="control-label" for="AirlineReservationNumber">Airline Reservation Number*</label>
-        <input class="form-control" id="AirlineReservationNumber" ng-model="passengers.passenger[0].reservationNumber" ng-blur="setAirlineReservation(formAirlineReservation.$valid)" required="" type="text">
+        <input class="form-control first-input" id="AirlineReservationNumber" ng-model="passengers.passenger[0].reservationNumber" ng-blur="setAirlineReservation(formAirlineReservation.$valid)" required="" type="text">
       </div>
 
       <div class="form-group label-floating">

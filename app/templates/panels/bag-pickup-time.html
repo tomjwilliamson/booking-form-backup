@@ -1,4 +1,4 @@
-<article panel panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-time" panel-layout="$index+1">
+<article id="panel + ($index+1)" panel panel-order="{- $index+1 -}" panel-scroll="true" class="panel panel-default panel-animate-in" panel-id="bag-pickup-time" panel-layout="$index+1">
 
   <div class="panel-heading">
     <h2>Bag Pick Up Date &amp; Time*</h2>
@@ -10,7 +10,7 @@
       <div class="btn-toolbar">
         <label for="BagDate" ng-class="{ 'has-error' : formBagPickupTimeDate.$invalid }">Select a date</p>
         <div class="btn-group date-btn">
-          <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('same'); showTimeSelect = true" ng-disabled="visiblePanel !== $index + 1">Same day</a>
+          <a href="javascript:void(0)" class="btn btn-raised first-input" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('same'); showTimeSelect = true" ng-disabled="visiblePanel !== $index + 1">Same day</a>
           <a href="javascript:void(0)" class="btn btn-raised" toggle-class="active-btn-1" toggle-selector=".date-btn .btn" ng-click="bagPickupDateSelection('before'); showTimeSelect = true" ng-disabled="visiblePanel !== $index + 1">Day before</a>
           <input class="form-control" ng-show="" ng-model="bagPickupTimeDetails.date" ng-init="bagPickupTimeDetails.date = ''" ng-value="bagPickupTimeDetails.date = bagTimeSelection" id="BagDate" name="BagDate" type="text" required="">
         </div>

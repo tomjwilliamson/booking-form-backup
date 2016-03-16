@@ -65,8 +65,6 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
       // and comparing with attr
       scope.$watch('visiblePanel', function(nv){
 
-        console.log(nv);
-
         if(parseInt(nv, 10) >= parseInt(attrs.fixedShow, 10) && parseInt(nv, 10) <= parseInt(attrs.fixedHide, 10)){
           element.addClass('show-section');
           element.removeClass('hide-section');
@@ -91,63 +89,122 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
 
 }]);
 
-portrBookingDirectives.directive('panelParent', [ '$window', function ($window) {
+portrBookingDirectives.directive('panelParent', [ '$window', '$interval', '$timeout', function ($window, $interval, $timeout) {
+
+  var $win = angular.element($window),
+      offset = 100,
+      timer,
+      lastValue;
 
   return {
 
+    restrict: 'A',
 
     link: function(scope, element, attrs){
 
-      var $win = angular.element($window);
+      // set first panel to visible
+      if(parseInt(attrs.panelIndex, 10) === 1){
+        element.addClass('active-panel');
+      }
 
-      //console.log(attrs);
+      // update visible panel value
+      var updateVisible = function(v){
 
-      scope.$watch('visiblePanel', function(nv){
-
-        console.log(nv);
-
-        if(parseInt(attrs.panelIndex, 10) === parseInt(nv, 10)){
-          console.log('add', parseInt(attrs.panelIndex, 10));
-          element.addClass('active-panel');
-          attrs.panelVisible = true;
-        }
-        else if(parseInt(attrs.panelIndex, 10) !== parseInt(nv, 10)){
-          console.log('remove');
-          element.removeClass('active-panel');
+        if(v === 2){
+          v = 3;
         }
 
-      });
+
+        if(lastValue === v){
+          console.log('return');
+
+          return;
+        }
+
+        lastValue = v;
+
+        console.log(lastValue);
+
+        $timeout(function(){
+          scope.$apply(function(){
+            scope.$parent.$parent.visiblePanel = v;
+          });
+        });
+      };
+
+      // update panel classes
+      var visiblePanelDisplay = function(e){
+        angular.element('.panel-parent').removeClass('active-panel');
+        e.addClass('active-panel');
+      };
+
+      var didScroll;
 
       $win.on('scroll', function (){
-
-        var $elem = element;
-
-        var docViewTop = $win.scrollTop();
-        var docViewBottom = docViewTop + $win.height();
-
-        var elemTop = $elem.offset().top;
-        var elemBottom = elemTop + $elem.height();
-
-        //console.log(attrs.panelIndex, elemTop, docViewTop, elemBottom, docViewBottom);
-        //console.log(elemTop, (elemBottom / 2));
-
-        if(elemTop >= docViewTop && elemBottom <= docViewBottom){
-          //console.log(attrs.panelIndex);
-          scope.visiblePanel = attrs.panelIndex;
-          scope.$digest();
-        }
-        else{
-          element.removeClass('active-panel');
-        }
-
+        didScroll = true;
       });
+      $interval(function() {
+        if (didScroll) {
+          hasScrolled();
+          didScroll = false;
+        }
+      }, 1000);
+
+      var hasScrolled = function(){
+
+        $win.on('scroll', function (){
+
+          var $elem = element;
+
+          var docViewTop = $win.scrollTop();
+          var docViewBottom = docViewTop + $win.height();
+
+          var elemTop = $elem.offset().top;
+          var elemBottom = elemTop + $elem.height();
+
+          if(docViewTop < offset){
+            if(parseInt(attrs.panelIndex, 10) === 1 && scope.showDetailPanel === true){
+              visiblePanelDisplay(element);
+              updateVisible(1);
+            }
+            else if(parseInt(attrs.panelIndex, 10) === 2 && scope.showDetailPanel === false){
+              visiblePanelDisplay(element);
+              updateVisible(2);
+            }
+          }
+          else if(elemTop >= (docViewTop + offset) && elemBottom <= (docViewBottom - offset)){
+
+            if(timer){
+              clearTimeout(timer);
+            }
+
+            timer = $timeout(function(){
+              visiblePanelDisplay(element);
+              updateVisible(parseInt(attrs.panelIndex, 10));
+            }, 250);
+          }
+          else if(elemBottom > (docViewBottom - 350)  && elemTop < (docViewTop + 350)){
+
+            if(timer){
+              clearTimeout(timer);
+            }
+
+            $timeout(function(){
+              visiblePanelDisplay(element);
+              updateVisible(parseInt(attrs.panelIndex, 10));
+            }, 250);
+          }
+
+        });
+
+      };
 
     }
   };
 
 }]);
 
-portrBookingDirectives.directive('addPanels', ['$window', function ($window) {
+portrBookingDirectives.directive('addPanels', ['$window', '$timeout', function ($window, $timeout) {
 
   return {
     link: function(scope, element, attrs){
@@ -174,8 +231,10 @@ portrBookingDirectives.directive('addPanels', ['$window', function ($window) {
               return;
             }
 
-            scope.panelCount = scope.panelCount + 1;
-            scope.$digest();
+            $timeout(function(){
+              scope.panelCount = scope.panelCount + 1;
+              scope.$digest();
+            });
 
           }
 
@@ -188,31 +247,22 @@ portrBookingDirectives.directive('addPanels', ['$window', function ($window) {
 
 }]);
 
-// portrBookingDirectives.directive('panel', ['$timeout', function ($timeout) {
+portrBookingDirectives.directive('panel', [ function () {
 
-//   return{
-//     restrict: 'A',
-//     link: function(scope, element, attrs){
+  return{
+    restrict: 'A',
+    link: function(scope, element, attrs){
 
-//       element.on('click', function(){
+      scope.$watch('visiblePanel', function(nv){
+        if(parseInt(attrs.panelOrder, 10) === nv){
+          element.find('.first-input').focus();
+        }
+      });
 
-//         if(attrs.scroll === false){
-//           return;
-//         }
+    }
+  };
 
-//         $timeout(function(){
-//           portrFunctions.animateScroll(element, {duration: 500, offset: -250});
-//           angular.element('.panel').parent('.panel-parent').removeClass('active-panel');
-//           element.parent('.panel-parent').addClass('active-panel');
-//           scope.$digest();
-//         }, 250);
-
-//       });
-
-//     }
-//   };
-
-// }]);
+}]);
 
 portrBookingDirectives.directive('showtab', [function () {
 

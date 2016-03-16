@@ -104,20 +104,32 @@
     padding: 0;
     overflow: hidden;
 
-    li{
-      list-style: none;
-      float: left;
+    .btn{
       color: $light-grey;
-      text-align: center;
-      cursor: pointer;
+      text-transform: none;
 
-      padding-right: 10px;
+      background-color: inherit !important;
 
-      &.active-li{
+      border-radius: 0;
+
+      &:focus,
+      &:active{
+
+        background-color: inherit !important;
+
         i{ color: $blue; }
         span{ color: $blue; }
       }
 
+      &:visited{
+        background-color: inherit !important;
+      }
+    }
+
+    .active-list-btn-1{
+      background-color: inherit !important;
+      i{ color: $blue; }
+      span{ color: $blue; }
     }
 
     span{
