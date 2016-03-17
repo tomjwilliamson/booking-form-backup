@@ -1,0 +1,48 @@
+{
+  "flightStatusDetails": {
+    "flightNumber": "7",
+    "airlineCode": "BA",
+    "airlineName": "British Airways",
+    "isCodeShare": false,
+    "departureAirport": {
+      "airportCode": "LHR",
+      "airportName": "London Heathrow Airport",
+      "airportTerminal": "5",
+      "airportLatitude": "51.469603",
+      "airportLongitude": "-0.453566",
+      "airportCityName": "London",
+      "airportCountryCode": "GB",
+      "airportCountryName": "United Kingdom"
+    },
+    "departureTimeDetails": {
+      "scheduledDate": "22/04/2016",
+      "scheduledTimeUTC": "11:45:00",
+      "scheduledTimeLocal": "11:45:00"
+    },
+    "arrivalAirport": {
+      "airportCode": "HND",
+      "airportName": "Haneda Airport",
+      "airportTerminal": "I",
+      "airportLatitude": "35.549069",
+      "airportLongitude": "139.784524",
+      "airportCityName": "Tokyo",
+      "airportCountryCode": "JP",
+      "airportCountryName": "Japan"
+    },
+    "arrivalTimeDetails": {
+      "scheduledDate": "23/04/2016",
+      "scheduledTimeUTC": "22:15:00",
+      "scheduledTimeLocal": "07:15:00"
+    },
+    "airlineCodeShare": [
+      {
+        "airlineCode": "JL",
+        "airlineName": "JAL",
+        "codeShareFlightNumber": "7082"
+      }
+    ]
+  },
+  "description": null,
+  "responseStatus": 1,
+  "validationErrors": []
+}

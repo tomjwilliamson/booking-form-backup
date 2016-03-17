@@ -55,7 +55,9 @@ PortrServices.service('BookingObject', [function () {
         'userId': '20a68eb3-0fc9-4191-9cf4-f32ddfd1450a',
         'bookingJourney': [
           {
-            'collectionLocation': {},
+            'collectionLocation': {
+              'geoCoord': {}
+            },
             'collectionDateTime': '',
             'deliveryLocation': {},
             'deliveryDateTime': '',
@@ -74,6 +76,12 @@ PortrServices.service('BookingObject', [function () {
   GlobalBookingObject.setCollectionLocation = function(obj){
 
     booking.bookingJourney[0].collectionLocation = obj;
+
+    return booking;
+  };
+  GlobalBookingObject.setCollectionGeo = function(obj){
+
+    booking.bookingJourney[0].collectionLocation.geoCoord = obj;
 
     return booking;
   };
@@ -99,6 +107,32 @@ PortrServices.service('BookingObject', [function () {
   return GlobalBookingObject;
 
 }]);
+
+PortrServices.factory('Auth', function ($localstorage) {
+
+  var thisUser = $localstorage.get('credentials');
+  var setUser = function (user) {
+    console.log(user);
+    thisUser = {'username' : user.username};
+    $localstorage.setObject('credentials', {
+      username: user.username
+    });
+  };
+
+  return {
+    setUser: setUser,
+    isLoggedIn: function () {
+      return thisUser ? true : false;
+    },
+    getUser: function () {
+      return thisUser;
+    },
+    logout: function () {
+      $localstorage.removeObject('credentials');
+      thisUser = null;
+    }
+  };
+});
 
 PortrServices.factory('$localstorage', ['$window', function($window) {
   return {

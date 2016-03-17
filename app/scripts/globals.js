@@ -15,7 +15,8 @@ var portrGlobals = (function(){ //eslint-disable-line no-use-before-define
   globals = {
     paths: {
       panelOrder: jsonFolder + 'order.json',
-      flightStatus: api + 'FlightStatus/GetFlightStatus'
+      flightStatus: api + 'FlightStatus/GetFlightStatus',
+      login: api + 'User/Login'
     },
     templates: {
       home: '/templates/partials/home.html',

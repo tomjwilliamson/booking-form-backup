@@ -7,7 +7,7 @@
 
 var portrBookingControllers = angular.module('portrBookingControllers', []);
 
-portrBookingControllers.controller('homeController', ['$scope', '$timeout', function ($scope, $timeout) {
+portrBookingControllers.controller('homeController', ['$scope', '$timeout', 'Auth', 'DataService', '$filter', function ($scope, $timeout, Auth, DataService, $filter) {
 
   $scope.currentPage = 'home';
   $scope.panelPath = portrGlobals.panels.loginRegister;
@@ -16,6 +16,51 @@ portrBookingControllers.controller('homeController', ['$scope', '$timeout', func
   $timeout(function(){
     $.material.init();
   }, 500);
+
+  //
+  // Login panel functions
+  // --------------------------------------------------
+
+  $scope.user = {};
+  $scope.loggedIn = false;
+  $scope.loginError = '';
+
+  // login click handler
+  $scope.loginHandler = function(isValid){
+
+    if(isValid){
+
+      if(!angular.isDefined($scope.user.username) || $scope.user.username.trim() === ''){
+         $scope.loginError = 'Email address is invalid. Please try again.';
+         return;
+      }
+
+      var loginParams = 'username=' + $scope.user.username + '&password=' + $scope.user.password;
+      console.log(loginParams);
+      loginParams = $filter('encode')(loginParams);
+      console.log(loginParams);
+
+      DataService.getData(portrGlobals.paths.login, loginParams)
+        .success(function(response){
+
+          console.log(response);
+
+          // handle success
+          // set user
+          Auth.setUser({
+            username: $scope.user.username
+          });
+          $scope.loggedIn = true;
+
+        })
+        .error(function(){
+          console.log('Nope');
+        });
+
+    }
+
+  };
+
 
 }]);
 
@@ -30,7 +75,6 @@ portrBookingControllers.controller('howItWorksController', ['$scope', '$location
     $.material.init();
   }, 500);
 
-
   $scope.checkFlight = function(isValid){
 
     if(isValid){
@@ -40,9 +84,16 @@ portrBookingControllers.controller('howItWorksController', ['$scope', '$location
 
           if(response.validationErrors.length === 0){
 
-            $localstorage.setObject('flightdetails', {
+            $localstorage.setObject('flightDetails', {
               flightNumber: $scope.flightDetails.flightNumber,
               departureDate: $scope.flightDetails.departureDate
+            });
+            $localstorage.setObject('deliveryDetails', {
+              airportName: response.flightStatusDetails.departureAirport.airportName
+            });
+            $localstorage.setObject('deliveryDateTime', {
+              time: response.flightStatusDetails.departureTimeDetails.scheduledTimeUTC,
+              date: response.flightStatusDetails.departureTimeDetails.scheduledDate
             });
 
             SharedProperties.setUserFlightData(response.flightStatusDetails);
@@ -60,8 +111,6 @@ portrBookingControllers.controller('howItWorksController', ['$scope', '$location
       console.log('INVALID');
     }
 
-
-
   };
 
 }]);
@@ -71,7 +120,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // inital scope variables
   $scope.currentPage = 'booking';
   $scope.panels = [];
-  $scope.panelCount = 9;
+  $scope.panelCount = 3;
   $scope.visiblePanel = 1;
   $scope.showDetailPanel = true;
 
@@ -216,20 +265,31 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     DataService.postData(portrGlobals.paths.flightStatus, data)
       .success(function(response){
 
-        // set local storage obj
-        if(setLocalObj === true){
-          $localstorage.setObject('flightdetails', {
-            flightNumber: $scope.flightDetails.flightNumber,
-            departureDate: $scope.flightDetails.departureDate
-          });
-        }
-
         // if no errors
-        // set data to scope item, update display - show detail apnel, hide loader
+        // set data to scope item, update display - show detail panel, hide loader
+        // also set delivery address object
         if(response.validationErrors.length === 0){
           $scope.userFlightDetails = response.flightStatusDetails;
+          $scope.deliveryLocation = response.departureAirport;
+          $scope.deliveryDateTime = response.departureTimeDetails;
           $scope.showFlightLoader = false;
           $scope.showDetailPanel = true;
+
+          // set local storage obj
+          if(setLocalObj === true){
+            $localstorage.setObject('flightDetails', {
+              flightNumber: $scope.flightDetails.flightNumber,
+              departureDate: $scope.flightDetails.departureDate
+            });
+            $localstorage.setObject('deliveryDetails', {
+              airportName: $scope.deliveryLocation.airportName
+            });
+            $localstorage.setObject('deliveryDateTime', {
+              time: $scope.deliveryDateTime.scheduledTimeUTC,
+              date: $scope.deliveryDateTime.scheduledDate
+            });
+          }
+
         }
         else{
           $scope.showFlightErrorText = true;
@@ -252,13 +312,13 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // get obj from local storage
   if(typeof SharedProperties.getUserFlightData() === 'undefined'){
 
-    var flightData = $localstorage.getObject('flightdetails');
+    var flightData = $localstorage.getObject('flightDetails');
     $scope.showFlightLoader = true;
 
     $timeout(function(){
       // call service with stored data
       flightDetailHandler(flightData, false);
-    }, 5000);
+    }, 2000);
 
   }
   else{
@@ -266,6 +326,67 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     // this happens when redirected from how-it-works page
     $scope.userFlightDetails = SharedProperties.getUserFlightData();
   }
+
+  // set delivery location
+  // set delivery time to -2 hours scheduled time
+  $scope.$watch('userFlightDetails', function(data){
+
+    if(typeof data === 'undefined'){
+      return;
+    }
+
+    //findDeliveryLocation(data.departureAirport);
+    findDeliveryTime(data.departureTimeDetails);
+
+
+  });
+
+  var findDeliveryTime = function(obj){
+
+    console.log(obj);
+
+    var deptime = obj.scheduledTimeUTC,
+        depDate = obj.scheduledDate;
+
+    var dateWithSlash = $filter('formatDateDash')(depDate),
+        day = moment(dateWithSlash, 'YYYY-MM-DD'),
+        time = moment(deptime, 'HH:mm:ss').subtract(2, 'hours');
+
+
+    var splitDate = $filter('formatDateSplit')(day._i);
+
+    console.log(splitDate);
+
+    moment(time).set('year', splitDate[0]);
+    moment(time).set('month', splitDate[1]);
+    moment(time).set('date', splitDate[2]);
+
+    console.log(time);
+
+  };
+
+  // var findDeliveryLocation = function(d){
+  //   var locationName = d.airportName;
+  //   console.log(locationName);
+
+  //   var latLng = new google.maps.LatLng(120, 55);
+
+  //   console.log(latLng);
+
+  //   var request = {
+  //     location: latLng
+  //   };
+
+  //   $timeout(function(){
+
+  //     var service = new google.maps.places.PlacesService();
+  //     var obj = service.nearbySearch(request);
+
+  //     console.log(obj);
+  //   }, 5000);
+
+
+  // };
 
   // show flying soon panel on clikc of change flight btn
   $scope.changeFlightPanel = function(){
@@ -332,16 +453,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       });
 
       $scope.booking = BookingObject.setCollectionDateTime($scope.bagPickupTimeDetails);
-
       console.log($scope.booking);
 
-    }
-
-    else{
-
-      console.log($scope.bagPickupTimeDetails);
-
-      console.log('error');
     }
 
   };
@@ -350,6 +463,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // Bag pick up location panel functions
   // --------------------------------------------------
   $scope.collectionLocation = {};
+  $scope.collectionGeo = {};
 
   $scope.setBagPickUpLocation = function(isValid){
 
@@ -362,10 +476,13 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     $scope.collectionLocation.addressLine2 = typeof $scope.locationDetails.addressLine2 !== 'undefined' ? $scope.locationDetails.addressLine2 : '';
     $scope.collectionLocation.addressLine3 = typeof $scope.locationDetails.addressLine3 !== 'undefined' ? $scope.locationDetails.addressLine3 : '';
     $scope.collectionLocation.addressTown = typeof $scope.locationDetails.addressTown !== 'undefined' ? $scope.locationDetails.addressTown : '';
-    $scope.collectionLocation.addressPostCode =  $scope.locationDetails.addressPostCode;
-    $scope.collectionLocation.addressPostCodePrefix =  $scope.locationDetails.addressPostCodePrefix;
+    $scope.collectionLocation.addressPostCode =  typeof $scope.locationDetails.addressPostCode !== 'undefined' ? $scope.locationDetails.addressPostCode : '';
+    $scope.collectionLocation.addressPostCodePrefix =  typeof $scope.locationDetails.addressPostCodePrefix !== 'undefined' ? $scope.locationDetails.addressPostCodePrefix : '';
     $scope.collectionLocation.addressCounty = typeof $scope.locationDetails.addressCounty !== 'undefined' ? $scope.locationDetails.addressCounty : '';
     $scope.collectionLocation.addressCountry = $scope.locationDetails.addressCountry;
+
+    $scope.collectionGeo.latitude = $scope.locationDetails.latitude;
+    $scope.collectionGeo.longitude = $scope.locationDetails.longitude;
 
     if(isValid){
       $localstorage.setObject('collectionLocation', {
@@ -375,11 +492,15 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
         collectionLocationAddress3: $scope.collectionLocation.addressLine3,
         collectionLocationAddressTown: $scope.collectionLocation.addressTown,
         collectionLocationAddressPostCode: $scope.collectionLocation.addressPostCode,
+        collectionLocationAddressPostCodePrefix: $scope.collectionLocation.addressPostCodePrefix,
         collectionLocationAddressCounty: $scope.collectionLocation.addressCounty,
         collectionLocationAddressCountry: $scope.collectionLocation.addressCountry,
+        collectionGeoLatitude: $scope.collectionGeo.latitude,
+        collectionGeoLongitude: $scope.collectionGeo.longitude
       });
 
       $scope.booking = BookingObject.setCollectionLocation($scope.collectionLocation);
+      $scope.booking = BookingObject.setCollectionGeo($scope.collectionGeo);
       console.log($scope.booking);
 
     }
@@ -459,7 +580,6 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
     if(isValid){
 
-      console.log($scope.passengers.passenger);
       $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
       console.log($scope.booking);
 

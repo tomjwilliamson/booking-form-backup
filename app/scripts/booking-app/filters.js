@@ -3,6 +3,15 @@
 
 var portrBookingFilters = angular.module('portrBookingFilters', []);
 
+portrBookingFilters.filter('encode', [function () {
+  return function(str) {
+
+    var strEncoded = btoa(str);
+    return strEncoded;
+
+  };
+}]);
+
 portrBookingFilters.filter('formatDateDash', [function () {
   return function(date) {
 
@@ -25,6 +34,20 @@ portrBookingFilters.filter('formatDateSlash', [function () {
 
     arr = date.split('-');
     newDate = (arr[0] + '/' + arr[1] + '/' + arr[2]);
+
+    return newDate;
+
+  };
+}]);
+
+portrBookingFilters.filter('formatDateSplit', [function () {
+  return function(date) {
+
+    var arr = [],
+        newDate = [];
+
+    arr = date.split('-');
+    newDate = [arr[0], arr[1], arr[2]];
 
     return newDate;
 
