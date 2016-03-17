@@ -15,7 +15,7 @@
   <p>We will need passport information for all passengers at least 24 hours prior to flight departure.</p>
   <p>Enter it now, or skip and we’ll remind you to enter later.</p>
 
-  <button class="btn btn-link first-input" ng-click="showPassportEditForm = true; goToPanel($index+1, true)" ng-show="!showPassportEditForm && passengers.passenger[$index]">Enter Now</button>
+  <button class="btn btn-link first-input" ng-click="showPassportEditForm = true" ng-show="!showPassportEditForm && passengers.passenger[$index]">Enter Now</button>
   <button class="btn btn-link" ng-click="showPassportEditForm = false" ng-show="!showPassportEditForm && passengers.passenger[$index]">Enter Later</button>
 
 </div>

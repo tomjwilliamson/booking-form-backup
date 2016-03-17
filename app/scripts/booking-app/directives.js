@@ -89,12 +89,12 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
 
 }]);
 
-portrBookingDirectives.directive('panelParent', [ '$window', '$interval', '$timeout', function ($window, $interval, $timeout) {
+portrBookingDirectives.directive('panelParent', [ '$window', '$timeout', function ($window, $timeout) {
 
   var $win = angular.element($window),
       offset = 100,
-      timer,
-      lastValue;
+      timer = null,
+      fireCount = 0;
 
   return {
 
@@ -107,29 +107,27 @@ portrBookingDirectives.directive('panelParent', [ '$window', '$interval', '$time
         element.addClass('active-panel');
       }
 
+      scope.$watch('showDetailPanel', function(){
+        $win.trigger('scroll');
+      });
+
       // update visible panel value
-      var updateVisible = function(v){
+      var updateVisible = function(v, e){
 
-        if(v === 2){
+        // fix due to hidden 'flying soon' panel
+        if(v === 2 && scope.showDetailPanel === true){
           v = 3;
+          e = angular.element('#panel3');
         }
 
-
-        if(lastValue === v){
-          console.log('return');
-
-          return;
-        }
-
-        lastValue = v;
-
-        console.log(lastValue);
+        visiblePanelDisplay(e);
 
         $timeout(function(){
           scope.$apply(function(){
             scope.$parent.$parent.visiblePanel = v;
+            fireCount = 0;
           });
-        });
+        }, 250);
       };
 
       // update panel classes
@@ -138,64 +136,56 @@ portrBookingDirectives.directive('panelParent', [ '$window', '$interval', '$time
         e.addClass('active-panel');
       };
 
-      var didScroll;
-
       $win.on('scroll', function (){
-        didScroll = true;
-      });
-      $interval(function() {
-        if (didScroll) {
-          hasScrolled();
-          didScroll = false;
+
+        if(timer !== null) {
+          clearTimeout(timer);
         }
-      }, 1000);
+        timer = $timeout(function(){
+          hasScrolled();
+        }, 500);
+
+      });
 
       var hasScrolled = function(){
 
-        $win.on('scroll', function (){
+        var $elem = element;
 
-          var $elem = element;
+        var docViewTop = $win.scrollTop();
+        var docViewBottom = docViewTop + $win.height();
 
-          var docViewTop = $win.scrollTop();
-          var docViewBottom = docViewTop + $win.height();
+        var elemTop = $elem.offset().top;
+        var elemBottom = elemTop + $elem.height();
 
-          var elemTop = $elem.offset().top;
-          var elemBottom = elemTop + $elem.height();
-
-          if(docViewTop < offset){
-            if(parseInt(attrs.panelIndex, 10) === 1 && scope.showDetailPanel === true){
-              visiblePanelDisplay(element);
-              updateVisible(1);
-            }
-            else if(parseInt(attrs.panelIndex, 10) === 2 && scope.showDetailPanel === false){
-              visiblePanelDisplay(element);
-              updateVisible(2);
+        if(docViewTop < offset){
+          if(parseInt(attrs.panelIndex, 10) === 1 && scope.showDetailPanel === true){
+            if(fireCount === 0){
+              updateVisible(1, element);
+              fireCount = 1;
             }
           }
-          else if(elemTop >= (docViewTop + offset) && elemBottom <= (docViewBottom - offset)){
-
-            if(timer){
-              clearTimeout(timer);
+          else if(parseInt(attrs.panelIndex, 10) === 2 && scope.showDetailPanel === false){
+            if(fireCount === 0){
+              updateVisible(2, element);
+              fireCount = 1;
             }
-
-            timer = $timeout(function(){
-              visiblePanelDisplay(element);
-              updateVisible(parseInt(attrs.panelIndex, 10));
-            }, 250);
           }
-          else if(elemBottom > (docViewBottom - 350)  && elemTop < (docViewTop + 350)){
+        }
+        else if(elemTop >= (docViewTop + offset) && elemBottom <= (docViewBottom - offset)){
 
-            if(timer){
-              clearTimeout(timer);
-            }
-
-            $timeout(function(){
-              visiblePanelDisplay(element);
-              updateVisible(parseInt(attrs.panelIndex, 10));
-            }, 250);
+          if(fireCount === 0){
+            updateVisible(parseInt(attrs.panelIndex, 10), element);
+            fireCount = 1;
           }
+        }
+        else if(elemBottom > (docViewBottom - 350)  && elemTop < (docViewTop + 350)){
 
-        });
+          if(fireCount === 0 && parseInt(attrs.panelIndex, 10) !== scope.visiblePanel){
+            updateVisible(parseInt(attrs.panelIndex, 10), element);
+            portrFunctions.animateScroll(element, {duration: 500, offset: -250});
+            fireCount = 1;
+          }
+        }
 
       };
 

@@ -71,7 +71,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // inital scope variables
   $scope.currentPage = 'booking';
   $scope.panels = [];
-  $scope.panelCount = 3;
+  $scope.panelCount = 9;
   $scope.visiblePanel = 1;
   $scope.showDetailPanel = true;
 
@@ -282,7 +282,6 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // Flying soon continue click
   $scope.flyingSoonContinue = function(){
     $scope.showDetailPanel = true;
-    $scope.visiblePanel = 2;
   };
 
   //
