@@ -242,13 +242,11 @@ portrBookingDirectives.directive('panel', [ function () {
   return{
     restrict: 'A',
     link: function(scope, element, attrs){
-
       scope.$watch('visiblePanel', function(nv){
         if(parseInt(attrs.panelOrder, 10) === nv){
           element.find('.first-input').focus();
         }
       });
-
     }
   };
 

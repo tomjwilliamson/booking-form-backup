@@ -245,13 +245,6 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     }
   };
 
-  $scope.formBlur = function(){
-    console.log('blur');
-  };
-  $scope.formFocus = function(){
-    console.log('focus');
-  };
-
   //
   // Flight Details/Flying Soon panel functions
   // --------------------------------------------------
@@ -275,18 +268,15 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
           $scope.showFlightLoader = false;
           $scope.showDetailPanel = true;
 
+          $scope.flightDataLoaded = true;
+
+          console.log($scope.userFlightDetails);
+
           // set local storage obj
           if(setLocalObj === true){
             $localstorage.setObject('flightDetails', {
               flightNumber: $scope.flightDetails.flightNumber,
               departureDate: $scope.flightDetails.departureDate
-            });
-            $localstorage.setObject('deliveryDetails', {
-              airportName: $scope.deliveryLocation.airportName
-            });
-            $localstorage.setObject('deliveryDateTime', {
-              time: $scope.deliveryDateTime.scheduledTimeUTC,
-              date: $scope.deliveryDateTime.scheduledDate
             });
           }
 
@@ -328,67 +318,72 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   }
 
   // set delivery location
-  // set delivery time to -2 hours scheduled time
+  // wait until data loaded
   $scope.$watch('userFlightDetails', function(data){
 
+    // if not loaded - return
     if(typeof data === 'undefined'){
       return;
     }
+    if($scope.flightDataLoaded === false){
+      return;
+    }
 
-    //findDeliveryLocation(data.departureAirport);
+    findDeliveryLocation(data.departureAirport);
     findDeliveryTime(data.departureTimeDetails);
-
 
   });
 
+  // set delivery time to -2 hours scheduled time
   var findDeliveryTime = function(obj){
-
-    console.log(obj);
 
     var deptime = obj.scheduledTimeUTC,
         depDate = obj.scheduledDate;
 
     var dateWithSlash = $filter('formatDateDash')(depDate),
-        day = moment(dateWithSlash, 'YYYY-MM-DD'),
-        time = moment(deptime, 'HH:mm:ss').subtract(2, 'hours');
+        day = moment(dateWithSlash, 'YYYY-MM-DD').utc(),
+        time = moment(deptime, 'HH:mm:ss').subtract(2, 'hours'),
+        splitDate = $filter('formatDateSplit')(day._i);
 
+    time.date(splitDate[2]);
+    time.month($filter('monthName')(parseInt(splitDate[1], 10)));
+    time.year(splitDate[0]);
 
-    var splitDate = $filter('formatDateSplit')(day._i);
-
-    console.log(splitDate);
-
-    moment(time).set('year', splitDate[0]);
-    moment(time).set('month', splitDate[1]);
-    moment(time).set('date', splitDate[2]);
-
-    console.log(time);
+    $scope.booking = BookingObject.setDeliveryDateTime(time._d);
 
   };
 
-  // var findDeliveryLocation = function(d){
-  //   var locationName = d.airportName;
-  //   console.log(locationName);
+  // set delivery location
+  //$scope.deliveryLocation = {};
+  //$scope.deliveryGeo = {};
 
-  //   var latLng = new google.maps.LatLng(120, 55);
+  var findDeliveryLocation = function(obj){
 
-  //   console.log(latLng);
+    $scope.deliveryLocation = {
+      name: obj.airportName + ', Terminal ' + obj.airportTerminal,
+      shortName: obj.airportCode,
+      addressLine1: '',
+      addressLine2: '',
+      addressLine3: '',
+      addressTown: obj.airportCityName,
+      addressPostCode: '',
+      addressCounty: '',
+      addressCountry: obj.airportCountryName
+    };
 
-  //   var request = {
-  //     location: latLng
-  //   };
+    $scope.deliveryGeo = {
+      latitude: parseFloat(obj.airportLatitude),
+      longitude: parseFloat(obj.airportLongitude)
+    };
 
-  //   $timeout(function(){
+    $scope.booking = BookingObject.setDeliveryLocation($scope.deliveryLocation);
+    $scope.booking = BookingObject.setDeliveryGeo($scope.deliveryGeo);
 
-  //     var service = new google.maps.places.PlacesService();
-  //     var obj = service.nearbySearch(request);
+    console.log($scope.booking);
 
-  //     console.log(obj);
-  //   }, 5000);
+  };
 
-
-  // };
-
-  // show flying soon panel on clikc of change flight btn
+  // show flying soon panel on click of change flight btn
   $scope.changeFlightPanel = function(){
     $scope.showDetailPanel = false;
   };
@@ -396,7 +391,10 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.checkFlight = function(isValid){
     if(isValid){
       // call api service handler, pass in form field data
+      $scope.false = true;
       flightDetailHandler($scope.flightDetails, true);
+      $scope.deliveryLocation = {};
+      $scope.deliveryGeo = {};
     }
   };
 
@@ -419,8 +417,6 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
         bagCarryOn: parseInt($scope.luggageDetails.bagCarryOn, 10)
       });
     }
-
-    console.log($scope.luggageDetails);
 
   };
 
@@ -452,6 +448,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
         bagPickupTime: $scope.bagPickupTimeDetails.time,
       });
 
+      console.log($scope.bagPickupTimeDetails);
+
       $scope.booking = BookingObject.setCollectionDateTime($scope.bagPickupTimeDetails);
       console.log($scope.booking);
 
@@ -467,42 +465,44 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
   $scope.setBagPickUpLocation = function(isValid){
 
-    $scope.locationDetails = SharedProperties.getUserLocation();
-    console.log($scope.locationDetails);
-
-    $scope.collectionLocation.name = $scope.locationDetails.formatted;
-    $scope.collectionLocation.shortName = $scope.locationDetails.shortName;
-    $scope.collectionLocation.addressLine1 = typeof $scope.locationDetails.addressLine1 !== 'undefined' ? $scope.locationDetails.addressLine1 : '';
-    $scope.collectionLocation.addressLine2 = typeof $scope.locationDetails.addressLine2 !== 'undefined' ? $scope.locationDetails.addressLine2 : '';
-    $scope.collectionLocation.addressLine3 = typeof $scope.locationDetails.addressLine3 !== 'undefined' ? $scope.locationDetails.addressLine3 : '';
-    $scope.collectionLocation.addressTown = typeof $scope.locationDetails.addressTown !== 'undefined' ? $scope.locationDetails.addressTown : '';
-    $scope.collectionLocation.addressPostCode =  typeof $scope.locationDetails.addressPostCode !== 'undefined' ? $scope.locationDetails.addressPostCode : '';
-    $scope.collectionLocation.addressPostCodePrefix =  typeof $scope.locationDetails.addressPostCodePrefix !== 'undefined' ? $scope.locationDetails.addressPostCodePrefix : '';
-    $scope.collectionLocation.addressCounty = typeof $scope.locationDetails.addressCounty !== 'undefined' ? $scope.locationDetails.addressCounty : '';
-    $scope.collectionLocation.addressCountry = $scope.locationDetails.addressCountry;
-
-    $scope.collectionGeo.latitude = $scope.locationDetails.latitude;
-    $scope.collectionGeo.longitude = $scope.locationDetails.longitude;
-
     if(isValid){
-      $localstorage.setObject('collectionLocation', {
-        collectionLocationType: $scope.collectionLocation.type,
-        collectionLocationAddress1: $scope.collectionLocation.addressLine1,
-        collectionLocationAddress2: $scope.collectionLocation.addressLine2,
-        collectionLocationAddress3: $scope.collectionLocation.addressLine3,
-        collectionLocationAddressTown: $scope.collectionLocation.addressTown,
-        collectionLocationAddressPostCode: $scope.collectionLocation.addressPostCode,
-        collectionLocationAddressPostCodePrefix: $scope.collectionLocation.addressPostCodePrefix,
-        collectionLocationAddressCounty: $scope.collectionLocation.addressCounty,
-        collectionLocationAddressCountry: $scope.collectionLocation.addressCountry,
-        collectionGeoLatitude: $scope.collectionGeo.latitude,
-        collectionGeoLongitude: $scope.collectionGeo.longitude
-      });
 
-      $scope.booking = BookingObject.setCollectionLocation($scope.collectionLocation);
-      $scope.booking = BookingObject.setCollectionGeo($scope.collectionGeo);
-      console.log($scope.booking);
+      $timeout(function(){
 
+        $scope.locationDetails = SharedProperties.getUserLocation();
+
+        $scope.collectionLocation.name = $scope.locationDetails.formatted;
+        $scope.collectionLocation.shortName = $scope.locationDetails.shortName;
+        $scope.collectionLocation.addressLine1 = typeof $scope.locationDetails.addressLine1 !== 'undefined' ? $scope.locationDetails.addressLine1 : '';
+        $scope.collectionLocation.addressLine2 = typeof $scope.locationDetails.addressLine2 !== 'undefined' ? $scope.locationDetails.addressLine2 : '';
+        $scope.collectionLocation.addressLine3 = typeof $scope.locationDetails.addressLine3 !== 'undefined' ? $scope.locationDetails.addressLine3 : '';
+        $scope.collectionLocation.addressTown = typeof $scope.locationDetails.addressTown !== 'undefined' ? $scope.locationDetails.addressTown : '';
+        $scope.collectionLocation.addressPostCode =  typeof $scope.locationDetails.addressPostCode !== 'undefined' ? $scope.locationDetails.addressPostCode : $scope.locationDetails.addressPostCodePrefix;
+        $scope.collectionLocation.addressCounty = typeof $scope.locationDetails.addressCounty !== 'undefined' ? $scope.locationDetails.addressCounty : '';
+        $scope.collectionLocation.addressCountry = $scope.locationDetails.addressCountry;
+
+        $scope.collectionGeo.latitude = $scope.locationDetails.latitude;
+        $scope.collectionGeo.longitude = $scope.locationDetails.longitude;
+
+        $localstorage.setObject('collectionLocation', {
+          collectionLocationType: $scope.collectionLocation.type,
+          collectionLocationAddress1: $scope.collectionLocation.addressLine1,
+          collectionLocationAddress2: $scope.collectionLocation.addressLine2,
+          collectionLocationAddress3: $scope.collectionLocation.addressLine3,
+          collectionLocationAddressTown: $scope.collectionLocation.addressTown,
+          collectionLocationAddressPostCode: $scope.collectionLocation.addressPostCode,
+          collectionLocationAddressPostCodePrefix: $scope.collectionLocation.addressPostCodePrefix,
+          collectionLocationAddressCounty: $scope.collectionLocation.addressCounty,
+          collectionLocationAddressCountry: $scope.collectionLocation.addressCountry,
+          collectionGeoLatitude: $scope.collectionGeo.latitude,
+          collectionGeoLongitude: $scope.collectionGeo.longitude
+        });
+
+        $scope.booking = BookingObject.setCollectionLocation($scope.collectionLocation);
+        $scope.booking = BookingObject.setCollectionGeo($scope.collectionGeo);
+        console.log($scope.booking);
+
+      }, 500);
     }
 
   };
@@ -595,9 +595,6 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
 
 }]);
-
-
-
 
 
 

@@ -22,7 +22,7 @@
 
       <div class="form-group label-static" ng-show="showTimeSelect">
         <label class="control-label" for="BagTime" ng-class="{ 'has-error' : formBagPickupTimeDate.$invalid }">Choose a time slot</label>
-        <select class="form-control" ng-model="bagPickupTimeDetails.time" id="BagTime" name="BagTime" required="" ng-disabled="visiblePanel !== $index + 1">
+        <select class="form-control" ng-model="bagPickupTimeDetails.time" ng-blur="setBagPickUpTimeDate(formBagPickupTimeDate.$valid)" id="BagTime" name="BagTime" required="" ng-disabled="visiblePanel !== $index + 1">
           <option>07:00 to 08:00</option>
           <option>08:00 to 09:00</option>
           <option>09:00 to 10:00</option>

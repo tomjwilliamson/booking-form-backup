@@ -36,21 +36,12 @@
         </div>
       </div>
 
-      <input class="form-control location-input-1" ng-show="" ng-model="collectionLocation.type" ng-init="collectionLocation.type = ''" ng-value="collectionLocation.type = bagLocationSelection" id="BagLocationType" name="BagLocationType" type="text" required="" ng-disabled="visiblePanel !== $index + 1">
+      <input class="form-control location-input-1" ng-show="" ng-model="collectionLocation.type" ng-init="collectionLocation.type = ''" ng-value="collectionLocation.type = bagLocationSelection" id="BagLocationType" name="BagLocationType" type="text" required="" ng-disabled="visiblePanel !== $index + 1" ng-blur="setBagPickUpLocation(formBagPickupLocation.$valid)">
 
       <div class="form-group label-static">
         <label class="control-label" for="BagLocationAddress" ng-class="{ 'has-error' : formBagPickupLocation.$invalid }">Start typing location name</label>
 
-        <input class="form-control" id="BagLocationAddress" ng-disabled="visiblePanel !== $index + 1" type="text" required="" google-places-autocomplete>
-
-       <!--  <input class="form-control" id="addressName" ng-model="collectionLocation.name" type="hidden" required="">
-        <input class="form-control" id="addressLine1" ng-model="collectionLocation.addressLine1" type="hidden" required="">
-        <input class="form-control" id="addressLine2" ng-model="collectionLocation.addressLine2" type="hidden" required="">
-        <input class="form-control" id="addressLine3" ng-model="collectionLocation.addressLine3" type="hidden" required="">
-        <input class="form-control" id="addressTown" ng-model="collectionLocation.addressTown" type="hidden" required="">
-        <input class="form-control" id="addressPostCode" ng-model="collectionLocation.addressPostCode" type="hidden" required="">
-        <input class="form-control" id="addressCounty" ng-model="collectionLocation.addressCounty" type="hidden" required="">
-        <input class="form-control" id="addressCountry" ng-model="collectionLocation.addressCountry" type="hidden" required=""> -->
+        <input class="form-control" id="BagLocationAddress" ng-disabled="visiblePanel !== $index + 1" type="text" required="" ng-blur="setBagPickUpLocation(formBagPickupLocation.$valid)" google-places-autocomplete>
 
       </div>
 

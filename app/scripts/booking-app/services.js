@@ -33,9 +33,6 @@ PortrServices.service('SharedProperties', [function () {
   };
   SharedProperties.setUserLocation = function(obj){
     locationDetails = obj;
-
-    console.log(obj);
-
     return locationDetails;
   };
   SharedProperties.getUserLocation = function(){
@@ -43,7 +40,6 @@ PortrServices.service('SharedProperties', [function () {
   };
 
   return SharedProperties;
-
 
 }]);
 
@@ -59,7 +55,9 @@ PortrServices.service('BookingObject', [function () {
               'geoCoord': {}
             },
             'collectionDateTime': '',
-            'deliveryLocation': {},
+            'deliveryLocation': {
+              'geoCoord': {}
+            },
             'deliveryDateTime': '',
             'passenger': []
           }
@@ -85,9 +83,27 @@ PortrServices.service('BookingObject', [function () {
 
     return booking;
   };
+  GlobalBookingObject.setDeliveryLocation = function(obj){
+
+    booking.bookingJourney[0].deliveryLocation = obj;
+
+    return booking;
+  };
+  GlobalBookingObject.setDeliveryGeo = function(obj){
+
+    booking.bookingJourney[0].deliveryLocation.geoCoord = obj;
+
+    return booking;
+  };
   GlobalBookingObject.setCollectionDateTime = function(obj){
 
     booking.bookingJourney[0].collectionDateTime = obj.date;
+
+    return booking;
+  };
+  GlobalBookingObject.setDeliveryDateTime = function(obj){
+
+    booking.bookingJourney[0].deliveryDateTime = obj;
 
     return booking;
   };
@@ -108,12 +124,12 @@ PortrServices.service('BookingObject', [function () {
 
 }]);
 
-PortrServices.factory('Auth', function ($localstorage) {
+PortrServices.factory('Auth', [ '$localstorage', function ($localstorage) {
 
   var thisUser = $localstorage.get('credentials');
   var setUser = function (user) {
     console.log(user);
-    thisUser = {'username' : user.username};
+    thisUser = { 'username': user.username };
     $localstorage.setObject('credentials', {
       username: user.username
     });
@@ -132,7 +148,7 @@ PortrServices.factory('Auth', function ($localstorage) {
       thisUser = null;
     }
   };
-});
+}]);
 
 PortrServices.factory('$localstorage', ['$window', function($window) {
   return {
