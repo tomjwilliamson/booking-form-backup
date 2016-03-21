@@ -6,6 +6,10 @@ $header-height: 85px;
 
 .header{
 
+  position: relative;
+  top: 0;
+  z-index: 500;
+
   background-color: $blue;
   min-height: $header-height;
 

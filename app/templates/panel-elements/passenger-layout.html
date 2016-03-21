@@ -5,20 +5,20 @@
 
 <div class="form-group label-floating">
   <label class="control-label" for="PassengerFirstName[$index]">Passenger First Name*</label>
-  <input class="form-control" id="PassengerFirstName[$index]" ng-model="passengers.passenger[$index].firstName" ng-blur="setPassengers(formPassengers.$valid)" required="" type="text">
+  <input class="form-control" id="PassengerFirstName[$index]" name="PassengerFirstName[$index]" ng-model="passengers.passenger[$index].firstName" ng-blur="setPassengers(formPassengers.$valid)" required="" type="text">
 </div>
 
 <div class="form-group label-floating">
   <label class="control-label" for="PassengerLastName[$index]">Passenger Last Name*</label>
-  <input class="form-control" id="PassengerLastName[$index]" ng-model="passengers.passenger[$index].lastName" ng-blur="setPassengers(formPassengers.$valid)" required="" type="text">
+  <input class="form-control" id="PassengerLastName[$index]" name="PassengerLastName[$index]" ng-model="passengers.passenger[$index].lastName" ng-blur="setPassengers(formPassengers.$valid)" required="" type="text">
 </div>
 
 <div class="form-group label-floating">
   <label class="control-label" for="PassengerEmail[$index]">E-mail</label>
-  <input class="form-control" id="PassengerEmail[$index]" ng-model="passengers.passenger[$index].emailAddress" type="text">
+  <input class="form-control" id="PassengerEmail[$index]" name="PassengerEmail[$index]" ng-model="passengers.passenger[$index].emailAddress" type="email">
 </div>
 
 <div class="form-group label-floating">
   <label class="control-label" for="PassengerPhone[$index]">Phone Number</label>
-  <input class="form-control" id="PassengerPhone[$index]" ng-model="passengers.passenger[$index].phoneNumber"  type="text">
+  <input class="form-control" id="PassengerPhone[$index]" name="PassengerPhone[$index]" ng-model="passengers.passenger[$index].phoneNumber" type="number">
 </div>

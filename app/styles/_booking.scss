@@ -4,6 +4,7 @@
 
 .booking-bg{
   position: fixed;
+  top: 0;
   background-size: cover;
 }
 
@@ -116,4 +117,37 @@
     h3{ font-size: 3.5rem; }
   }
 
+  .progress{
+    position: absolute;
+    top: 75%;
+    left: 0;
+    right: 0;
+  }
+
 }
+
+.book-now-container{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 0 15px;
+
+  background-color: $white;
+  height: 75px;
+
+  &.relative-pos{
+    position: relative;
+  }
+
+
+  @media screen and (min-width: $screen-sm) {
+    position: relative;
+    padding: 0;
+    height: auto;
+    background-color: inherit;
+  }
+
+}
+

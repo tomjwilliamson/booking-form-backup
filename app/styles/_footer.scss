@@ -5,8 +5,24 @@
 $footer-height: 100px;
 
 .footer{
+
+  position: relative;
+  z-index: 500;
+
   background-color: $light-grey;
   min-height: $footer-height;
 
   margin: 0;
+  padding: 15px;
+
+  ul{
+    > li{
+      list-style: none;
+      float: left;
+
+      padding-right: 15px;
+
+      > a{ color: $white; }
+    }
+  }
 }

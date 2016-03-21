@@ -61,20 +61,20 @@ portrBookingDirectives.directive('fixedSidebar', ['$window', function ($window) 
 
       });
 
-      // swap visibility by watching 'visiblePanel' scope item
-      // and comparing with attr
-      scope.$watch('visiblePanel', function(nv){
+      // // swap visibility by watching 'visiblePanel' scope item
+      // // and comparing with attr
+      // scope.$watch('visiblePanel', function(nv){
 
-        if(parseInt(nv, 10) >= parseInt(attrs.fixedShow, 10) && parseInt(nv, 10) <= parseInt(attrs.fixedHide, 10)){
-          element.addClass('show-section');
-          element.removeClass('hide-section');
-        }
-        else{
-          element.removeClass('show-section');
-          element.addClass('hide-section');
-        }
+      //   if(parseInt(nv, 10) >= parseInt(attrs.fixedShow, 10) && parseInt(nv, 10) <= parseInt(attrs.fixedHide, 10)){
+      //     element.addClass('show-section');
+      //     element.removeClass('hide-section');
+      //   }
+      //   else{
+      //     element.removeClass('show-section');
+      //     element.addClass('hide-section');
+      //   }
 
-      });
+      // });
 
       portrFunctions.browserSize.resize(function () {
 
@@ -324,6 +324,66 @@ portrBookingDirectives.directive('siteFooter', [function () {
     restrict: 'A',
     replace: true,
     templateUrl: portrGlobals.sections.footer
+  };
+
+}]);
+
+portrBookingDirectives.directive('booknowContainer', [ '$window', '$document', '$timeout', function ($window, $document, $timeout) {
+
+  var $win = angular.element($window),
+      $doc = angular.element($document),
+      timer = null;
+
+  return {
+    restrict: 'A',
+
+    link: function(scope, element){
+
+      console.log($doc);
+
+      $win.on('scroll', function (){
+
+        if(timer !== null) {
+          clearTimeout(timer);
+        }
+        timer = $timeout(function(){
+          hasScrolled();
+        }, 250);
+
+      });
+
+      var hasScrolled = function(){
+
+        if(scope.panelCount <= 8){
+          return;
+        }
+
+        var footerElem = angular.element('.footer');
+
+
+        //console.log(element.offset().top + element.height() + 50, footerElem.offset().top, footerElem.height());
+
+        if(element.offset().top + element.height() >= footerElem.offset().top){
+          element.addClass('relative-pos');
+
+
+          console.log('yes', element.offset().top + element.height(), footerElem.offset().top);
+
+        }
+
+        // console.log($doc.scrollTop() + $win.height(), footerElem.offset().top);
+
+        else if($doc.scrollTop() + $win.height() <= footerElem.offset().top){
+          element.removeClass('relative-pos');
+
+          console.log('no', $doc.scrollTop() + $win.height(), footerElem.offset().top);
+
+        }
+
+      };
+
+    }
+
   };
 
 }]);

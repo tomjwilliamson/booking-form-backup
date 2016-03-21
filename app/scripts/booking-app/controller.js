@@ -123,10 +123,26 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.panelCount = 3;
   $scope.visiblePanel = 1;
   $scope.showDetailPanel = true;
+  $scope.progress = 0;
 
   $scope.booking = {};
 
   var offsetValue = (angular.element($window).height() / 4);
+
+  // set device handler
+  // set device to desktop, tablet or mobile
+  var setScreensize = function() {
+    if(portrFunctions.browserSize.width() < 768){
+      $scope.device = 'mobile';
+    }
+    else if(portrFunctions.browserSize.width() >= 768 && portrFunctions.browserSize.width() < 992){
+      $scope.device = 'tablet';
+    }
+    else{
+      $scope.device = 'desktop';
+    }
+  };
+  setScreensize();
 
   // get order of panels from JSON data
   // set up scope var
@@ -139,6 +155,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
             iterations = response.length,
             count = 0,
             displayInterval;
+
+        $scope.fullCardCount = iterations;
 
         // set interval to stagger entrance animation
         displayInterval = $interval(function(){
@@ -245,6 +263,12 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     }
   };
 
+  // progress bar function
+  var widthCalcValue = 100 / 8;
+  $scope.$watch('progress', function(){
+    $scope.progressWidth = $scope.progress * widthCalcValue + '%';
+  });
+
   //
   // Flight Details/Flying Soon panel functions
   // --------------------------------------------------
@@ -332,6 +356,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
     findDeliveryLocation(data.departureAirport);
     findDeliveryTime(data.departureTimeDetails);
 
+    $scope.progress = 1;
+
   });
 
   // set delivery time to -2 hours scheduled time
@@ -408,6 +434,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // --------------------------------------------------
   $scope.showCarryOnSection = true;
   $scope.luggageDetails = {};
+  var progressLuggage = false;
 
   $scope.setLuggage = function(isValid){
 
@@ -418,12 +445,18 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       });
     }
 
+    if(!progressLuggage){
+      progressLuggage = true;
+      $scope.progress ++;
+    }
+
   };
 
   //
   // Bag pick up time panel functions
   // --------------------------------------------------
   $scope.bagPickupTimeDetails = {};
+  var progressbagPickupTime = false;
   $scope.bagPickupDateSelection = function(type){
 
     if(type === 'same'){
@@ -453,6 +486,11 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       $scope.booking = BookingObject.setCollectionDateTime($scope.bagPickupTimeDetails);
       console.log($scope.booking);
 
+      if(!progressbagPickupTime){
+        progressbagPickupTime = true;
+        $scope.progress ++;
+      }
+
     }
 
   };
@@ -462,8 +500,11 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // --------------------------------------------------
   $scope.collectionLocation = {};
   $scope.collectionGeo = {};
+  var progressCollectionLocation = false;
 
   $scope.setBagPickUpLocation = function(isValid){
+
+    console.log(isValid);
 
     if(isValid){
 
@@ -503,6 +544,17 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
         console.log($scope.booking);
 
       }, 500);
+
+      if(!progressCollectionLocation){
+        progressCollectionLocation = true;
+        $scope.progress ++;
+      }
+    }
+    else{
+      if(progressCollectionLocation){
+        progressCollectionLocation = false;
+        $scope.progress --;
+      }
     }
 
   };
@@ -513,6 +565,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   $scope.passengers = [];
   $scope.passenger = {};
   $scope.passengers.push($scope.passenger);
+  var progressPassengers = false;
 
   $scope.getPassengerTemplate = function(i){
 
@@ -547,6 +600,17 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
 
       console.log($scope.booking);
 
+      if(!progressPassengers){
+        progressPassengers = true;
+        $scope.progress ++;
+      }
+
+    }
+    else{
+      if(progressPassengers){
+        progressPassengers = false;
+        $scope.progress --;
+      }
     }
 
   };
@@ -555,6 +619,7 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // Airline reservation panel functions
   // --------------------------------------------------
   $scope.airlineReservation = {};
+  var progressReservation = false;
 
   $scope.setAirlineReservation = function(isValid){
 
@@ -567,6 +632,17 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
 
       console.log($scope.booking);
+
+      if(!progressReservation){
+        progressReservation = true;
+        $scope.progress ++;
+      }
+    }
+    else{
+      if(progressReservation){
+        progressReservation = false;
+        $scope.progress --;
+      }
     }
 
   };
@@ -575,6 +651,8 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
   // Passport panel functions
   // --------------------------------------------------
   $scope.passportListTemplate = portrGlobals.panelElements.passportList;
+  $scope.showPassportEditForm = false;
+  var progressPassport = false;
 
   $scope.setPassport = function(isValid){
 
@@ -583,6 +661,19 @@ portrBookingControllers.controller('bookingController', ['$scope', '$window', '$
       $scope.booking = BookingObject.setPassengers($scope.passengers.passenger);
       console.log($scope.booking);
 
+      $scope.showPassportEditForm = false;
+
+      if(!progressPassport){
+        progressPassport = true;
+        $scope.progress ++;
+      }
+
+    }
+    else{
+      if(progressPassport){
+        progressPassport = false;
+        $scope.progress --;
+      }
     }
 
   };
